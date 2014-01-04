@@ -1,0 +1,7 @@
+<!-- See http://www.sublimetext.com/docs/snippets for more information -->
+<snippet>
+    <content><![CDATA[{% assign $1 = $2 %}]]></content>
+    <tabTrigger>assign</tabTrigger>
+    <scope>text.html.jekyll, text.html.markdown.jekyll, source.json.jekyll</scope>
+    <description>assign</description>
+</snippet>

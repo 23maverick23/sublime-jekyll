@@ -1,0 +1,292 @@
+{
+    "fileTypes": [
+        "json"
+    ],
+    "foldingStartMarker": "(?x){%\\s*(if|unless|for|paginate|capture|form|case|tablerow|raw|comment)[^(%})]+%}",
+    "foldingStopMarker": "(?x){%\\s*(endif|endunless|endfor|endpaginate|endcapture|endform|endcase|endtablerow|endraw|endcomment)[^(%})]+%}",
+    "name": "JSON (Jekyll)",
+    "patterns": [
+        {
+            "include": "#front-matter"
+        },
+        {
+            "begin": "{%\\s*comment\\s*%}",
+            "end": "{%\\s*endcomment\\s*%}",
+            "name": "comment.block.jekyll"
+        },
+        {
+            "begin": "{{",
+            "end": "}}",
+            "name": "punctuation.output.jekyll",
+            "patterns": [
+                {
+                    "include": "#template_var"
+                }
+            ]
+        },
+        {
+            "begin": "{%",
+            "end": "%}",
+            "name": "punctuation.tag.jekyll",
+            "patterns": [
+                {
+                    "include": "#template_tag_name"
+                },
+                {
+                    "include": "#template_var"
+                }
+            ]
+        },
+        {
+            "captures": {
+                "1": {
+                    "name": "string.quoted.double.json.jekyll"
+                },
+                "2": {
+                    "name": "punctuation.separator.dictionary.key-value.json.jekyll"
+                }
+            },
+            "match": "\\s*(\"\\w+\")\\s*(:)",
+            "name": "meta.structure.dictionary.json.jekyll"
+        },
+        {
+            "captures": {
+                "1": {
+                    "name": "punctuation.definition.entry.jekyll"
+                },
+                "10": {
+                    "name": "punctuation.definition.string.end.jekyll"
+                },
+                "11": {
+                    "name": "string.unquoted.jekyll"
+                },
+                "2": {
+                    "name": "entity.name.tag.jekyll"
+                },
+                "3": {
+                    "name": "punctuation.separator.key-value.jekyll"
+                },
+                "4": {
+                    "name": "punctuation.definition.entry.jekyll"
+                },
+                "5": {
+                    "name": "string.quoted.double.jekyll"
+                },
+                "6": {
+                    "name": "punctuation.definition.string.begin.jekyll"
+                },
+                "7": {
+                    "name": "punctuation.definition.string.end.jekyll"
+                },
+                "8": {
+                    "name": "string.quoted.single.jekyll"
+                },
+                "9": {
+                    "name": "punctuation.definition.string.begin.jekyll"
+                }
+            },
+            "match": "(?:(?:(-\\s*)?(\\w+\\s*(:)))|(-))\\s*(?:((\")[^\"]*(\"))|((')[^']*('))|([^,{}&#\\[\\]]+))\\s*",
+            "name": "string.unquoted.jekyll"
+        }
+    ],
+    "repository": {
+        "assign_op": {
+            "patterns": [
+                {
+                    "match": "/=",
+                    "name": "keyword.operator.assignment.augmented.jekyll"
+                }
+            ]
+        },
+        "logic_expression": {
+            "patterns": [
+                {
+                    "match": "/=",
+                    "name": "keyword.operator.assignment.augmented.jekyll"
+                }
+            ]
+        },
+        "logic_op": {
+            "patterns": [
+                {
+                    "match": "\\s+(and|or|not|contains|(\\!\\=|\\=\\=|<\\=|>\\=|<|>)\\s+",
+                    "name": "keyword.operator.logical.jekyll"
+                }
+            ]
+        },
+        "template_tag_name": {
+            "patterns": [
+                {
+                    "match": "(?<={%)\\s*(\\w+)",
+                    "name": "entity.name.tag.jekyll"
+                }
+            ]
+        },
+        "template_var": {
+            "patterns": [
+                {
+                    "captures": {
+                        "2": {
+                            "name": "invalid.illegal.filter.jekyll"
+                        },
+                        "3": {
+                            "name": "invalid.illegal.filter.jekyll"
+                        }
+                    },
+                    "match": "(\\[)(\\|)(?=[^\\]]*)(?=\\])"
+                },
+                {
+                    "match": "(?<=\\s)(\\+|\\-|\\/|\\*)(?=\\s)",
+                    "name": "invalid.illegal.filter.jekyll"
+                },
+                {
+                    "match": "(false|true|nil)",
+                    "name": "constant.language.jekyll"
+                },
+                {
+                    "captures": {
+                        "3": {
+                            "name": "invalid.illegal.operator.jekyll"
+                        }
+                    },
+                    "match": "(?=if|unless|elsif)\\s*[^%}]+\\s(in)\\s"
+                },
+                {
+                    "match": "\\s+(and|or|not|contains|in|by|((\\!|\\=|\\<|\\>)\\=))\\s+",
+                    "name": "keyword.operator.jekyll"
+                },
+                {
+                    "captures": {
+                        "2": {
+                            "name": "invalid.illegal.assignment.jekyll"
+                        }
+                    },
+                    "match": "(?<=assign)([^\\=]+)(\\=\\=+)"
+                },
+                {
+                    "match": "\\|\\s+(?![\\.0-9])[a-zA-Z0-9_-]+\\:\\s+",
+                    "name": "support.function.with-args.jekyll"
+                },
+                {
+                    "match": "\\|\\s+(?![\\.0-9])[a-zA-Z0-9_-]+\\s+",
+                    "name": "support.function.without-args.jekyll"
+                },
+                {
+                    "match": "(?<=\\s)(with|offset\\:|limit\\:)(?=\\s)",
+                    "name": "keyword.control.jekyll"
+                },
+                {
+                    "captures": {
+                        "2": {
+                            "name": "invalid.illegal.argument.jekyll"
+                        }
+                    },
+                    "match": "(?<=include)(.*)(with\\:|offset|limit)(?=\\s)"
+                },
+                {
+                    "match": "(?<=\\s)(\\w+\\:)(?=\\:\\s)",
+                    "name": "invalid.illegal.jekyll"
+                },
+                {
+                    "begin": "\"",
+                    "end": "\"",
+                    "name": "string.quoted.double.jekyll"
+                },
+                {
+                    "begin": "'",
+                    "end": "'",
+                    "name": "string.quoted.single.jekyll"
+                },
+                {
+                    "match": "(-|\\+)?\\s*[0-9]+(\\.[0-9]+)?",
+                    "name": "constant.numeric.jekyll"
+                },
+                {
+                    "match": "\\b(collection|product|linklist|linklists|order|link|customer|customer_address|line_item|shop|collections|page_title|template|image|blog|blogs|cart|pages|theme|themes|variant|items|comment|forloop|settings)\\b",
+                    "name": "support.class.jekyll"
+                },
+                {
+                    "match": "\\b(assets|author|body|body_raw|current|date|excerpt_raw|meta|next|pages|parent|posts|previous|site|tags|taxonomy|title|url)\\b",
+                    "name": "support.class.jekyll"
+                },
+                {
+                    "match": "\\b(site|page|content|paginator)\\b",
+                    "name": "support.class.jekyll",
+                    "comment": "global variables"
+                },
+                {
+                    "match": "\\b(page\\.(content|title|excerpt|url|date|id|categories|tags|path))\\b",
+                    "name": "support.class.jekyll",
+                    "comment": "page variables"
+                },
+                {
+                    "match": "\\b(site\\.(time|p(ages|osts)|related_posts|categories|tags))\\b",
+                    "name": "support.class.jekyll",
+                    "comment": "site variables"
+                },
+                {
+                    "match": "\\b(per_page|posts|total_posts|page|previous_page|previous_page_path|next_page|next_page_path)\\b",
+                    "name": "support.class.jekyll",
+                    "comment": "paginator variables"
+                },
+                {
+                    "match": "((?<=\\w\\:\\s)\\w+)",
+                    "name": "variable.parameter.jekyll"
+                },
+                {
+                    "match": "(?<=\\.)\\w+\\b",
+                    "name": "support.variable.jekyll"
+                },
+                {
+                    "match": "\\w+",
+                    "name": "variable.other.jekyll"
+                }
+            ]
+        },
+        "front-matter": {
+            "patterns": [
+                {
+                    "captures": {
+                        "1": {
+                            "name": "punctuation.definition.entry.yaml.jekyll"
+                        },
+                        "10": {
+                            "name": "punctuation.definition.string.end.yaml.jekyll"
+                        },
+                        "11": {
+                            "name": "string.unquoted.yaml.jekyll"
+                        },
+                        "2": {
+                            "name": "entity.name.tag.yaml.jekyll"
+                        },
+                        "3": {
+                            "name": "punctuation.separator.key-value.yaml.jekyll"
+                        },
+                        "4": {
+                            "name": "punctuation.definition.entry.yaml.jekyll"
+                        },
+                        "5": {
+                            "name": "string.quoted.double.yaml.jekyll"
+                        },
+                        "6": {
+                            "name": "punctuation.definition.string.begin.yaml.jekyll"
+                        },
+                        "7": {
+                            "name": "punctuation.definition.string.end.yaml.jekyll"
+                        },
+                        "8": {
+                            "name": "string.quoted.single.yaml.jekyll"
+                        },
+                        "9": {
+                            "name": "punctuation.definition.string.begin.yaml.jekyll"
+                        }
+                    },
+                    "match": "(?:(?:(-\\s*)?(\\w+\\s*(:)))|(-))\\s*(?:((\")[^\"]*(\"))|((')[^']*('))|([^,{}&#\\[\\]]+))\\s*",
+                    "name": "string.unquoted.yaml.jekyll"
+                },
+            ]
+        }
+    },
+    "scopeName": "source.json.jekyll",
+    "uuid": "b7c6e3f9-588c-464e-9b74-5852152cec80"
+}

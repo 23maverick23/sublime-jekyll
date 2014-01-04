@@ -1,0 +1,6 @@
+[
+    {
+        "caption": "Jekyll: Insert current date",
+        "command": "insert_date"
+    }
+]

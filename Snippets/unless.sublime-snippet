@@ -1,0 +1,11 @@
+<!-- See http://www.sublimetext.com/docs/snippets for more information -->
+<snippet>
+    <content><![CDATA[
+{% unless $1 %}${2:
+    }$3${2:
+}{% endunless %}
+]]> </content>
+    <tabTrigger>unless</tabTrigger>
+    <scope>text.html.jekyll, text.html.markdown.jekyll, source.json.jekyll</scope>
+    <description>unless</description>
+</snippet>

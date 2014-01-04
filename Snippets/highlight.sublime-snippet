@@ -1,0 +1,11 @@
+<!-- See http://www.sublimetext.com/docs/snippets for more information -->
+<snippet>
+    <content><![CDATA[
+{% highlight $1 %}
+$0
+{% endhighlight %}
+]]> </content>
+    <tabTrigger>highlight</tabTrigger>
+    <scope>text.html.jekyll, text.html.markdown.jekyll, source.json.jekyll</scope>
+    <description>highlight</description>
+</snippet>

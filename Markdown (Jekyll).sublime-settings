@@ -1,0 +1,9 @@
+{
+    "extensions":
+    [
+        "md",
+        "markdown",
+        "mdown",
+        "mkdn"
+    ]
+}

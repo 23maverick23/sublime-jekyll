@@ -1,0 +1,7 @@
+<!-- See http://www.sublimetext.com/docs/snippets for more information -->
+<snippet>
+    <content><![CDATA[{% endfor %}]]></content>
+    <tabTrigger>endfor</tabTrigger>
+    <scope>text.html.jekyll, text.html.markdown.jekyll, source.json.jekyll</scope>
+    <description>endfor</description>
+</snippet>

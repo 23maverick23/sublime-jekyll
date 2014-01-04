@@ -1,0 +1,5 @@
+{
+    // Used to determine whether to use short date (%Y-%m-%d)
+    // or long date (%Y-%m-%d %H:%M:%S).
+    "insert_date_only": true
+}
