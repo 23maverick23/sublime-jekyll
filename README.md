@@ -8,6 +8,10 @@ A Sublime Text package for [Jekyll](http://jekyllrb.com/) static sites. This is 
 * JSON (Jekyll)
 * Markdown (Jekyll)
 
+### Commands
+* Jekyll: Insert current date `CTRL + ALT + 0`
+* Jekyll: Insert current datetime `CTRL + ALT + 9`
+
 ### Snippets
 * assign: `{% assign a = b %}`
 * capture: `{% capture %}{% endcapture %}`
