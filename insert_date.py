@@ -5,7 +5,7 @@ import sublime_plugin
 
 
 # Get a value from a key in the sublime-settings file
-def get_setting(key, default_value=True):
+def get_setting(key, default_value='%Y-%m-%d'):
     try:
         settings = sublime.active_window().active_view().settings()
         if settings.has(key):
@@ -16,30 +16,30 @@ def get_setting(key, default_value=True):
     return s.get(key, default_value)
 
 
-class InsertDateCommand(sublime_plugin.TextCommand):
+class JekyllInsertDateCommand(sublime_plugin.TextCommand):
     """
     Prints Date according to format in settings file
 
     """
-    def run(self, edit):
-        DEFAULT_DATE_FORMAT = '%Y-%m-%d'
-        try:
-            if not get_setting('insert_date_only'):
-                date_format = DEFAULT_DATE_FORMAT
-            else:
-                date_format = '%Y-%m-%d %H:%M:%S'
-        except Exception as e:
-            sublime.error_message("[InsertDate]\n%s: %s" % (type(e).__name__, e))
-            date_format = DEFAULT_DATE_FORMAT
+    def run(self, edit, **args):
+        DEFAULT_FORMAT = '%Y-%m-%d'
+        date_format = get_setting('jekyll_insert_date_format', '%Y-%m-%d')
+        datetime_format = get_setting('jekyll_insert_datetime_format', '%Y-%m-%d %H:%M:%S')
 
         try:
             d = datetime.today()
-            text = d.strftime(date_format)
+            if args['format'] and args['format'] == 'date':
+                text = d.strftime(date_format)
+            elif args['format'] and args['format'] == 'datetime':
+                text = d.strftime(datetime_format)
+            else:
+                text = d.strftime(DEFAULT_FORMAT)
+
         except Exception as e:
-            sublime.error_message("[InsertDate]\n%s: %s" % (type(e).__name__, e))
+            sublime.error_message("[JekyllInsertDate]\n%s: %s" % (type(e).__name__, e))
             return
 
-        # Don't bother replacing selections with actually nothing
+        # Don't bother replacing selections if no text exists
         if text == '' or text.isspace():
             return
 

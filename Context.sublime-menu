@@ -6,7 +6,13 @@
         [
             {
                 "caption": "Insert current date",
-                "command": "insert_date"
+                "command": "jekyll_insert_date",
+                "args": {"format": "date"}
+            },
+            {
+                "caption": "Insert current datetime",
+                "command": "jekyll_insert_date",
+                "args": {"format": "datetime"}
             }
         ]
     },

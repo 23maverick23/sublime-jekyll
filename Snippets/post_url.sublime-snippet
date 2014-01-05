@@ -1,11 +1,7 @@
 <!-- See http://www.sublimetext.com/docs/snippets for more information -->
 <snippet>
-	<content><![CDATA[
-{% if $1 %}
-	$2
-{% endif %}
-]]>	</content>
-    <tabTrigger>if</tabTrigger>
+    <content><![CDATA[{% post_url $1 %}]]></content>
+    <tabTrigger>post_url</tabTrigger>
     <scope>text.html.jekyll, text.html.markdown.jekyll, source.json.jekyll</scope>
-    <description>if</description>
+    <description>post_url</description>
 </snippet>

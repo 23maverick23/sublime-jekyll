@@ -1,0 +1,4 @@
+[
+    { "keys": ["ctrl+alt+0"], "command": "jekyll_insert_date", "args": {"format": "date"} },
+    { "keys": ["ctrl+alt+9"], "command": "jekyll_insert_date", "args": {"format": "datetime"} },
+]

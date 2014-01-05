@@ -1,5 +1,17 @@
 {
-    // Used to determine whether to use short date (%Y-%m-%d)
-    // or long date (%Y-%m-%d %H:%M:%S).
-    "insert_date_only": true
+    /**
+     * If for some reason you want to change the way either the date
+     * or the datetime string is formatted, you can override those formats
+     * here using valid Python datetime.strftime() format codes.
+     *
+     * If you need a refresher on these codes, have a look at the Python
+     * documentation found here:
+     *
+     * http://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior
+     */
+
+    "jekyll_insert_date_format": "%Y-%m-%d",
+
+    "jekyll_insert_datetime_format": "%Y-%m-%d %H:%M:%S"
+
 }
