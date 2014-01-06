@@ -1,6 +1,20 @@
 # sublime-jekyll
 
-A Sublime Text package for [Jekyll](http://jekyllrb.com/) static sites. This is a fork of the [liquid-syntax-mode](https://github.com/siteleaf/liquid-syntax-mode) repo from [siteleaf](https://github.com/siteleaf).
+A Sublime Text package for [Jekyll](http://jekyllrb.com/) static sites. This began as a fork of the [liquid-syntax-mode](https://github.com/siteleaf/liquid-syntax-mode) repo from siteleaf. This package should help creating Jekyll sites and posts easier by providing access to key template tags and filters, as well as common completions and a current date/datetime command (for dating posts).
+
+## Installation
+### Package Control
+You can install this package using [Package Control](https://sublime.wbond.net/) from wbond.
+* Press `CTRL + SHIfT + P` (Win/Linux) or `CMD + SHIFT + P` (OS X) to bring up the Command Palette (or use Tools > Command Palette menu)
+* Type to search for the `Package Control: Install Package` command
+* Search packages for `sublime-jekyll` and hit `enter` to install
+* You may need to restart in order to use this package
+
+### Manual
+[Clone](https://github.com/23maverick23/sublime-jekyll.git) or [download](https://github.com/23maverick23/sublime-jekyll/archive/master.zip) the contents of this repo into your Sublime Text `Packages` folder.
+* OS X: `~/Library/Application\ Support/Sublime\ Text\ 3/Packages`
+* Windows: `%APPDATA%\Sublime Text 3\Packages`
+* Linux: `~/.config/sublime-text-3/Packages`
 
 ## What's Included
 ### Syntaxes
@@ -129,17 +143,6 @@ A Sublime Text package for [Jekyll](http://jekyllrb.com/) static sites. This is 
 * uri_escape
 * weight_with_unit
 * xml_escape
-
-## Installation
-### Manual
-[Clone](https://github.com/23maverick23/sublime-jekyll.git) or [download](https://github.com/23maverick23/sublime-jekyll/archive/master.zip) the contents of this repo into your Sublime Text `Packages` folder.
-
-* OS X: `~/Library/Application\ Support/Sublime\ Text\ 3/Packages`
-* Windows: `%APPDATA%\Sublime Text 3\Packages`
-* Linux: `~/.config/sublime-text-3/Packages`
-
-### Package Control
-coming soon...
 
 ## Tests
 Feel free to open the files in [Tests](https://github.com/23maverick23/sublime-jekyll/tree/master/Tests) to view the syntax highlighting, snippets, and completions.
