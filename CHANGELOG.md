@@ -1,6 +1,11 @@
 # sublime-jekyll Changelog
 
+## v0.1.2 (2014-01-05)
+
+- Fixed #2 (updates to snippets)
+
 ## v0.1.1 (2014-01-04)
+
 - Updated `insert_date` command to support multiple formats
 - Updated syntax settings in all snippet files
 - Updated snippets
