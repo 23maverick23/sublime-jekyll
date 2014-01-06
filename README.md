@@ -5,6 +5,7 @@ A Sublime Text package for [Jekyll](http://jekyllrb.com/) static sites. This beg
 ## Installation
 ### Package Control
 You can install this package using [Package Control](https://sublime.wbond.net/) from wbond.
+
 * Press `CTRL + SHIfT + P` (Win/Linux) or `CMD + SHIFT + P` (OS X) to bring up the Command Palette (or use Tools > Command Palette menu)
 * Type to search for the `Package Control: Install Package` command
 * Search packages for `sublime-jekyll` and hit `enter` to install
@@ -12,21 +13,25 @@ You can install this package using [Package Control](https://sublime.wbond.net/)
 
 ### Manual
 [Clone](https://github.com/23maverick23/sublime-jekyll.git) or [download](https://github.com/23maverick23/sublime-jekyll/archive/master.zip) the contents of this repo into your Sublime Text `Packages` folder.
+
 * OS X: `~/Library/Application\ Support/Sublime\ Text\ 3/Packages`
 * Windows: `%APPDATA%\Sublime Text 3\Packages`
 * Linux: `~/.config/sublime-text-3/Packages`
 
 ## What's Included
 ### Syntaxes
+
 * HTML (Jekyll)
 * JSON (Jekyll)
 * Markdown (Jekyll)
 
 ### Commands
+
 * Jekyll: Insert current date `CTRL + ALT + 0`
 * Jekyll: Insert current datetime `CTRL + ALT + 9`
 
 ### Snippets
+
 * assign: `{% assign a = b %}`
 * capture: `{% capture %}{% endcapture %}`
 * case: `{% case %}{% endcase %}`
@@ -58,6 +63,7 @@ You can install this package using [Package Control](https://sublime.wbond.net/)
 
 ### Completions
 #### Tags
+
 * page
     * page.categories
     * page.content
@@ -92,6 +98,7 @@ You can install this package using [Package Control](https://sublime.wbond.net/)
     * site.tags
 
 #### Filters
+
 * append
 * array_to_sentence_string
 * camelize
@@ -154,6 +161,7 @@ Feel free to open the files in [Tests](https://github.com/23maverick23/sublime-j
 [CHANGELOG](CHANGELOG.md)
 
 ## Contribute
+
 1. [Fork](https://github.com/23maverick23/sublime-jekyll/fork) this repo.
 2. Create a branch `git checkout -b my_feature`
 3. Commit your changes `git commit -am "Added Feature"`
