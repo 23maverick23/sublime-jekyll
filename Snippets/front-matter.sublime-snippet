@@ -2,11 +2,11 @@
 <snippet>
     <content><![CDATA[
 ---
-${1:layout: ${2:post}
-title: $3
-date: ${4:YYYY-MM-DD}
-category: $5
-tags: $[6]}
+layout: ${1:post}
+title: $2
+date: $3
+category: $4
+tags: [$5]
 ---
 $0
 ]]></content>
