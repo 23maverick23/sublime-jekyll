@@ -1,5 +1,7 @@
 [
     {
+        "caption": "Preferences",
+        "mnemonic": "n",
         "id": "preferences",
         "children":
         [
@@ -18,21 +20,79 @@
                             {
                                 "caption": "README",
                                 "command": "open_file",
-                                "args": {"file": "${packages}/Jekyll/README.md"}
+                                "args": {
+                                    "file": "${packages}/Jekyll/README.md"
+                                }
                             },
-                            { "caption": "-"},
+                            { "caption": "-" },
                             // Settings - Default
                             {
                                 "caption": "Settings – Default",
                                 "command": "open_file",
-                                "args": {"file": "${packages}/Jekyll/Jekyll.sublime-settings"}
+                                "args": {
+                                    "file": "${packages}/Jekyll/Jekyll.sublime-settings"
+                                }
                             },
                             // Settings - User
                             {
                                 "caption": "Settings – User",
                                 "command": "open_file",
-                                "args": {"file": "${packages}/User/Jekyll.sublime-settings"}
-                            }
+                                "args": {
+                                    "file": "${packages}/User/Jekyll.sublime-settings"
+                                }
+                            },
+                            { "caption": "-" },
+                            // Key Bindings - Default
+                            {
+                                "caption": "Key Bindings – Default",
+                                "command": "open_file",
+                                "args": {
+                                    "file": "${packages}/Jekyll/Default (OSX).sublime-keymap",
+                                    "platform": "OSX"
+                                }
+                            },
+                            {
+                                "caption": "Key Bindings – Default",
+                                "command": "open_file",
+                                "args": {
+                                    "file": "${packages}/Jekyll/Default (Linux).sublime-keymap",
+                                    "platform": "Linux"
+                                }
+                            },
+                            {
+                                "caption": "Key Bindings – Default",
+                                "command": "open_file",
+                                "args": {
+                                    "file": "${packages}/Jekyll/Default (Windows).sublime-keymap",
+                                    "platform": "Windows"
+                                }
+                            },
+                            // Key Bindings - User
+                            {
+                                "caption": "Key Bindings – User",
+                                "command": "open_file",
+                                "args": {
+                                    "file": "${packages}/User/Default (OSX).sublime-keymap",
+                                    "platform": "OSX"
+                                }
+                            },
+                            {
+                                "caption": "Key Bindings – User",
+                                "command": "open_file",
+                                "args": {
+                                    "file": "${packages}/User/Default (Linux).sublime-keymap",
+                                    "platform": "Linux"
+                                }
+                            },
+                            {
+                                "caption": "Key Bindings – User",
+                                "command": "open_file",
+                                "args": {
+                                    "file": "${packages}/User/Default (Windows).sublime-keymap",
+                                    "platform": "Windows"
+                                }
+                            },
+                            { "caption": "-" }
                         ]
                     }
                 ]

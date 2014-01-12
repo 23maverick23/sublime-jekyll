@@ -2,6 +2,6 @@
 <snippet>
     <content><![CDATA[{% assign $1 = $2 %}]]></content>
     <tabTrigger>assign</tabTrigger>
-    <scope>text.html.jekyll, text.html.markdown.jekyll, source.json.jekyll</scope>
+    <scope>text.html.jekyll, text.html.markdown.jekyll, source.json.jekyll, text.html.textile.jekyll</scope>
     <description>assign</description>
 </snippet>

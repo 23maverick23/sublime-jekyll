@@ -6,6 +6,6 @@
 {% endfor %}
 ]]>	</content>
     <tabTrigger>for</tabTrigger>
-    <scope>text.html.jekyll, text.html.markdown.jekyll, source.json.jekyll</scope>
+    <scope>text.html.jekyll, text.html.markdown.jekyll, source.json.jekyll, text.html.textile.jekyll</scope>
     <description>for</description>
 </snippet>

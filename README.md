@@ -4,9 +4,9 @@ A Sublime Text package for [Jekyll](http://jekyllrb.com/) static sites. This beg
 
 ## Installation
 ### Package Control
-You can install this package using [Package Control](https://sublime.wbond.net/) from wbond.
+You can install this package using [Package Control](https://sublime.wbond.net/packages/Jekyll) from wbond.net.
 
-* Press `CTRL + SHIfT + P` (Win/Linux) or `CMD + SHIFT + P` (OS X) to bring up the Command Palette (or use Tools > Command Palette menu)
+* Press `ctrl+shift+p` (Windows/Linux) or `command+shift+p` (OS X) to bring up the Command Palette (or use _Tools > Command Palette_ menu)
 * Type to search for the `Package Control: Install Package` command
 * Search packages for `sublime-jekyll` and hit `enter` to install
 * You may need to restart in order to use this package
@@ -24,11 +24,32 @@ You can install this package using [Package Control](https://sublime.wbond.net/)
 * HTML (Jekyll)
 * JSON (Jekyll)
 * Markdown (Jekyll)
+* Textile (Jekyll)
 
 ### Commands
 
-* Jekyll: Insert current date `CTRL + ALT + 0`
-* Jekyll: Insert current datetime `CTRL + ALT + 9`
+* Jekyll: Insert current date
+* Jekyll: Insert current datetime
+
+You can change the default format of both the date and datetime commands in your user settings file (_Preferences > Package Settings > Jekyll > Settings – User_).
+
+```json
+{
+    "jekyll_insert_date_format": "%Y-%m-%d",
+    "jekyll_insert_datetime_format": "%Y-%m-%d %H:%M:%S"
+}
+```
+
+### Key Bindings
+
+There are default key bindings for adding dates quickly. You can keep the defaults, or override them in your user key bindings file (_Preferences > Package Settings > Jekyll > Key Bindings – User_).
+
+```python
+[
+    { "keys": ["ctrl+alt+0"], "command": "jekyll_insert_date", "args": {"format": "date"} },
+    { "keys": ["ctrl+alt+9"], "command": "jekyll_insert_date", "args": {"format": "datetime"} }
+]
+```
 
 ### Snippets
 
@@ -46,11 +67,12 @@ You can install this package using [Package Control](https://sublime.wbond.net/)
     ---
     layout: post
     title:
-    date: YYYY-MM-DD
+    date:
     category:
     tags: []
     ---
     ```
+
 * gist: `{% gist url %}`
 * highlight: `{% highlight syntax|linenos %}{% endhighlight %}`
 * if: `{% if this %}{% endif %}`
@@ -152,13 +174,13 @@ You can install this package using [Package Control](https://sublime.wbond.net/)
 * xml_escape
 
 ## Tests
-Feel free to open the files in [Tests](https://github.com/23maverick23/sublime-jekyll/tree/master/Tests) to view the syntax highlighting, snippets, and completions.
+Feel free to open the files in [Tests](https://github.com/23maverick23/sublime-jekyll/tree/master/Tests) to view the syntax highlighting, snippets, and completions, and to test adding the date commands.
 
 ## License
 [LICENSE](LICENSE)
 
 ## Changelog
-[CHANGELOG](CHANGELOG.md)
+[CHANGELOG](CHANGELOG)
 
 ## Contribute
 

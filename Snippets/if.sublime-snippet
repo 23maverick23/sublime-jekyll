@@ -6,6 +6,6 @@
 {% endif %}
 ]]> </content>
     <tabTrigger>if</tabTrigger>
-    <scope>text.html.jekyll, text.html.markdown.jekyll, source.json.jekyll</scope>
+    <scope>text.html.jekyll, text.html.markdown.jekyll, source.json.jekyll, text.html.textile.jekyll</scope>
     <description>if</description>
 </snippet>

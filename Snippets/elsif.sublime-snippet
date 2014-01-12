@@ -2,6 +2,6 @@
 <snippet>
     <content><![CDATA[{% elsif $1 %}]]></content>
     <tabTrigger>elsif</tabTrigger>
-    <scope>text.html.jekyll, text.html.markdown.jekyll, source.json.jekyll</scope>
+    <scope>text.html.jekyll, text.html.markdown.jekyll, source.json.jekyll, text.html.textile.jekyll</scope>
     <description>elsif</description>
 </snippet>

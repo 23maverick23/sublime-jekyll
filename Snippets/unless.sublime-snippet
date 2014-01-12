@@ -6,6 +6,6 @@
 {% endunless %}
 ]]> </content>
     <tabTrigger>unless</tabTrigger>
-    <scope>text.html.jekyll, text.html.markdown.jekyll, source.json.jekyll</scope>
+    <scope>text.html.jekyll, text.html.markdown.jekyll, source.json.jekyll, text.html.textile.jekyll</scope>
     <description>unless</description>
 </snippet>

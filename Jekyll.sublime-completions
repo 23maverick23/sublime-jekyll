@@ -1,5 +1,5 @@
 {
-        "scope": "text.html.jekyll, text.html.markdown.jekyll, source.json.jekyll, source.yaml",
+        "scope": "text.html.jekyll, text.html.markdown.jekyll, source.json.jekyll, text.html.textile.jekyll",
 
         "completions":
         [
