@@ -4,15 +4,15 @@ title: My first post
 date: 2014-01-01
 date:
 ---
-h2. markItUp! Universal markup editor
+h2. this is a header
 
-!../markitup/preview/picture.png(markItUp! Logo)!
+!.http://www.sublimetext.com/favicon.ico(ST Logo)!
 
-*markItUp!* is a javascript over "jQuery(jQuery Website)":http://www.jquery.com plug-in which allow you to turn any textarea in a markup editor.
+*text* with a link to "jQuery(jQuery Website)":http://www.jquery.com
 
-*markItUp!* is a lightweight fully customizable engine made to easily fit all developers needs in their CMS, blogs, forums or websites.
+*more text* with some text after it.
 
-_Html, Textile, Wiki Syntax, Markdown, BBcode_ or even your own Markup system can be easily implemented.
+_Html, Textile, Wiki Syntax, Markdown, BBcode_ or or other text.
 
 * integrate it easily
 * customize buttons and macros to fit all your need

@@ -1,17 +1,20 @@
 # sublime-jekyll
 
-A Sublime Text package for [Jekyll](http://jekyllrb.com/) static sites. This began as a fork of the [liquid-syntax-mode](https://github.com/siteleaf/liquid-syntax-mode) repo from siteleaf. This package should help creating Jekyll sites and posts easier by providing access to key template tags and filters, as well as common completions and a current date/datetime command (for dating posts).
+A Sublime Text package for [Jekyll](http://jekyllrb.com/) static sites. This began as a fork of the [liquid-syntax-mode](https://github.com/siteleaf/liquid-syntax-mode) repo from siteleaf. This package should help creating Jekyll sites and posts easier by providing access to key template tags and filters, as well as common completions and a current date/datetime command (for dating posts). Some of the concepts for the date commands were borrowed from the [sublime-insertdate](https://github.com/FichteFoll/sublimetext-insertdate) repo from FitcheFoll.
 
 ## Installation
+
 ### Package Control
+
 You can install this package using [Package Control](https://sublime.wbond.net/packages/Jekyll) from wbond.net.
 
 * Press `ctrl+shift+p` (Windows/Linux) or `command+shift+p` (OS X) to bring up the Command Palette (or use _Tools > Command Palette_ menu)
 * Type to search for the `Package Control: Install Package` command
-* Search packages for `sublime-jekyll` and hit `enter` to install
+* Search packages for **Jekyll** and hit `enter` to install
 * You may need to restart in order to use this package
 
 ### Manual
+
 [Clone](https://github.com/23maverick23/sublime-jekyll.git) or [download](https://github.com/23maverick23/sublime-jekyll/archive/master.zip) the contents of this repo into your Sublime Text `Packages` folder.
 
 * OS X: `~/Library/Application\ Support/Sublime\ Text\ 3/Packages`
@@ -19,6 +22,7 @@ You can install this package using [Package Control](https://sublime.wbond.net/p
 * Linux: `~/.config/sublime-text-3/Packages`
 
 ## What's Included
+
 ### Syntaxes
 
 * HTML (Jekyll)
@@ -33,7 +37,7 @@ You can install this package using [Package Control](https://sublime.wbond.net/p
 
 You can change the default format of both the date and datetime commands in your user settings file (_Preferences > Package Settings > Jekyll > Settings – User_).
 
-```json
+```python
 {
     "jekyll_insert_date_format": "%Y-%m-%d",
     "jekyll_insert_datetime_format": "%Y-%m-%d %H:%M:%S"
@@ -84,6 +88,7 @@ There are default key bindings for adding dates quickly. You can keep the defaul
 * when: `{% when this %}`
 
 ### Completions
+
 #### Tags
 
 * page
@@ -173,13 +178,37 @@ There are default key bindings for adding dates quickly. You can keep the defaul
 * weight_with_unit
 * xml_escape
 
+### Build Systems
+
+If desired, you can add a custom Jekyll build system to your Sublime projects. This allows you to create a specific build system for each Jekyll project you're working on. From what I can tell, a project-specific build system needs to be used, as opposed to a standard build system. This is because the `jekyll` CLT command must be run from the main Jekyll folder that contains the _config.yml file (which cannot be guaranteed to be the current project folder).
+
+```python
+{
+    "build_systems":
+    [
+        // This will build your Jekyll site, and print a trace to the console
+        {
+            "name": "Jekyll",
+            // Change this directory to match your top-level Jekyll project folder
+            "working_dir": "/path/to/jekyll/project/root",
+            "cmd": "jekyll build -t",
+            "shell": true,
+            "encoding": "UTF-8"
+        }
+    ]
+}
+```
+
 ## Tests
+
 Feel free to open the files in [Tests](https://github.com/23maverick23/sublime-jekyll/tree/master/Tests) to view the syntax highlighting, snippets, and completions, and to test adding the date commands.
 
 ## License
+
 [LICENSE](LICENSE)
 
 ## Changelog
+
 [CHANGELOG](CHANGELOG)
 
 ## Contribute
