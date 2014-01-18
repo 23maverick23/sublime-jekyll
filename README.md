@@ -1,6 +1,6 @@
 # sublime-jekyll
 
-A Sublime Text package for [Jekyll](http://jekyllrb.com/) static sites. This began as a fork of the [liquid-syntax-mode](https://github.com/siteleaf/liquid-syntax-mode) repo from siteleaf. This package should help creating Jekyll sites and posts easier by providing access to key template tags and filters, as well as common completions and a current date/datetime command (for dating posts). Some of the concepts for the date commands were borrowed from the [sublime-insertdate](https://github.com/FichteFoll/sublimetext-insertdate) repo from FitcheFoll.
+A Sublime Text package for [Jekyll](http://jekyllrb.com/) static sites. This began as a fork of the [liquid-syntax-mode](https://github.com/siteleaf/liquid-syntax-mode) repo from siteleaf. This package should help creating Jekyll sites and posts easier by providing access to key template tags and filters, as well as common completions and a current date/datetime command (for dating posts). Some of the concepts for the date commands were borrowed from the [sublime-insertdate](https://github.com/FichteFoll/sublimetext-insertdate) repo from FichteFoll.
 
 ## Installation
 
