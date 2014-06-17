@@ -5,6 +5,14 @@
         "children":
         [
             {
+                "caption": "New post",
+                "command": "jekyll_new_post"
+            },
+            {
+                "caption": "New draft",
+                "command": "jekyll_new_draft"
+            },
+            {
                 "caption": "Insert current date",
                 "command": "jekyll_insert_date",
                 "args": {"format": "date"}

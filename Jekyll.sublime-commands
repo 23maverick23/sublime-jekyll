@@ -1,0 +1,28 @@
+[
+    {
+        "caption": "Jekyll: New post",
+        "command": "jekyll_new_post",
+    },
+    {
+        "caption": "Jekyll: New draft",
+        "command": "jekyll_new_draft",
+    },
+    {
+        "caption": "Jekyll: Open post...",
+        "command": "jekyll_open_post",
+    },
+    {
+        "caption": "Jekyll: Open draft...",
+        "command": "jekyll_open_draft",
+    },
+    {
+        "caption": "Jekyll: Insert current date",
+        "command": "jekyll_insert_date",
+        "args": {"format": "date"}
+    },
+    {
+        "caption": "Jekyll: Insert current datetime",
+        "command": "jekyll_insert_date",
+        "args": {"format": "datetime"}
+    }
+]

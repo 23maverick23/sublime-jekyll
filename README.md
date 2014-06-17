@@ -1,8 +1,37 @@
-# sublime-jekyll
+sublime-jekyll
+==============
 
-A Sublime Text package for [Jekyll](http://jekyllrb.com/) static sites. This began as a fork of the [liquid-syntax-mode](https://github.com/siteleaf/liquid-syntax-mode) repo from siteleaf. This package should help creating Jekyll sites and posts easier by providing access to key template tags and filters, as well as common completions and a current date/datetime command (for dating posts). Some of the concepts for the date commands were borrowed from the [sublime-insertdate](https://github.com/FichteFoll/sublimetext-insertdate) repo from FichteFoll.
+A Sublime Text package for [Jekyll](http://jekyllrb.com/) static sites. This package should help maintaining Jekyll sites and posts easier by providing access to new post/draft shortcuts, key template tags and filters, as well as common completions and a current date/datetime command (for dating posts).
 
-## Installation
+### New in this Release
+
+The 2.0.0 release brings some brand new commands for creating posts and drafts, as well as the ability to set per-project settings for paths and defaults. Also added is the ability to access existing posts from the Command Palette for making quick edits.
+
+For per-project settings, make sure you add your Jekyll settings correctly:
+
+```python
+{
+    "folders":
+    [
+        {
+            "follow_symlinks": true,
+            "path": "/Users/username/site/"
+        }
+    ],
+
+    "settings":
+    {
+        "Jekyll":
+        {
+            "posts_path": "/Users/username/site/_posts",
+            "drafts_path": "/Users/username/site/_drafts",
+        }
+    }
+}
+```
+
+Installation
+------------
 
 ### Package Control
 
@@ -21,7 +50,8 @@ You can install this package using [Package Control](https://sublime.wbond.net/p
 * Windows: `%APPDATA%\Sublime Text 3\Packages`
 * Linux: `~/.config/sublime-text-3/Packages`
 
-## What's Included
+What's Included
+---------------
 
 ### Syntaxes
 
@@ -32,6 +62,8 @@ You can install this package using [Package Control](https://sublime.wbond.net/p
 
 ### Commands
 
+* Jekyll: New post
+* Jekyll: New draft
 * Jekyll: Insert current date
 * Jekyll: Insert current datetime
 
@@ -46,26 +78,19 @@ You can change the default format of both the date and datetime commands in your
 
 ### Key Bindings
 
-There are default key bindings for adding dates quickly. You can keep the defaults, or override them in your user key bindings file (_Preferences > Package Settings > Jekyll > Key Bindings – User_).
-
-```python
-[
-    { "keys": ["ctrl+alt+0"], "command": "jekyll_insert_date", "args": {"format": "date"} },
-    { "keys": ["ctrl+alt+9"], "command": "jekyll_insert_date", "args": {"format": "datetime"} }
-]
-```
+There no default key bindings for any commands, however you set them in your user key bindings file (_Preferences > Package Settings > Jekyll > Key Bindings – User_).
 
 ### Snippets
 
-* assign: `{% assign a = b %}`
-* capture: `{% capture %}{% endcapture %}`
-* case: `{% case %}{% endcase %}`
-* comment: `{% comment %}{% endcomment %}`
-* va: `{{ variable }}`
-* cycle: `{% cycle %}`
-* elsif: `{% elsif %}`
-* for: `{% for item in list %}{% endfor %}`
-* front-matter:
+- assign: `{% assign a = b %}`
+- capture: `{% capture %}{% endcapture %}`
+- case: `{% case %}{% endcase %}`
+- comment: `{% comment %}{% endcomment %}`
+- va: `{{ variable }}`
+- cycle: `{% cycle %}`
+- elsif: `{% elsif %}`
+- for: `{% for item in list %}{% endfor %}`
+- front-matter:
 
     ```yaml
     ---
@@ -77,106 +102,109 @@ There are default key bindings for adding dates quickly. You can keep the defaul
     ---
     ```
 
-* gist: `{% gist url %}`
-* highlight: `{% highlight syntax|linenos %}{% endhighlight %}`
-* if: `{% if this %}{% endif %}`
-* ifelse: `{% if this %}{% else %}{% endif %}`
-* include: `{% include this.html %}`
-* post_url: `{% post_url url %}`
-* raw: `{% raw %}{% endraw %}`
-* unless: `{% unless this %}{% endunless %}`
-* when: `{% when this %}`
+- gist: `{% gist url %}`
+- highlight: `{% highlight syntax|linenos %}{% endhighlight %}`
+- if: `{% if this %}{% endif %}`
+- ifelse: `{% if this %}{% else %}{% endif %}`
+- include: `{% include this.html %}`
+- post_url: `{% post_url url %}`
+- raw: `{% raw %}{% endraw %}`
+- unless: `{% unless this %}{% endunless %}`
+- when: `{% when this %}`
 
 ### Completions
 
 #### Tags
 
 * page
-    * page.categories
-    * page.content
-    * page.date
-    * page.excerpt
-    * page.id
-    * page.path
-    * page.tags
-    * page.title
-    * page.url
+    - page.categories
+    - page.content
+    - page.date
+    - page.excerpt
+    - page.id
+    - page.path
+    - page.tags
+    - page.title
+    - page.url
 * paginator
-    * paginator.next_page
-    * paginator.next_page_path
-    * paginator.page
-    * paginator.per_page
-    * paginator.posts
-    * paginator.previous_page
-    * paginator.previous_page_path
-    * paginator.total_pages
-    * paginator.total_posts
+    - paginator.next_page
+    - paginator.next_page_path
+    - paginator.page
+    - paginator.per_page
+    - paginator.posts
+    - paginator.previous_page
+    - paginator.previous_page_path
+    - paginator.total_pages
+    - paginator.total_posts
 * site
-    * site.date
-    * site.domain
-    * site.feed_url
-    * site.pages
-    * site.permalink
-    * site.posts
-    * site.sitemap_url
-    * site.time
-    * site.related_posts
-    * site.categories
-    * site.tags
+    - site.date
+    - site.domain
+    - site.feed_url
+    - site.pages
+    - site.permalink
+    - site.posts
+    - site.sitemap_url
+    - site.time
+    - site.related_posts
+    - site.categories
+    - site.tags
 
 #### Filters
 
-* append
-* array_to_sentence_string
-* camelize
-* capitalize
-* cgi_escape
-* date
-* date_to_long_string
-* date_to_rfc822
-* date_to_string
-* date_to_xmlschema
-* divided_by
-* downcase
-* escape
-* first
-* handleize
-* highlight_active_tag
-* img_tag
-* join
-* json
-* jsonify
-* last
-* link_to
-* markdownify
-* minus
-* money
-* money_with_currency
-* money_without_currency
-* newline_to_br
-* number_of_words
-* pluralize
-* plus
-* prepend
-* remove
-* remove_first
-* replace
-* replace_first
-* script_tag
-* size
-* split
-* strip_html
-* strip_newlines
-* stylesheet_tag
-* textilize
-* times
-* trim
-* truncate
-* truncatewords
-* upcase
-* uri_escape
-* weight_with_unit
-* xml_escape
+- append
+- array_to_sentence_string
+- camelize
+- capitalize
+- cgi_escape
+- date
+- date_to_long_string
+- date_to_rfc822
+- date_to_string
+- date_to_xmlschema
+- divided_by
+- downcase
+- escape
+- first
+- group_by
+- handleize
+- highlight_active_tag
+- img_tag
+- join
+- json
+- jsonify
+- last
+- link_to
+- markdownify
+- minus
+- money
+- money_with_currency
+- money_without_currency
+- newline_to_br
+- number_of_words
+- pluralize
+- plus
+- prepend
+- remove
+- remove_first
+- replace
+- replace_first
+- script_tag
+- size
+- sort
+- split
+- strip_html
+- strip_newlines
+- stylesheet_tag
+- textilize
+- times
+- trim
+- truncate
+- truncatewords
+- upcase
+- uri_escape
+- weight_with_unit
+- where
+- xml_escape
 
 ### Build Systems
 
@@ -199,19 +227,33 @@ If desired, you can add a custom Jekyll build system to your Sublime projects. T
 }
 ```
 
-## Tests
+Tests
+-----
 
 Feel free to open the files in [Tests](https://github.com/23maverick23/sublime-jekyll/tree/master/Tests) to view the syntax highlighting, snippets, and completions, and to test adding the date commands.
 
-## License
+Thanks
+------
+
+Much of this package would not have been possible without the help (mostly unsolicited) of many community members and open source packages. A big part of my learning experience has been reviewing source code from some really great packages to get ideas for my own uses. I've listed some of those packages below - please visit them and use them as you see fit!
+
+* [liquid-syntax-mode](https://github.com/siteleaf/liquid-syntax-mode) from siteleaf (the original fork for this project)
+* [sublime-insertdate](https://github.com/FichteFoll/sublimetext-insertdate) from FichteFoll (basis of insert date commands)
+* [Sublime-AdvancedNewFile](https://github.com/skuroda/Sublime-AdvancedNewFile) from skuroda (new post creation tips)
+* [Gist](https://github.com/condemil/Gist) from condemil (new post creation tips)
+
+License
+-------
 
 [LICENSE](LICENSE)
 
-## Changelog
+Changelog
+---------
 
 [CHANGELOG](CHANGELOG)
 
-## Contribute
+Contribute
+----------
 
 1. [Fork](https://github.com/23maverick23/sublime-jekyll/fork) this repo.
 2. Create a branch `git checkout -b my_feature`

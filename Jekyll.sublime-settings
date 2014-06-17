@@ -1,5 +1,52 @@
 {
     /**
+     * Be sure to configure these settings so that new posts
+     * and new drafts are created in the correct directory.
+     *
+     * You can also specify default settings about your posts.
+     * Settings entered here will override any frontmatter configuration
+     * defaults provided in your "config.yaml" file per the frontmatter
+     * default spec here:
+     *
+     * http://jekyllrb.com/docs/configuration/#frontmatter-defaults
+     */
+
+    // This should point to your "_posts" directory.
+    // NOTE: This should be an absolute path. Also, the path should
+    // match your system convention. For example, Windows machines should
+    // have a path similar to "C:\\Users\\username\\site\\_posts".
+    // *nix systems should have a path similar to "/Users/username/site/_posts".
+    "posts_path": "",
+
+    // This should point to your "_drafts" directory.
+    // NOTE: This should be an absolute path. Also, the path should
+    // match your system convention. For example, Windows machines should
+    // have a path similar to "C:\\Users\\username\\site\\_drafts".
+    // *nix systems should have a path similar to "/Users/username/site/_drafts".
+    "drafts_path": "",
+
+    // This string value should represent the default syntax for a new post.
+    // Valid options are: "Markdown", "Textile"
+    "default_post_syntax": "Markdown",
+
+    // This string value should represent the default layout for new posts.
+    "default_post_layout": "",
+
+    // This value should represent the default categories for new posts.
+    // Each category should be entered as a list item in string format
+    // with commas separating values ["cat1", "cat2"].
+    "default_post_categories": [],
+
+    // This value should represent the default tags for new posts.
+    // Each tag should be entered as a list item in string format
+    // with commas separating values ["tag1", "tag2"].
+    "default_post_tags": [],
+
+    // A boolean specifying if you want new posts to be marked as published.
+    "default_post_published": true,
+
+
+    /**
      * If for some reason you want to change the way either the date
      * or the datetime string is formatted, you can override those formats
      * here using valid Python datetime.strftime() format codes.
@@ -10,8 +57,8 @@
      * http://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior
      */
 
-    "jekyll_insert_date_format": "%Y-%m-%d",
+    "insert_date_format": "%Y-%m-%d",
 
-    "jekyll_insert_datetime_format": "%Y-%m-%d %H:%M:%S"
+    "insert_datetime_format": "%Y-%m-%d %H:%M:%S"
 
 }

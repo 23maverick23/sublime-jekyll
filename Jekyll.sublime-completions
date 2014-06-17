@@ -50,6 +50,8 @@
             { "trigger": "date_to_rfc822", "contents": "date_to_rfc822" },
             { "trigger": "date_to_string", "contents": "date_to_string" },
             { "trigger": "date_to_long_string", "contents": "date_to_long_string" },
+            { "trigger": "where", "contents": "where" },
+            { "trigger": "group_by", "contents": "group_by" },
             { "trigger": "xml_escape", "contents": "xml_escape" },
             { "trigger": "cgi_escape", "contents": "cgi_escape" },
             { "trigger": "uri_escape", "contents": "uri_escape" },
@@ -58,6 +60,7 @@
             { "trigger": "textilize", "contents": "textilize" },
             { "trigger": "markdownify", "contents": "markdownify" },
             { "trigger": "jsonify", "contents": "jsonify" },
+            { "trigger": "sort", "contents": "sort" },
 
             { "trigger": "trim", "contents": "replace: \" \", split: \" \" | join: \" \""},
             { "trigger": "img_tag", "contents": "img_tag" },

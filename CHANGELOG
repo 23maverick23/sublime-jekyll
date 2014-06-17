@@ -1,5 +1,12 @@
 # sublime-jekyll Changelog
 
+## v2.0.0 (2014-06-16)
+
+- Added Jekyll 2.0 snippets and completions
+- Added brand new commands for post interaction
+- Clean up code in most files for easier reading
+- Remove default keybindings
+
 ## v1.0.1 (2014-01-17)
 
 - Added documentation for configuring a Jekyll build system
