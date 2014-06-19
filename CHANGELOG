@@ -1,5 +1,12 @@
 # sublime-jekyll Changelog
 
+## v2.0.1 (2014-06-18)
+
+- Fixed #7
+- Fixed #9
+- Added support for ST2 (closes #8)
+- Added default keymaps back
+
 ## v2.0.0 (2014-06-16)
 
 - Added Jekyll 2.0 snippets and completions

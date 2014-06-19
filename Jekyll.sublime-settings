@@ -57,8 +57,10 @@
      * http://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior
      */
 
+    // A valid Python strftime string
     "insert_date_format": "%Y-%m-%d",
 
+    // A valid Python strftime string
     "insert_datetime_format": "%Y-%m-%d %H:%M:%S"
 
 }
