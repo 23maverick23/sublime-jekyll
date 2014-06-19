@@ -29,7 +29,7 @@ def catch_errors(fn):
             return fn(*args, **kwargs)
 
         except MissingPathException:
-            sublime.error_message("Jekyll: Unable to find path information in Jekyll.sublime-settings.")
+            sublime.error_message('Jekyll: Unable to find path information in Jekyll.sublime-settings.')
             user_settings_path = os.path.join(sublime.packages_path(), 'User', 'Jekyll.sublime-settings')
             if not os.path.exists(user_settings_path):
                 default_settings_path = os.path.join(sublime.packages_path(), 'Jekyll', 'Jekyll.sublime-settings')
@@ -38,7 +38,7 @@ def catch_errors(fn):
 
         except:
             traceback.print_exc()
-            sublime.error_message("Jekyll: unknown error (please, report a bug!)")
+            sublime.error_message('Jekyll: unknown error (please, report a bug!)')
 
     return _fn
 
@@ -53,7 +53,11 @@ def get_setting(view, key, default=None):
     try:
         settings = view.settings()
         if settings.has('Jekyll'):
-            return settings.get('Jekyll').get(key)
+            s = settings.get('Jekyll').get(key)
+            if s and len(s) > 0:
+                return s
+            else:
+                pass
         else:
             pass
     except:
@@ -62,30 +66,46 @@ def get_setting(view, key, default=None):
     return global_settings.get(key, default)
 
 
+def get_syntax_path(view, syntax='Markdown'):
+    """
+    Sets the view syntax.
+
+    """
+    full_syntax = os.path.join('Jekyll', 'Syntaxes', '{0} (Jekyll).tmLanguage'.format(syntax))
+
+    if PY3:
+        syntax_path = os.path.join('Packages', full_syntax)
+
+        if sublime.platform() == 'windows':
+            syntax_path = full_syntax.replace('\\', '/')
+        try:
+            sublime.load_resource(syntax_path)
+            view.set_syntax_file(syntax_path)
+        except:
+            pass
+    else:
+        syntax_path = os.path.join(sublime.packages_path(), full_syntax)
+        if os.path.exists(syntax_path):
+            view.set_syntax_file(syntax_path)
+
+
 class JekyllNewPostBase(sublime_plugin.WindowCommand):
     """
     A Sublime window command base class for creating Jekyll posts.
 
     """
     def doCommand(self):
-        self.window.show_input_panel('Jekyll post title:', '', self.title_input, None, None)
-
-    def get_setting(self, key):
-        view = self.window.active_view()
-        try:
-            settings = view.settings()
-            if settings.has('Jekyll'):
-                return settings.get('Jekyll').get(key)
-            else:
-                pass
-        except:
-            pass
-        global_settings = sublime.load_settings('Jekyll.sublime-settings')
-        return global_settings.get(key)
+        post_type = 'draft' if self.IS_DRAFT else 'post'
+        self.window.show_input_panel(
+            'Jekyll {0} title:'.format(post_type),
+            '',
+            self.title_input,
+            None,
+            None
+        )
 
     @catch_errors
     def posts_path_string(self):
-        # path = self.get_setting('posts_path')
         p = get_setting(self.window.active_view(), 'posts_path')
         if not p or p == '':
             raise MissingPathException
@@ -93,16 +113,16 @@ class JekyllNewPostBase(sublime_plugin.WindowCommand):
 
     @catch_errors
     def drafts_path_string(self):
-        p = self.get_setting('drafts_path')
+        p = get_setting(self.window.active_view(), 'drafts_path')
         if not p or p == '':
             raise MissingPathException
         return p
 
     def create_file(self, filename):
         base, filename = os.path.split(filename)
-        if filename != "":
+        if filename != '':
             creation_path = os.path.join(base, filename)
-            open(creation_path, "a").close()
+            open(creation_path, 'a').close()
 
     def clean_title_input(self, title):
         POST_DATE_FORMAT = '%Y-%m-%d'
@@ -114,11 +134,12 @@ class JekyllNewPostBase(sublime_plugin.WindowCommand):
         return d_str + '-' + t_str
 
     def create_post_frontmatter(self, title):
-        POST_LAYOUT = self.get_setting('default_post_layout')
+        view = self.window.active_view()
+        POST_LAYOUT = get_setting(view, 'default_post_layout')
         POST_TITLE = title
-        POST_CATEGORIES = self.get_setting('default_post_categories')
-        POST_TAGS = self.get_setting('default_post_tags')
-        POST_PUBLISHED = self.get_setting('default_post_published')
+        POST_CATEGORIES = get_setting(view, 'default_post_categories')
+        POST_TAGS = get_setting(view, 'default_post_tags')
+        POST_PUBLISHED = get_setting(view, 'default_post_published', True)
 
         frontmatter = (
             '---\n'
@@ -128,13 +149,7 @@ class JekyllNewPostBase(sublime_plugin.WindowCommand):
             'categories: {3}\n'
             'tags: {4}\n'
             '---\n\n'
-        ).format(
-            POST_LAYOUT,
-            POST_TITLE,
-            POST_PUBLISHED,
-            POST_CATEGORIES,
-            POST_TAGS,
-        )
+        ).format(POST_LAYOUT, POST_TITLE, POST_PUBLISHED, POST_CATEGORIES, POST_TAGS)
         return frontmatter
 
     def title_input(self, title):
@@ -143,11 +158,13 @@ class JekyllNewPostBase(sublime_plugin.WindowCommand):
         else:
             post_dir = self.posts_path_string()
 
-        syntax = self.get_setting('default_post_syntax')
-        if (syntax == 'Textile'):
+        syntax = get_setting(self.window.active_view(), 'default_post_syntax', 'Markdown')
+        if syntax == 'Textile':
             file_ext = '.textile'
-        else:
+        elif syntax == 'Markdown':
             file_ext = '.md'
+        else:
+            file_ext = '.txt'
 
         clean_title = self.clean_title_input(title) + file_ext
         full_path = os.path.join(post_dir, clean_title)
@@ -170,9 +187,8 @@ class JekyllListPostsBase(JekyllNewPostBase):
             f = self.posts[index][1]
             syntax = self.get_syntax(self.posts[index][0])
             output_view = self.window.open_file(f)
-            output_view.set_syntax_file(
-                'Packages/Jekyll/Syntaxes/{0} (Jekyll).tmLanguage'.format(syntax)
-            )
+            if syntax and syntax == 'Markdown' or syntax == 'Textile':
+                get_syntax_path(output_view, syntax)
 
     def get_syntax(self, file):
         # Uses Github preferred file extensions as referenced here: http://superuser.com/a/285878
@@ -187,6 +203,8 @@ class JekyllListPostsBase(JekyllNewPostBase):
             self.syntax = 'Markdown'
         elif f.endswith('.textile'):
             self.syntax = 'Textile'
+        else:
+            pass
 
         return self.syntax
 
@@ -250,7 +268,10 @@ class JekyllNewPostCommand(JekyllNewPostBase):
         view = self.window.active_view()
         view.run_command(
             'jekyll_post_frontmatter',
-            args={"path": path, "frontmatter": frontmatter}
+            args={
+                'path': path,
+                'frontmatter': frontmatter
+            }
         )
 
 
@@ -269,7 +290,10 @@ class JekyllNewDraftCommand(JekyllNewPostBase):
         view = self.window.active_view()
         view.run_command(
             'jekyll_post_frontmatter',
-            args={"path": path, "frontmatter": frontmatter}
+            args={
+                'path': path,
+                'frontmatter': frontmatter
+            }
         )
 
 
@@ -278,23 +302,11 @@ class JekyllPostFrontmatterCommand(sublime_plugin.TextCommand):
     Creates a new post using post defaults.
 
     """
-    def get_setting(self, key, default):
-        view = self.view
-        try:
-            settings = view.settings()
-            if settings.has('Jekyll'):
-                return settings.get('Jekyll').get(key)
-            else:
-                pass
-        except:
-            pass
-        global_settings = sublime.load_settings('Jekyll.sublime-settings')
-        return global_settings.get(key, default)
-
     def run(self, edit, **args):
+        view = self.view
         path = args.get('path')
         frontmatter = args.get('frontmatter', '-there was an error-')
-        syntax = self.get_setting('default_post_syntax', 'Markdown')
+        syntax = get_setting(view, 'default_post_syntax', 'Markdown')
 
         output_view = self.view.window().open_file(path)
 
@@ -302,13 +314,19 @@ class JekyllPostFrontmatterCommand(sublime_plugin.TextCommand):
             if output_view.is_loading():
                 sublime.set_timeout_async(update, 0.1)
             else:
-                output_view.run_command(
-                    'insert',
-                    {'characters': frontmatter}
-                )
-                output_view.set_syntax_file(
-                    'Packages/Jekyll/Syntaxes/{0} (Jekyll).tmLanguage'.format(syntax)
-                )
+                if PY3:
+                    output_view.run_command(
+                        'insert',
+                        {
+                            'characters': frontmatter
+                        }
+                    )
+                else:
+                    edit = output_view.begin_edit()
+                    output_view.insert(edit, 0, frontmatter)
+                    output_view.end_edit(edit)
+
+                get_syntax_path(output_view, syntax)
                 output_view.run_command('save')
         update()
 
@@ -318,23 +336,11 @@ class JekyllInsertDateCommand(sublime_plugin.TextCommand):
     Prints todays date according to format in settings file.
 
     """
-    def get_setting(self, key, default):
-        view = self.view
-        try:
-            settings = view.settings()
-            if settings.has('Jekyll'):
-                return settings.get('Jekyll').get(key)
-            else:
-                pass
-        except:
-            pass
-        global_settings = sublime.load_settings('Jekyll.sublime-settings')
-        return global_settings.get(key, default)
-
     def run(self, edit, **args):
         DEFAULT_FORMAT = '%Y-%m-%d'
-        date_format = self.get_setting('insert_date_format', '%Y-%m-%d')
-        datetime_format = self.get_setting('insert_datetime_format', '%Y-%m-%d %H:%M:%S')
+        view = self.view
+        date_format = get_setting(view, 'insert_date_format', '%Y-%m-%d')
+        datetime_format = get_setting(view, 'insert_datetime_format', '%Y-%m-%d %H:%M:%S')
 
         try:
             d = datetime.today()
@@ -346,7 +352,7 @@ class JekyllInsertDateCommand(sublime_plugin.TextCommand):
                 text = d.strftime(DEFAULT_FORMAT)
 
         except Exception as e:
-            sublime.error_message("Jekyll: {0}: {1}".format(type(e).__name__, e))
+            sublime.error_message('Jekyll: {0}: {1}'.format(type(e).__name__, e))
             return
 
         # Don't bother replacing selections if no text exists

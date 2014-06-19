@@ -7,6 +7,76 @@ A Sublime Text package for [Jekyll](http://jekyllrb.com/) static sites. This pac
 
 The 2.0.0 release brings some brand new commands for creating posts and drafts, as well as the ability to set per-project settings for paths and defaults. Also added is the ability to access existing posts from the Command Palette for making quick edits.
 
+
+Installation
+------------
+
+### Package Control
+
+You can install this package using [Package Control](https://sublime.wbond.net/packages/Jekyll) from wbond.net.
+
+* Press `ctrl+shift+p` (Windows/Linux) or `command+shift+p` (OS X) to bring up the Command Palette (or use _Tools > Command Palette_ menu)
+* Type to search for the `Package Control: Install Package` command
+* Search packages for **Jekyll** and hit `enter` to install
+* **NOTE:** You may need to restart in order to use this package
+
+### Manual
+
+[Clone](https://github.com/23maverick23/sublime-jekyll.git) or [download](https://github.com/23maverick23/sublime-jekyll/archive/master.zip) the contents of this repo into your Sublime Text `Packages` folder.
+
+* OS X: `~/Library/Application\ Support/Sublime\ Text\ 3/Packages`
+* Windows: `%APPDATA%\Sublime Text 3\Packages`
+* Linux: `~/.config/sublime-text-3/Packages`
+
+> After installing this package, make sure you configure your User settings file:
+
+```python
+{
+
+    // This should point to your "_posts" directory.
+    // NOTE: This should be an absolute path. Also, the path should
+    // match your system convention. For example, Windows machines should
+    // have a path similar to "C:\\Users\\username\\site\\_posts".
+    // *nix systems should have a path similar to "/Users/username/site/_posts".
+    "posts_path": "",
+
+    // This should point to your "_drafts" directory.
+    // NOTE: This should be an absolute path. Also, the path should
+    // match your system convention. For example, Windows machines should
+    // have a path similar to "C:\\Users\\username\\site\\_drafts".
+    // *nix systems should have a path similar to "/Users/username/site/_drafts".
+    "drafts_path": "",
+
+    // This string value should represent the default syntax for a new post.
+    // Valid options are: "Markdown", "Textile"
+    "default_post_syntax": "Markdown",
+
+    // This string value should represent the default layout for new posts.
+    "default_post_layout": "",
+
+    // This value should represent the default categories for new posts.
+    // Each category should be entered as a list item in string format
+    // with commas separating values ["cat1", "cat2"].
+    "default_post_categories": [],
+
+    // This value should represent the default tags for new posts.
+    // Each tag should be entered as a list item in string format
+    // with commas separating values ["tag1", "tag2"].
+    "default_post_tags": [],
+
+    // A boolean specifying if you want new posts to be marked as published.
+    "default_post_published": true,
+
+    // A valid Python strftime string
+    "insert_date_format": "%Y-%m-%d",
+
+    // A valid Python strftime string
+    "insert_datetime_format": "%Y-%m-%d %H:%M:%S"
+
+}
+
+```
+
 For per-project settings, make sure you add your Jekyll settings correctly:
 
 ```python
@@ -30,26 +100,6 @@ For per-project settings, make sure you add your Jekyll settings correctly:
 }
 ```
 
-Installation
-------------
-
-### Package Control
-
-You can install this package using [Package Control](https://sublime.wbond.net/packages/Jekyll) from wbond.net.
-
-* Press `ctrl+shift+p` (Windows/Linux) or `command+shift+p` (OS X) to bring up the Command Palette (or use _Tools > Command Palette_ menu)
-* Type to search for the `Package Control: Install Package` command
-* Search packages for **Jekyll** and hit `enter` to install
-* You may need to restart in order to use this package
-
-### Manual
-
-[Clone](https://github.com/23maverick23/sublime-jekyll.git) or [download](https://github.com/23maverick23/sublime-jekyll/archive/master.zip) the contents of this repo into your Sublime Text `Packages` folder.
-
-* OS X: `~/Library/Application\ Support/Sublime\ Text\ 3/Packages`
-* Windows: `%APPDATA%\Sublime Text 3\Packages`
-* Linux: `~/.config/sublime-text-3/Packages`
-
 What's Included
 ---------------
 
@@ -60,25 +110,14 @@ What's Included
 * Markdown (Jekyll)
 * Textile (Jekyll)
 
-### Commands
+### Commands & Key Bindings
 
-* Jekyll: New post
-* Jekyll: New draft
-* Jekyll: Insert current date
-* Jekyll: Insert current datetime
+* Jekyll: New post => `CMD+K, CMD+P`
+* Jekyll: New draft => `CMD+K, CMD+F`
+* Jekyll: Insert current date => `CMD+K, CMD+D`
+* Jekyll: Insert current datetime => `CMD+K, CMD+T`
 
-You can change the default format of both the date and datetime commands in your user settings file (_Preferences > Package Settings > Jekyll > Settings – User_).
-
-```python
-{
-    "jekyll_insert_date_format": "%Y-%m-%d",
-    "jekyll_insert_datetime_format": "%Y-%m-%d %H:%M:%S"
-}
-```
-
-### Key Bindings
-
-There no default key bindings for any commands, however you set them in your user key bindings file (_Preferences > Package Settings > Jekyll > Key Bindings – User_).
+There are default key bindings for all commands, however you can re-assign them in your user key bindings file (_Preferences > Package Settings > Jekyll > Key Bindings – User_).
 
 ### Snippets
 
