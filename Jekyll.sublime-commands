@@ -16,6 +16,10 @@
         "command": "jekyll_open_draft",
     },
     {
+        "caption": "Jekyll: Promote draft to post...",
+        "command": "jekyll_promote_draft",
+    },
+    {
         "caption": "Jekyll: Insert current date",
         "command": "jekyll_insert_date",
         "args": {"format": "date"}

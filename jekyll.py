@@ -189,6 +189,8 @@ class JekyllListPostsBase(JekyllNewPostBase):
             output_view = self.window.open_file(f)
             if syntax and syntax == 'Markdown' or syntax == 'Textile':
                 get_syntax_path(output_view, syntax)
+        else:
+            self.posts = []
 
     def get_syntax(self, file):
         # Uses Github preferred file extensions as referenced here: http://superuser.com/a/285878
@@ -204,7 +206,7 @@ class JekyllListPostsBase(JekyllNewPostBase):
         elif f.endswith('.textile'):
             self.syntax = 'Textile'
         else:
-            pass
+            self.syntax = None
 
         return self.syntax
 
@@ -220,7 +222,7 @@ class JekyllOpenPostCommand(JekyllListPostsBase):
     def run(self):
         path = self.posts_path_string()
         for f in os.listdir(path):
-            if self.get_syntax(f) == 'Markdown' or self.get_syntax(f) == 'Textile':
+            if self.get_syntax(f):
                 fname = os.path.splitext(f)[0]
                 fpath = os.path.join(path, f)
                 self.posts.append([fname, fpath])
@@ -242,7 +244,7 @@ class JekyllOpenDraftCommand(JekyllListPostsBase):
     def run(self):
         path = self.drafts_path_string()
         for f in os.listdir(path):
-            if self.get_syntax(f) == 'Markdown' or self.get_syntax(f) == 'Textile':
+            if self.get_syntax(f):
                 fname = os.path.splitext(f)[0]
                 fpath = os.path.join(path, f)
                 self.posts.append([fname, fpath])
@@ -251,6 +253,47 @@ class JekyllOpenDraftCommand(JekyllListPostsBase):
             self.posts.append('No drafts found!')
 
         self.window.show_quick_panel(self.posts, self.callback)
+
+
+class JekyllPromoteDraftCommand(JekyllListPostsBase):
+    """
+    A subclass for displaying posts in the _drafts directory.
+
+    """
+    posts = []
+    syntax = None
+
+    def move_post(self, index):
+        p_path = self.posts_path_string()
+
+        if index > -1 and type(self.posts[index]) is list:
+            f = self.posts[index][1]
+            syntax = self.get_syntax(self.posts[index][0])
+            bname = os.path.basename(f)
+            fpath = os.path.join(p_path, bname)
+
+            shutil.move(f, fpath)
+
+            output_view = self.window.open_file(fpath)
+            if syntax:
+                get_syntax_path(output_view, syntax)
+
+        else:
+            self.posts = []
+
+    def run(self):
+        d_path = self.drafts_path_string()
+
+        for f in os.listdir(d_path):
+            if self.get_syntax(f):
+                fname = os.path.splitext(f)[0]
+                fpath = os.path.join(d_path, f)
+                self.posts.append([fname, fpath])
+
+        if not len(self.posts) > 0:
+            self.posts.append('No drafts found!')
+
+        self.window.show_quick_panel(self.posts, self.move_post)
 
 
 class JekyllNewPostCommand(JekyllNewPostBase):
