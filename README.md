@@ -117,6 +117,10 @@ What's Included
 * Jekyll: Insert current date => `CMD+K, CMD+D`
 * Jekyll: Insert current datetime => `CMD+K, CMD+T`
 
+* Jekyll: Open post...
+* Jekyll: Open draft...
+* Jekyll: Promote draft to post...
+
 There are default key bindings for all commands, however you can re-assign them in your user key bindings file (_Preferences > Package Settings > Jekyll > Key Bindings – User_).
 
 ### Snippets

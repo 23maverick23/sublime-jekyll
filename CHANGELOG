@@ -1,5 +1,11 @@
 # sublime-jekyll Changelog
 
+## v2.0.2 (2014-07-04)
+
+- Added support for converting drafts to posts (closes #11)
+- Small updates to README.md
+- Small bug fixes to "open" commands
+
 ## v2.0.1 (2014-06-18)
 
 - Fixed #7
