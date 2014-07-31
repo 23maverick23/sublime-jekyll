@@ -1,4 +1,12 @@
-# sublime-jekyll Changelog
+sublime-jekyll changelog
+========================
+
+## v2.0.3 (2014-07-31)
+
+- Small changes to default settings and front-matter snippet
+- Added screenshot for new github.io project site page
+- Added support for install and update messages
+- Small updates to README.md
 
 ## v2.0.2 (2014-07-04)
 
