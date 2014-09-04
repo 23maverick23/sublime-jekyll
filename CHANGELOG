@@ -1,6 +1,10 @@
 sublime-jekyll changelog
 ========================
 
+## v2.0.4 (2014-09-04)
+
+- Fixed issue with trailing commas in commands
+
 ## v2.0.3 (2014-07-31)
 
 - Small changes to default settings and front-matter snippet
