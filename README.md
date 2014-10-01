@@ -304,8 +304,17 @@ Changelog
 
 [CHANGELOG](CHANGELOG)
 
+Issues
+------
+
+[![Issue Stats](http://issuestats.com/github/23maverick23/sublime-jekyll/badge/issue?style=flat)](http://issuestats.com/github/23maverick23/sublime-jekyll)
+
+You can log issues from the menu at right, or by [clicking here](https://github.com/23maverick23/sublime-jekyll/issues). Curious about responsiveness? Check out our [Issue Stats](http://issuestats.com/github/23maverick23/sublime-jekyll)!
+
 Contribute
 ----------
+
+[![Issue Stats](http://issuestats.com/github/23maverick23/sublime-jekyll/badge/pr?style=flat)](http://issuestats.com/github/23maverick23/sublime-jekyll)
 
 1. [Fork](https://github.com/23maverick23/sublime-jekyll/fork) this repo.
 2. Create a branch `git checkout -b my_feature`
