@@ -1,6 +1,10 @@
 sublime-jekyll changelog
 ========================
 
+## v2.0.5 (2014-10-16)
+
+- Fixed ST2 specific bug in run_commands and set_timeout
+
 ## v2.0.4 (2014-09-04)
 
 - Fixed issue with trailing commas in commands

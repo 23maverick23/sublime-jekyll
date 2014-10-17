@@ -10,6 +10,7 @@ import sublime
 import sublime_plugin
 
 PY3 = sys.version > '3'
+ST3 = sublime.version() >= '3000'
 
 
 ## Exception Decorator                                                       ##
@@ -311,7 +312,7 @@ class JekyllNewPostCommand(JekyllNewPostBase):
         view = self.window.active_view()
         view.run_command(
             'jekyll_post_frontmatter',
-            args={
+            {
                 'path': path,
                 'frontmatter': frontmatter
             }
@@ -333,7 +334,7 @@ class JekyllNewDraftCommand(JekyllNewPostBase):
         view = self.window.active_view()
         view.run_command(
             'jekyll_post_frontmatter',
-            args={
+            {
                 'path': path,
                 'frontmatter': frontmatter
             }
@@ -355,7 +356,10 @@ class JekyllPostFrontmatterCommand(sublime_plugin.TextCommand):
 
         def update():
             if output_view.is_loading():
-                sublime.set_timeout_async(update, 0.1)
+                if ST3:
+                    sublime.set_timeout_async(update, 1)
+                else:
+                    sublime.set_timeout(update, 1)
             else:
                 if PY3:
                     output_view.run_command(
