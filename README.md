@@ -5,7 +5,7 @@ A Sublime Text package for [Jekyll](http://jekyllrb.com/) static sites. This pac
 
 ### New in this Release
 
-The 2.0.0 release brings some brand new commands for creating posts and drafts, as well as the ability to set per-project settings for paths and defaults. Also added is the ability to access existing posts from the Command Palette for making quick edits.
+The 2.0 release brings some brand new commands for creating posts and drafts, as well as the ability to set per-project settings for paths and defaults. Also added is the ability to access existing posts from the Command Palette for making quick edits.
 
 
 Installation
@@ -28,7 +28,9 @@ You can install this package using [Package Control](https://sublime.wbond.net/p
 * Windows: `%APPDATA%\Sublime Text 3\Packages`
 * Linux: `~/.config/sublime-text-3/Packages`
 
-> After installing this package, make sure you configure your User settings file:
+### After Installing...
+
+After installing this package, make sure you configure your User settings file. The most important piece of this is to set your `posts_path` location. This can also be set on a per-project basis later if you have multiple Jekyll sites you wish to manage.
 
 ```python
 {
@@ -103,6 +105,14 @@ For per-project settings, make sure you add your Jekyll settings correctly:
 What's Included
 ---------------
 
+### Screenshots
+
+![nsoa_console.png](https://github.com/23maverick23/sublime-jekyll/raw/master/Screenshots/sublime_jekyll_screenshot.png "sublime-jekyll")
+
+> Theme: [Centurion](https://sublime.wbond.net/packages/Theme%20-%20Centurion)
+> Color Scheme: [Tomorrow Night](https://sublime.wbond.net/packages/Tomorrow%20Color%20Schemes)
+> Font: [Source Code Pro](https://github.com/adobe/source-code-pro)
+
 ### Syntaxes
 
 * HTML (Jekyll)
@@ -116,12 +126,11 @@ What's Included
 * Jekyll: New draft => `CMD+K, CMD+F`
 * Jekyll: Insert current date => `CMD+K, CMD+D`
 * Jekyll: Insert current datetime => `CMD+K, CMD+T`
-
 * Jekyll: Open post...
 * Jekyll: Open draft...
 * Jekyll: Promote draft to post...
 
-There are default key bindings for all commands, however you can re-assign them in your user key bindings file (_Preferences > Package Settings > Jekyll > Key Bindings – User_).
+There are default key bindings for some commands above, however you can re-assign them in your user key bindings file (_Preferences > Package Settings > Jekyll > Key Bindings – User_).
 
 ### Snippets
 
@@ -139,8 +148,8 @@ There are default key bindings for all commands, however you can re-assign them 
     ---
     layout: post
     title:
-    date:
-    category:
+    published: true
+    categories: []
     tags: []
     ---
     ```
@@ -295,8 +304,17 @@ Changelog
 
 [CHANGELOG](CHANGELOG)
 
+Issues
+------
+
+[![Issue Stats](http://issuestats.com/github/23maverick23/sublime-jekyll/badge/issue?style=flat)](http://issuestats.com/github/23maverick23/sublime-jekyll)
+
+You can log issues from the menu at right, or by [clicking here](https://github.com/23maverick23/sublime-jekyll/issues). Curious about responsiveness? Check out our [Issue Stats](http://issuestats.com/github/23maverick23/sublime-jekyll)!
+
 Contribute
 ----------
+
+[![Issue Stats](http://issuestats.com/github/23maverick23/sublime-jekyll/badge/pr?style=flat)](http://issuestats.com/github/23maverick23/sublime-jekyll)
 
 1. [Fork](https://github.com/23maverick23/sublime-jekyll/fork) this repo.
 2. Create a branch `git checkout -b my_feature`

@@ -2,7 +2,6 @@
 layout: post
 title: My first post
 date: 2014-01-01
-date:
 ---
 
 # Heading 1

@@ -4,8 +4,8 @@
 ---
 layout: ${1:post}
 title: $2
-date: $3
-category: $4
+published: ${3:true}
+categories: [$4]
 tags: [$5]
 ---
 $0
