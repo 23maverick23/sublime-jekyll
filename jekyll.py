@@ -293,12 +293,15 @@ class JekyllPromoteDraftCommand(JekyllListPostsBase):
 
     def run(self):
         d_path = self.drafts_path_string()
-
-        for f in os.listdir(d_path):
-            if self.get_syntax(f):
-                fname = os.path.splitext(f)[0]
-                fpath = os.path.join(d_path, f)
-                self.posts.append([fname, fpath])
+        self. post = []
+        if os.path.isdir(d_path):
+            for f in os.listdir(d_path):
+                if self.get_syntax(f):
+                    fname = os.path.splitext(f)[0]
+                    fpath = os.path.join(d_path, f)
+                    self.posts.append([fname, fpath])
+        else:
+            self.posts.append('Drafts directory does not exist!')
 
         if not len(self.posts) > 0:
             self.posts.append('No drafts found!')
