@@ -228,15 +228,15 @@ class JekyllOpenPostCommand(JekyllListPostsBase):
                 if self.get_syntax(f):
                     fname = os.path.splitext(f)[0]
                     fpath = os.path.join(path, f)
-                    self.posts.append([fname, fpath,os.path.getmtime(fpath)])
-                    self.posts.sort(key=lambda item: item[2], reverse=True)
+                    self.posts.append([fname, fpath])
         else:
             self.posts.append(['Posts directory does not exist!'])
 
         if not len(self.posts) > 0:
             self.posts.append(['No posts found!'])
 
-        self.window.show_quick_panel([f[0] for f in self.posts], self.callback)
+        self.posts.sort(key=lambda x: os.path.getmtime(x[1]), reverse=True)   
+        self.window.show_quick_panel(self.posts, self.callback)
 
 
 class JekyllOpenDraftCommand(JekyllListPostsBase):
@@ -255,15 +255,15 @@ class JekyllOpenDraftCommand(JekyllListPostsBase):
                 if self.get_syntax(f):
                     fname = os.path.splitext(f)[0]
                     fpath = os.path.join(path, f)
-                    self.posts.append([fname, fpath,os.path.getmtime(fpath)])
-                    self.posts.sort(key=lambda item: item[2], reverse=True)
+                    self.posts.append([fname, fpath])
         else:
             self.posts.append(['Drafts directory does not exist!'])
 
         if not len(self.posts) > 0:
             self.posts.append(['No drafts found!'])
 
-        self.window.show_quick_panel([f[0] for f in self.posts], self.callback)
+        self.posts.sort(key=lambda x: os.path.getmtime(x[1]), reverse=True)   
+        self.window.show_quick_panel(self.posts, self.callback)
 
 
 class JekyllPromoteDraftCommand(JekyllListPostsBase):
@@ -306,7 +306,8 @@ class JekyllPromoteDraftCommand(JekyllListPostsBase):
         if not len(self.posts) > 0:
             self.posts.append(['No drafts found!'])
 
-        self.window.show_quick_panel([f[0] for f in self.posts], self.move_post)
+        self.posts.sort(key=lambda x: os.path.getmtime(x[1]), reverse=True)
+        self.window.show_quick_panel(self.posts, self.move_post)
 
 
 class JekyllNewPostCommand(JekyllNewPostBase):
