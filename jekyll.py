@@ -217,20 +217,25 @@ class JekyllOpenPostCommand(JekyllListPostsBase):
     A subclass for displaying posts in the _posts directory.
 
     """
-    posts = []
+
     syntax = None
 
     def run(self):
+        self.posts = []
         path = self.posts_path_string()
-        for f in os.listdir(path):
-            if self.get_syntax(f):
-                fname = os.path.splitext(f)[0]
-                fpath = os.path.join(path, f)
-                self.posts.append([fname, fpath])
+        if os.path.isdir(path):
+            for f in os.listdir(path):
+                if self.get_syntax(f):
+                    fname = os.path.splitext(f)[0]
+                    fpath = os.path.join(path, f)
+                    self.posts.append([fname, fpath])
+        else:
+            self.posts.append(['Posts directory does not exist!'])
 
         if not len(self.posts) > 0:
-            self.posts.append('No posts found!')
+            self.posts.append(['No posts found!'])
 
+        self.posts.sort(key=lambda x: os.path.getmtime(x[1]), reverse=True)   
         self.window.show_quick_panel(self.posts, self.callback)
 
 
@@ -239,20 +244,25 @@ class JekyllOpenDraftCommand(JekyllListPostsBase):
     A subclass for displaying posts in the _drafts directory.
 
     """
-    posts = []
+
     syntax = None
 
     def run(self):
+        self.posts = []
         path = self.drafts_path_string()
-        for f in os.listdir(path):
-            if self.get_syntax(f):
-                fname = os.path.splitext(f)[0]
-                fpath = os.path.join(path, f)
-                self.posts.append([fname, fpath])
+        if os.path.isdir(path):
+            for f in os.listdir(path):
+                if self.get_syntax(f):
+                    fname = os.path.splitext(f)[0]
+                    fpath = os.path.join(path, f)
+                    self.posts.append([fname, fpath])
+        else:
+            self.posts.append(['Drafts directory does not exist!'])
 
         if not len(self.posts) > 0:
-            self.posts.append('No drafts found!')
+            self.posts.append(['No drafts found!'])
 
+        self.posts.sort(key=lambda x: os.path.getmtime(x[1]), reverse=True)   
         self.window.show_quick_panel(self.posts, self.callback)
 
 
@@ -261,13 +271,12 @@ class JekyllPromoteDraftCommand(JekyllListPostsBase):
     A subclass for displaying posts in the _drafts directory.
 
     """
-    posts = []
+
     syntax = None
 
     def move_post(self, index):
         p_path = self.posts_path_string()
-
-        if index > -1 and type(self.posts[index]) is list:
+        if index != -1 and type(self.posts[index]) is list:
             f = self.posts[index][1]
             syntax = self.get_syntax(self.posts[index][0])
             bname = os.path.basename(f)
@@ -283,17 +292,21 @@ class JekyllPromoteDraftCommand(JekyllListPostsBase):
             self.posts = []
 
     def run(self):
+        self.posts = []
         d_path = self.drafts_path_string()
-
-        for f in os.listdir(d_path):
-            if self.get_syntax(f):
-                fname = os.path.splitext(f)[0]
-                fpath = os.path.join(d_path, f)
-                self.posts.append([fname, fpath])
+        if os.path.isdir(d_path):
+            for f in os.listdir(d_path):
+                if self.get_syntax(f):
+                    fname = os.path.splitext(f)[0]
+                    fpath = os.path.join(d_path, f)
+                    self.posts.append([fname, fpath])
+        else:
+            self.posts.append(['Drafts directory does not exist!'])
 
         if not len(self.posts) > 0:
-            self.posts.append('No drafts found!')
+            self.posts.append(['No drafts found!'])
 
+        self.posts.sort(key=lambda x: os.path.getmtime(x[1]), reverse=True)
         self.window.show_quick_panel(self.posts, self.move_post)
 
 
