@@ -1,6 +1,13 @@
 sublime-jekyll changelog
 ========================
 
+## v2.0.6 (2014-11-01)
+
+- Merge pull request #17 from @fk128
+- Fixed duplicates from showing in Quick Panel
+- Added directory check (in cases where drafts/posts paths do not exist)
+- Added sorting of posts by last modified date
+
 ## v2.0.5 (2014-10-16)
 
 - Fixed ST2 specific bug in run_commands and set_timeout
