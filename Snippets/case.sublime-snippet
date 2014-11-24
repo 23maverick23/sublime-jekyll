@@ -6,6 +6,6 @@
 {% endcase %}
 ]]> </content>
     <tabTrigger>case</tabTrigger>
-    <scope>text.html.jekyll, text.html.markdown.jekyll, source.json.jekyll, text.html.textile.jekyll</scope>
+    <scope>text.html.jekyll, text.html.markdown.jekyll, source.json.jekyll, text.html.textile.jekyll, text.html.markdown.multimarkdown, text.html.markdown</scope>
     <description>case</description>
 </snippet>

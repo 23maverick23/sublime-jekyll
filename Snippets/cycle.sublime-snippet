@@ -2,6 +2,6 @@
 <snippet>
 	<content><![CDATA[{% cycle $1 %}]]></content>
     <tabTrigger>cycle</tabTrigger>
-    <scope>text.html.jekyll, text.html.markdown.jekyll, source.json.jekyll, text.html.textile.jekyll</scope>
+    <scope>text.html.jekyll, text.html.markdown.jekyll, source.json.jekyll, text.html.textile.jekyll, text.html.markdown.multimarkdown, text.html.markdown</scope>
     <description>cycle</description>
 </snippet>

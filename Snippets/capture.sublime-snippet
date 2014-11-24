@@ -6,6 +6,6 @@ $0
 {% endcapture %}
 ]]></content>
     <tabTrigger>capture</tabTrigger>
-    <scope>text.html.jekyll, text.html.markdown.jekyll, source.json.jekyll, text.html.textile.jekyll</scope>
+    <scope>text.html.jekyll, text.html.markdown.jekyll, source.json.jekyll, text.html.textile.jekyll, text.html.markdown.multimarkdown, text.html.markdown</scope>
     <description>capture</description>
 </snippet>
