@@ -1,0 +1,6 @@
+sublime-jekyll
+==============
+
+## v2.0.8 (2014-11-30)
+
+- Fixes issue #14 with messages directory (only affects Linux systems)

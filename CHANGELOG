@@ -1,6 +1,14 @@
 sublime-jekyll changelog
 ========================
 
+## v2.0.8 (2014-11-30)
+
+- Fixes #14 with messages directory naming convention (only affects Linux systems)
+
+## v2.0.7
+
+- Merge pull request #18 from calledT/master
+
 ## v2.0.6 (2014-11-01)
 
 - Merge pull request #17 from @fk128
