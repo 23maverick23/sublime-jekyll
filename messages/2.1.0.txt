@@ -1,0 +1,9 @@
+sublime-jekyll
+==============
+
+## v2.1.0 (2014-12-07)
+
+- Implement feature #22 (new post front-matter extras)
+- Allow for default post keys to be hidden using `null`
+- Update default Jekyll settings file to include instructions
+- Small changes to README

@@ -5,7 +5,7 @@ A Sublime Text package for [Jekyll](http://jekyllrb.com/) static sites. This pac
 
 ### New in this Release
 
-The 2.0 release brings some brand new commands for creating posts and drafts, as well as the ability to set per-project settings for paths and defaults. Also added is the ability to access existing posts from the Command Palette for making quick edits.
+The 2.1 release brings some brand new commands for creating posts and drafts, as well as the ability to set per-project settings for paths and defaults. Also added is the ability to access existing posts from the Command Palette for making quick edits. Finally, you can optionally set your own custom front-matter values to drive per-project defaults, or your own flavor of a front-matter template.
 
 
 Installation
@@ -53,21 +53,53 @@ After installing this package, make sure you configure your User settings file. 
     // Valid options are: "Markdown", "Textile"
     "default_post_syntax": "Markdown",
 
+    /** *****************************************************************************
+     * Post Front-matter Defaults
+     *
+     * Set these values to make your life easier when composing new posts. This is
+     * similar to setting your defaults as part of the `_config.yml` file:
+     *
+     * http://jekyllrb.com/docs/configuration/#front-matter-defaults
+     * ******************************************************************************
+     */
+
     // This string value should represent the default layout for new posts.
     "default_post_layout": "",
 
     // This value should represent the default categories for new posts.
     // Each category should be entered as a list item in string format
-    // with commas separating values ["cat1", "cat2"].
+    // with commas separating values ["cat1", "cat2"]. To remove this key
+    // from your front-matter completely, pass a value of `null`.
     "default_post_categories": [],
 
     // This value should represent the default tags for new posts.
     // Each tag should be entered as a list item in string format
-    // with commas separating values ["tag1", "tag2"].
+    // with commas separating values ["tag1", "tag2"]. To remove this key
+    // from your front-matter completely, pass a value of `null`.
     "default_post_tags": [],
 
     // A boolean specifying if you want new posts to be marked as published.
+    // To remove this key from your front-matter completely, pass a value of `null`.
     "default_post_published": true,
+
+    // If you need to add additional front-matter `key: value` information to
+    // your posts, you can store them in a dictionary object using a format
+    // like {"foo": "bar", "baz": "qux"}. This dictionary will be appended to
+    // any of the enabled default keys above (Reminder: the `title` and `layout`
+    // keys will always be included, so **DO NOT** include them in the extras dictionary).
+    "default_post_extras": {},
+
+    /** ***********************************************************************************
+     * If for some reason you want to change the way either the date
+     * or the datetime string is formatted, you can override those formats
+     * here using valid Python datetime.strftime() format codes.
+     *
+     * If you need a refresher on these codes, have a look at the Python
+     * documentation found here:
+     *
+     * http://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior
+     * ******************************************************************************
+     */
 
     // A valid Python strftime string
     "insert_date_format": "%Y-%m-%d",
@@ -110,7 +142,9 @@ What's Included
 ![nsoa_console.png](https://github.com/23maverick23/sublime-jekyll/raw/master/Screenshots/sublime_jekyll_screenshot.png "sublime-jekyll")
 
 > Theme: [Centurion](https://sublime.wbond.net/packages/Theme%20-%20Centurion)
+
 > Color Scheme: [Tomorrow Night](https://sublime.wbond.net/packages/Tomorrow%20Color%20Schemes)
+
 > Font: [Source Code Pro](https://github.com/adobe/source-code-pro)
 
 ### Syntaxes

@@ -136,21 +136,42 @@ class JekyllNewPostBase(sublime_plugin.WindowCommand):
 
     def create_post_frontmatter(self, title):
         view = self.window.active_view()
-        POST_LAYOUT = get_setting(view, 'default_post_layout')
-        POST_TITLE = title
         POST_CATEGORIES = get_setting(view, 'default_post_categories')
         POST_TAGS = get_setting(view, 'default_post_tags')
         POST_PUBLISHED = get_setting(view, 'default_post_published', True)
+        POST_EXTRAS = get_setting(view, 'default_post_extras', {})
+
+        POST_TITLE_STR = str(title)
+        POST_LAYOUT_STR = str(get_setting(view, 'default_post_layout'))
+
+        POST_CATEGORIES_STR = str(
+            'categories: {0}\n'.format(POST_CATEGORIES) if POST_CATEGORIES is not None else ''
+        )
+        POST_TAGS_STR = str(
+            'tags: {0}\n'.format(POST_TAGS) if POST_TAGS is not None else ''
+        )
+        POST_PUBLISHED_STR = str(
+            'published: {0}\n'.format(POST_PUBLISHED) if POST_PUBLISHED is not None else ''
+        )
+        POST_EXTRAS_STR = ''.join(['{0}: {1}\n'.format(i, POST_EXTRAS[i]) for i in POST_EXTRAS])
 
         frontmatter = (
             '---\n'
             'layout: {0}\n'
             'title: {1}\n'
-            'published: {2}\n'
-            'categories: {3}\n'
-            'tags: {4}\n'
+            '{2}'
+            '{3}'
+            '{4}'
+            '{5}'
             '---\n\n'
-        ).format(POST_LAYOUT, POST_TITLE, POST_PUBLISHED, POST_CATEGORIES, POST_TAGS)
+        ).format(
+            POST_LAYOUT_STR,
+            POST_TITLE_STR,
+            POST_CATEGORIES_STR,
+            POST_TAGS_STR,
+            POST_PUBLISHED_STR,
+            POST_EXTRAS_STR
+        )
         return frontmatter
 
     def title_input(self, title):
@@ -235,7 +256,7 @@ class JekyllOpenPostCommand(JekyllListPostsBase):
         if not len(self.posts) > 0:
             self.posts.append(['No posts found!'])
 
-        self.posts.sort(key=lambda x: os.path.getmtime(x[1]), reverse=True)   
+        self.posts.sort(key=lambda x: os.path.getmtime(x[1]), reverse=True)
         self.window.show_quick_panel(self.posts, self.callback)
 
 
@@ -262,7 +283,7 @@ class JekyllOpenDraftCommand(JekyllListPostsBase):
         if not len(self.posts) > 0:
             self.posts.append(['No drafts found!'])
 
-        self.posts.sort(key=lambda x: os.path.getmtime(x[1]), reverse=True)   
+        self.posts.sort(key=lambda x: os.path.getmtime(x[1]), reverse=True)
         self.window.show_quick_panel(self.posts, self.callback)
 
 
