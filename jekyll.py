@@ -153,7 +153,40 @@ class JekyllNewPostBase(sublime_plugin.WindowCommand):
         POST_PUBLISHED_STR = str(
             'published: {0}\n'.format(POST_PUBLISHED) if POST_PUBLISHED is not None else ''
         )
-        POST_EXTRAS_STR = ''.join(['{0}: {1}\n'.format(i, POST_EXTRAS[i]) for i in POST_EXTRAS])
+
+        def pretty_walk(settings_dict):
+            """
+            Walks through a multi-level dictionary and returns
+            a YAML-like string.
+
+            :param settings_dict: a dictionary object
+            :returns: formatted string
+            """
+            s = []
+
+            def walk(d, indent=-1):
+                """
+                Walk through a dictionary of key/values
+                and append the results in a placeholder list.
+
+                :param d: dictionary object
+                :param indent: the starting indent value; default -1
+                """
+                try:
+                    for key, value in d.items():
+                        if isinstance(value, dict):
+                            s.append('{}{}:\n'.format('\t' * (indent + 1), key))
+                            walk(value, indent + 1)
+                        else:
+                            s.append('{}{}: {}\n'.format('\t' * (indent + 1), key, value))
+                except Exception as e:
+                    print('Jekyll: Settings parsing error - {}'.format(e))
+                    return
+
+            walk(settings_dict)
+            return ''.join(s)
+
+        POST_EXTRAS_STR = pretty_walk(POST_EXTRAS)
 
         frontmatter = (
             '---\n'
@@ -163,7 +196,7 @@ class JekyllNewPostBase(sublime_plugin.WindowCommand):
             '{3}'
             '{4}'
             '{5}'
-            '---\n\n'
+            '\n---\n\n'
         ).format(
             POST_LAYOUT_STR,
             POST_TITLE_STR,
@@ -397,9 +430,9 @@ class JekyllPostFrontmatterCommand(sublime_plugin.TextCommand):
             else:
                 if PY3:
                     output_view.run_command(
-                        'insert',
+                        'insert_snippet',
                         {
-                            'characters': frontmatter
+                            'contents': frontmatter
                         }
                     )
                 else:
