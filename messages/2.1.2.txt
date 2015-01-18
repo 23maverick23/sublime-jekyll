@@ -1,0 +1,13 @@
+sublime-jekyll
+==============
+
+## v2.1.2 (2015-01-18)
+
+- Closes #24
+- Remove date/datetime keybindings that clash with ST defaults
+
+## v2.1.1 (2014-12-17)
+
+- Closes #23
+- Add support for multi-level dictionary in front-matter defaults
+- Update JekyllPostFrontmatterCommand to use insert_snippet

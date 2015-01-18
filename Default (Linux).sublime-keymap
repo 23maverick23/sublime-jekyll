@@ -1,7 +1,4 @@
 [
     { "keys": ["ctrl+k", "ctrl+p"], "command": "jekyll_new_post" },
-    { "keys": ["ctrl+k", "ctrl+f"], "command": "jekyll_new_draft" },
-
-    { "keys": ["ctrl+k", "ctrl+d"], "command": "jekyll_insert_date", "args": {"format": "date"} },
-    { "keys": ["ctrl+k", "ctrl+t"], "command": "jekyll_insert_date", "args": {"format": "datetime"} }
+    { "keys": ["ctrl+k", "ctrl+f"], "command": "jekyll_new_draft" }
 ]

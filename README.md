@@ -158,8 +158,8 @@ What's Included
 
 * Jekyll: New post => `CMD+K, CMD+P`
 * Jekyll: New draft => `CMD+K, CMD+F`
-* Jekyll: Insert current date => `CMD+K, CMD+D`
-* Jekyll: Insert current datetime => `CMD+K, CMD+T`
+* Jekyll: Insert current date
+* Jekyll: Insert current datetime
 * Jekyll: Open post...
 * Jekyll: Open draft...
 * Jekyll: Promote draft to post...

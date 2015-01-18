@@ -1,6 +1,24 @@
 sublime-jekyll changelog
 ========================
 
+## v2.1.2 (2015-01-18)
+
+- Closes #24
+- Remove date/datetime keybindings that clash with ST defaults
+
+## v2.1.2 (2014-12-17)
+
+- Closes #23
+- Add support for multi-level dictionary in front-matter defaults
+- Update JekyllPostFrontmatterCommand to use insert_snippet
+
+## v2.1.0 (2014-12-07)
+
+- Implement new post front-matter extras (closes #22)
+- Allow for default post keys to be hidden using `null`
+- Update default Jekyll settings file to include instructions
+- Small changes to README
+
 ## v2.0.8 (2014-11-30)
 
 - Fixes #14 with messages directory naming convention (only affects Linux systems)
