@@ -175,12 +175,12 @@ class JekyllNewPostBase(sublime_plugin.WindowCommand):
                 try:
                     for key, value in d.items():
                         if isinstance(value, dict):
-                            s.append('{}{}:\n'.format('\t' * (indent + 1), key))
+                            s.append('{0}{1}:\n'.format('\t' * (indent + 1), key))
                             walk(value, indent + 1)
                         else:
-                            s.append('{}{}: {}\n'.format('\t' * (indent + 1), key, value))
+                            s.append('{0}{1}: {2}\n'.format('\t' * (indent + 1), key, value))
                 except Exception as e:
-                    print('Jekyll: Settings parsing error - {}'.format(e))
+                    print('Jekyll: Settings parsing error - {0}'.format(e))
                     return
 
             walk(settings_dict)
