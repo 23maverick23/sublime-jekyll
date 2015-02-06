@@ -1,6 +1,7 @@
 from datetime import datetime
 import functools
 import os
+import os.path
 import re
 import shutil
 import sys
@@ -89,6 +90,13 @@ def get_syntax_path(view, syntax='Markdown'):
         if os.path.exists(syntax_path):
             view.set_syntax_file(syntax_path)
 
+def get_local_path(window, folder_name):
+    for folder in window.folders():
+        local_folder = os.path.join(folder, folder_name)
+        if os.path.exists(local_folder):
+            return local_folder
+        return None
+
 
 class JekyllNewPostBase(sublime_plugin.WindowCommand):
     """
@@ -109,14 +117,20 @@ class JekyllNewPostBase(sublime_plugin.WindowCommand):
     def posts_path_string(self):
         p = get_setting(self.window.active_view(), 'posts_path')
         if not p or p == '':
-            raise MissingPathException
+            backup = get_local_path(self.window, '_posts')
+            if not backup:
+                raise MissingPathException
+            return backup
         return p
 
     @catch_errors
     def drafts_path_string(self):
         p = get_setting(self.window.active_view(), 'drafts_path')
         if not p or p == '':
-            raise MissingPathException
+            backup = get_local_path(self.window, '_drafts')
+            if not backup:
+                raise MissingPathException
+            return backup
         return p
 
     def create_file(self, filename):
