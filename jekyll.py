@@ -1,7 +1,6 @@
 from datetime import datetime
 import functools
 import os
-import os.path
 import re
 import shutil
 import sys
@@ -31,7 +30,7 @@ def catch_errors(fn):
             return fn(*args, **kwargs)
 
         except MissingPathException:
-            sublime.error_message('Jekyll: Unable to find path information in Jekyll.sublime-settings.')
+            sublime.error_message('Jekyll: Unable to find path information for Jekyll!')
             user_settings_path = os.path.join(sublime.packages_path(), 'User', 'Jekyll.sublime-settings')
             if not os.path.exists(user_settings_path):
                 default_settings_path = os.path.join(sublime.packages_path(), 'Jekyll', 'Jekyll.sublime-settings')
@@ -90,12 +89,28 @@ def get_syntax_path(view, syntax='Markdown'):
         if os.path.exists(syntax_path):
             view.set_syntax_file(syntax_path)
 
-def get_local_path(window, folder_name):
+
+def find_dir_path(window, dir_name):
+    """
+    Attempts to find a named directory in a given sublime window.
+
+    Params:
+        window: a Sublime window object
+        dir_name: a string directory name
+    Returns:
+        {Array} array of path strings
+
+    """
+    all_dirs = []
+
     for folder in window.folders():
-        local_folder = os.path.join(folder, folder_name)
-        if os.path.exists(local_folder):
-            return local_folder
-        return None
+        for root, dirs, files in os.walk(folder):
+            dirs[:] = [d for d in dirs if not d[0] == '.']
+
+            if all(x in dirs for x in [dir_name]):
+                all_dirs.append(os.path.abspath(os.path.join(root, dir_name)))
+
+    return all_dirs
 
 
 class JekyllNewPostBase(sublime_plugin.WindowCommand):
@@ -114,24 +129,50 @@ class JekyllNewPostBase(sublime_plugin.WindowCommand):
         )
 
     @catch_errors
+    def determine_path(self, p, d):
+        a = get_setting(self.window.active_view(), 'automatically_find_paths', False)
+
+        if not a:
+            if not p or p == '':
+                raise MissingPathException
+            return p
+
+        elif a:
+            self.dirs = find_dir_path(self.window, d)
+
+            if not self.dirs:
+                # there were no directories found, fallback to settings
+                if not p or p == '':
+                    raise MissingPathException
+                return p
+
+            elif self.dirs and len(self.dirs) > 1:
+                # more than one directory was found, but we only support one currently
+                # TODO: figure out how to support many with a quick_panel?
+                msg = (
+                    'More than one folder was found in the active view:\n{0}'
+                    '\nClick confirm to use the first folder in the list, '
+                    'otherwise cancel and use Project settings instead'.format('\n'.join(self.dirs))
+                )
+
+                if sublime.ok_cancel_dialog(msg, 'Confirm'):
+                    return self.dirs[0]
+                else:
+                    return None
+
+            elif self.dirs and len(self.dirs) == 1:
+                # only one directory was found, so use it
+                return self.dirs[0]
+
+    @catch_errors
     def posts_path_string(self):
         p = get_setting(self.window.active_view(), 'posts_path')
-        if not p or p == '':
-            backup = get_local_path(self.window, '_posts')
-            if not backup:
-                raise MissingPathException
-            return backup
-        return p
+        return self.determine_path(p, '_posts')
 
     @catch_errors
     def drafts_path_string(self):
         p = get_setting(self.window.active_view(), 'drafts_path')
-        if not p or p == '':
-            backup = get_local_path(self.window, '_drafts')
-            if not backup:
-                raise MissingPathException
-            return backup
-        return p
+        return self.determine_path(p, '_drafts')
 
     def create_file(self, filename):
         base, filename = os.path.split(filename)
@@ -221,11 +262,15 @@ class JekyllNewPostBase(sublime_plugin.WindowCommand):
         )
         return frontmatter
 
+    @catch_errors
     def title_input(self, title):
         if self.IS_DRAFT:
             post_dir = self.drafts_path_string()
         else:
             post_dir = self.posts_path_string()
+
+        if not post_dir:
+            raise MissingPathException
 
         syntax = get_setting(self.window.active_view(), 'default_post_syntax', 'Markdown')
         if syntax == 'Textile':
