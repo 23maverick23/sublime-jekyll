@@ -26,6 +26,11 @@
     // *nix systems should have a path similar to "/Users/username/site/_drafts".
     "drafts_path": "",
 
+    // If you have multiple Jekyll blogs, but don't use Sumblime Projects,
+    // you can optionally have sublime-jekyll look for the `_posts` or `_drafts`
+    // folders open in your sidebar. This should have a value of true or false.
+    "automatically_find_paths": false,
+
     // This string value should represent the default syntax for a new post.
     // Valid options are: "Markdown", "Textile"
     "default_post_syntax": "Markdown",
