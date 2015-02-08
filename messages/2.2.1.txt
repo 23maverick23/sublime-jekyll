@@ -1,0 +1,10 @@
+sublime-jekyll
+==============
+
+## v2.2.1 (2015-02-08)
+
+- Closes PR #27
+- Added support for finding Jekyll folders in active view
+    - Enable in user or project settings
+    - Will attempt to recursively find the `_posts` and `_drafts` directories
+    - Falls back to project settings if none are found

@@ -5,7 +5,9 @@ A Sublime Text package for [Jekyll](http://jekyllrb.com/) static sites. This pac
 
 ### New in this Release
 
-The 2.1 release brings some brand new commands for creating posts and drafts, as well as the ability to set per-project settings for paths and defaults. Also added is the ability to access existing posts from the Command Palette for making quick edits. Finally, you can optionally set your own custom front-matter values to drive per-project defaults, or your own flavor of a front-matter template.
+The 2.2 release introduces.
+
+For previous releases, have a look at the [CHANGELOG ➭](CHANGELOG)
 
 
 Installation
@@ -22,7 +24,7 @@ You can install this package using [Package Control](https://sublime.wbond.net/p
 
 ### Manual
 
-[Clone](https://github.com/23maverick23/sublime-jekyll.git) or [download](https://github.com/23maverick23/sublime-jekyll/archive/master.zip) the contents of this repo into your Sublime Text `Packages` folder.
+[Clone ↻](https://github.com/23maverick23/sublime-jekyll.git) or [download ⬇](https://github.com/23maverick23/sublime-jekyll/archive/master.zip) the contents of this repo into your Sublime Text `Packages` folder.
 
 * OS X: `~/Library/Application\ Support/Sublime\ Text\ 3/Packages`
 * Windows: `%APPDATA%\Sublime Text 3\Packages`
@@ -48,6 +50,11 @@ After installing this package, make sure you configure your User settings file. 
     // have a path similar to "C:\\Users\\username\\site\\_drafts".
     // *nix systems should have a path similar to "/Users/username/site/_drafts".
     "drafts_path": "",
+
+    // If you have multiple Jekyll blogs, but don't use Sumblime Projects,
+    // you can optionally have sublime-jekyll look for the `_posts` or `_drafts`
+    // folders open in your sidebar. This should have a value of true or false.
+    "automatically_find_paths": false,
 
     // This string value should represent the default syntax for a new post.
     // Valid options are: "Markdown", "Textile"
@@ -111,7 +118,7 @@ After installing this package, make sure you configure your User settings file. 
 
 ```
 
-For per-project settings, make sure you add your Jekyll settings correctly:
+For per-project settings, make sure you add your Jekyll settings correctly (read [Issue #16](https://github.com/23maverick23/sublime-jekyll/issues/16) if you have questions on formatting).
 
 ```python
 {
@@ -316,7 +323,7 @@ If desired, you can add a custom Jekyll build system to your Sublime projects. T
 Tests
 -----
 
-Feel free to open the files in [Tests](https://github.com/23maverick23/sublime-jekyll/tree/master/Tests) to view the syntax highlighting, snippets, and completions, and to test adding the date commands.
+Feel free to open the files in [Tests ➭](https://github.com/23maverick23/sublime-jekyll/tree/master/Tests) to view the syntax highlighting, snippets, and completions, and to test adding the date commands.
 
 Thanks
 ------
@@ -331,12 +338,12 @@ Much of this package would not have been possible without the help (mostly unsol
 License
 -------
 
-[LICENSE](LICENSE)
+[LICENSE ➭](LICENSE)
 
 Changelog
 ---------
 
-[CHANGELOG](CHANGELOG)
+[CHANGELOG ➭](CHANGELOG)
 
 Issues
 ------
@@ -350,8 +357,18 @@ Contribute
 
 [![Issue Stats](http://issuestats.com/github/23maverick23/sublime-jekyll/badge/pr?style=flat)](http://issuestats.com/github/23maverick23/sublime-jekyll)
 
-1. [Fork](https://github.com/23maverick23/sublime-jekyll/fork) this repo.
+1. [Fork ⇉](https://github.com/23maverick23/sublime-jekyll/fork) this repo.
 2. Create a branch `git checkout -b my_feature`
 3. Commit your changes `git commit -am "Added Feature"`
 4. Push to the branch `git push origin my_feature`
-5. Open a [Pull Request](https://github.com/23maverick23/sublime-jekyll/pulls)
+5. Open a [Pull Request ⥆](https://github.com/23maverick23/sublime-jekyll/pulls)
+
+**Thanks to the current contributors!**
+
+* fk128
+* Kimi
+* Marcos Ojeda
+* Robert Holak
+* svensvenson
+
+> [View the contributor graph ➭](https://github.com/23maverick23/sublime-jekyll/graphs/contributors)
