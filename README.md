@@ -357,11 +357,7 @@ Contribute
 
 [![Issue Stats](http://issuestats.com/github/23maverick23/sublime-jekyll/badge/pr?style=flat)](http://issuestats.com/github/23maverick23/sublime-jekyll)
 
-1. [Fork ⇉](https://github.com/23maverick23/sublime-jekyll/fork) this repo.
-2. Create a branch `git checkout -b my_feature`
-3. Commit your changes `git commit -am "Added Feature"`
-4. Push to the branch `git push origin my_feature`
-5. Open a [Pull Request ⥆](https://github.com/23maverick23/sublime-jekyll/pulls)
+Read my [contributing guide ➭](CONTRIBUTING.md)
 
 **Thanks to the current contributors!**
 
