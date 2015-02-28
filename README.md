@@ -5,9 +5,9 @@ A Sublime Text package for [Jekyll](http://jekyllrb.com/) static sites. This pac
 
 ### New in this Release
 
-The 2.2 release introduces.
+The 2.2 release introduces a new feature for faster post and draft creation. If you don't want to specify your folder paths, or you don't create a Sublime project for each blog you manage, you can enable a new setting `automatically_find_paths`. Setting this key to `true` will tell sublime-jekyll to search all folders in the active view for any `_posts` or `_drafts` directories. If none are found, it falls back to the normal project or user settings.
 
-For previous releases, have a look at the [CHANGELOG ➭](CHANGELOG)
+For a history of changes or previous releases, have a look at the more detailed [CHANGELOG ➭](CHANGELOG)
 
 
 Installation
