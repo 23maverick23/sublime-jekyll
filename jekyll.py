@@ -337,11 +337,12 @@ class JekyllOpenPostCommand(JekyllListPostsBase):
         self.posts = []
         path = self.posts_path_string()
         if os.path.isdir(path):
-            for f in os.listdir(path):
-                if self.get_syntax(f):
-                    fname = os.path.splitext(f)[0]
-                    fpath = os.path.join(path, f)
-                    self.posts.append([fname, fpath])
+            for root, dirs, files in os.walk(path):
+                for f in files:
+                    if self.get_syntax(f):
+                        fname = os.path.splitext(f)[0]
+                        fpath = os.path.join(root, f)
+                        self.posts.append([fname, fpath])
         else:
             self.posts.append(['Posts directory does not exist!'])
 
@@ -364,11 +365,12 @@ class JekyllOpenDraftCommand(JekyllListPostsBase):
         self.posts = []
         path = self.drafts_path_string()
         if os.path.isdir(path):
-            for f in os.listdir(path):
-                if self.get_syntax(f):
-                    fname = os.path.splitext(f)[0]
-                    fpath = os.path.join(path, f)
-                    self.posts.append([fname, fpath])
+            for root, dirs, files in os.walk(path):
+                for f in files:
+                    if self.get_syntax(f):
+                        fname = os.path.splitext(f)[0]
+                        fpath = os.path.join(root, f)
+                        self.posts.append([fname, fpath])
         else:
             self.posts.append(['Drafts directory does not exist!'])
 
@@ -392,8 +394,13 @@ class JekyllPromoteDraftCommand(JekyllListPostsBase):
         if index != -1 and type(self.posts[index]) is list:
             f = self.posts[index][1]
             syntax = self.get_syntax(self.posts[index][0])
-            bname = os.path.basename(f)
-            fpath = os.path.join(p_path, bname)
+            dirlist = f.rsplit(os.sep)
+            spath = dirlist[dirlist.index('_drafts')+1:]
+            fpath = os.path.join(p_path, *spath)
+            bpath = os.path.split(fpath)[0]
+
+            if not os.path.exists(bpath):
+                os.makedirs(bpath)
 
             shutil.move(f, fpath)
 
@@ -408,11 +415,12 @@ class JekyllPromoteDraftCommand(JekyllListPostsBase):
         self.posts = []
         d_path = self.drafts_path_string()
         if os.path.isdir(d_path):
-            for f in os.listdir(d_path):
-                if self.get_syntax(f):
-                    fname = os.path.splitext(f)[0]
-                    fpath = os.path.join(d_path, f)
-                    self.posts.append([fname, fpath])
+            for root, dirs, files in os.walk(d_path):
+                for f in files:
+                    if self.get_syntax(f):
+                        fname = os.path.splitext(f)[0]
+                        fpath = os.path.join(root, f)
+                        self.posts.append([fname, fpath])
         else:
             self.posts.append(['Drafts directory does not exist!'])
 

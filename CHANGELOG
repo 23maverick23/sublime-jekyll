@@ -1,6 +1,12 @@
 sublime-jekyll changelog
 ========================
 
+## v2.2.2 (2015-03-03)
+
+- Fix #30
+- Add support for opening posts/drafts in subdirectories
+- Add support for promoting drafts to posts while maintaining directory tree
+
 ## v2.2.1 (2015-02-08)
 
 - Closes PR #27
