@@ -180,14 +180,14 @@ class JekyllNewPostBase(sublime_plugin.WindowCommand):
             creation_path = os.path.join(base, filename)
             open(creation_path, 'a').close()
 
-    def clean_title_input(self, title):
-        POST_DATE_FORMAT = '%Y-%m-%d'
+    def clean_title_input(self, title, draft=False):
         t = title.lower()
-        t_str = re.sub('[^\w\s]', '', t)
-        t_str = re.sub(' |_', '-', t_str)
+        t_str = re.sub(r'[^\w -]', '', t)
+        t_str = re.sub(r' |_', '-', t_str)
         d = datetime.today()
+        POST_DATE_FORMAT = '%Y-%m-%d'
         d_str = d.strftime(POST_DATE_FORMAT)
-        return d_str + '-' + t_str
+        return d_str + '-' + t_str if not draft else t_str
 
     def create_post_frontmatter(self, title):
         view = self.window.active_view()
@@ -280,7 +280,7 @@ class JekyllNewPostBase(sublime_plugin.WindowCommand):
         else:
             file_ext = '.txt'
 
-        clean_title = self.clean_title_input(title) + file_ext
+        clean_title = self.clean_title_input(title, self.IS_DRAFT) + file_ext
         full_path = os.path.join(post_dir, clean_title)
 
         if os.path.lexists(full_path):
@@ -394,15 +394,31 @@ class JekyllPromoteDraftCommand(JekyllListPostsBase):
         if index != -1 and type(self.posts[index]) is list:
             f = self.posts[index][1]
             syntax = self.get_syntax(self.posts[index][0])
+            # return a list of directory names using platform specific separator
             dirlist = f.rsplit(os.sep)
+
+            # check the draft name for a date
+            # if you find one, replace it
+            # if you don't find one, add it
+            dirlist[-1] = re.sub(r'(^\d{4}-\d{2}-\d{2}-)', '', dirlist[-1])
+            d = datetime.today()
+            POST_DATE_FORMAT = '%Y-%m-%d'
+            d_str = "{0}-".format(d.strftime(POST_DATE_FORMAT))
+            dirlist[-1] = d_str + dirlist[-1]
+
+            # return the full dirpath after the drafts folder
             spath = dirlist[dirlist.index('_drafts')+1:]
+            # join the dirpath with the posts path
             fpath = os.path.join(p_path, *spath)
+            # get the new, full folder path for the file
             bpath = os.path.split(fpath)[0]
 
+            # if the folder path doesn't yet exist, create it recursively
             if not os.path.exists(bpath):
                 os.makedirs(bpath)
 
-            shutil.move(f, fpath)
+            if not os.path.exists(fpath):
+                shutil.move(f, fpath)
 
             output_view = self.window.open_file(fpath)
             if syntax:

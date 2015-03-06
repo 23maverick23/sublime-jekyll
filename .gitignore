@@ -1,3 +1,23 @@
+# Created by https://www.gitignore.io
+
+### SublimeText ###
+# cache files for sublime text
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+
+# workspace files are user-specific
+*.sublime-workspace
+
+# project files should be checked into the repository, unless a significant
+# proportion of contributors will probably not be using SublimeText
+# *.sublime-project
+
+# sftp configuration file
+sftp-config.json
+
+
+### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -11,7 +31,9 @@ env/
 build/
 develop-eggs/
 dist/
+downloads/
 eggs/
+.eggs/
 lib/
 lib64/
 parts/
@@ -20,6 +42,12 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
 
 # Installer logs
 pip-log.txt
@@ -43,9 +71,29 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
-# MacOS files
-.DS_Store
+# PyBuilder
+target/
 
-# Sublime Text related files
-Sublime/
-package-metadata.json
+
+### OSX ###
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
