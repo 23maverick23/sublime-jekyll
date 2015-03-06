@@ -443,7 +443,10 @@ class JekyllNewPostCommand(JekyllNewPostBase):
 
     def create_and_open_file(self, path, frontmatter):
         self.create_file(path)
-        view = self.window.active_view()
+        if not self.window.views():
+            view = self.window.new_file()
+        else:
+            view = self.window.active_view()
         view.run_command(
             'jekyll_post_frontmatter',
             {
@@ -465,7 +468,10 @@ class JekyllNewDraftCommand(JekyllNewPostBase):
 
     def create_and_open_file(self, path, frontmatter):
         self.create_file(path)
-        view = self.window.active_view()
+        if not self.window.views():
+            view = self.window.new_file()
+        else:
+            view = self.window.active_view()
         view.run_command(
             'jekyll_post_frontmatter',
             {
