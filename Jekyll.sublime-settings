@@ -26,7 +26,15 @@
     // *nix systems should have a path similar to "/Users/username/site/_drafts".
     "drafts_path": "",
 
-    // If you have multiple Jekyll blogs, but don't use Sumblime Projects,
+    // This should point to the default uploads directory. This should be an
+    // absolute path.
+    "uploads_path": "",
+
+    // this should be the base uploads directory in reference to your site.
+    // e.g. http://example.com/uploads
+    "site_uploads_path": "",
+
+    // If you have multiple Jekyll blogs, but don't use Sublime Projects,
     // you can optionally have sublime-jekyll look for the `_posts` or `_drafts`
     // folders open in your sidebar. This should have a value of true or false.
     "automatically_find_paths": false,

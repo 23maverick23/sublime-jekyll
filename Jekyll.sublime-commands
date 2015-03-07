@@ -28,5 +28,9 @@
         "caption": "Jekyll: Insert current datetime",
         "command": "jekyll_insert_date",
         "args": {"format": "datetime"}
+    },
+    {
+        "caption": "Jekyll: Insert upload...",
+        "command": "jekyll_list_uploads"
     }
 ]

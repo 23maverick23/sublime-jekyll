@@ -5,6 +5,7 @@ import re
 import shutil
 import sys
 import traceback
+import imghdr
 
 import sublime
 import sublime_plugin
@@ -301,6 +302,7 @@ class JekyllListPostsBase(JekyllNewPostBase):
             f = self.posts[index][1]
             syntax = self.get_syntax(self.posts[index][0])
             output_view = self.window.open_file(f)
+            output_view.settings().set("is_jekyll_post", True)
             if syntax and syntax == 'Markdown' or syntax == 'Textile':
                 get_syntax_path(output_view, syntax)
         else:
@@ -510,6 +512,8 @@ class JekyllPostFrontmatterCommand(sublime_plugin.TextCommand):
 
         output_view = self.view.window().open_file(path)
 
+        output_view.settings().set("is_jekyll_post", True)
+
         def update():
             if output_view.is_loading():
                 if ST3:
@@ -532,6 +536,65 @@ class JekyllPostFrontmatterCommand(sublime_plugin.TextCommand):
                 get_syntax_path(output_view, syntax)
                 output_view.run_command('save')
         update()
+
+
+class JekyllListUploadsCommand(sublime_plugin.WindowCommand):
+    """
+    A subclass for displaying uploads in the upload directory.
+
+    """
+
+    def run(self):
+        self.posts = []
+        path = get_setting(self.window.active_view(),"uploads_path")
+        print(path)
+        if os.path.isdir(path):
+            for root, dirs, files in os.walk(path):
+                for f in files:
+                    fname = os.path.splitext(f)[0]
+                    fpath = os.path.join(root, f)
+                    self.posts.append([fname, fpath])
+        else:
+            self.posts.append(['Uploads directory does not exist!'])
+
+        if not len(self.posts) > 0:
+            self.posts.append(['No uploads found!'])
+
+        self.posts.sort(key=lambda x: os.path.getmtime(x[1]), reverse=True)
+        self.window.show_quick_panel(self.posts, self.get_upload)
+
+    def is_enabled(self):
+        is_jekyll_post = self.window.active_view().settings().get("is_jekyll_post")
+        if is_jekyll_post:
+            return True
+        else:
+            return False
+
+    def get_upload(self, index):
+        if index > -1 and type(self.posts[index]) is list:
+            path = self.posts[index][1]
+            fname = self.posts[index][0]
+        
+        self.window.active_view().run_command("jekyll_insert_upload",{ "name": fname , "path": path})
+
+
+class JekyllInsertUpload(sublime_plugin.TextCommand):
+    """
+    Insert the upload link at the current position
+
+    """
+    def run(self, edit, **args):
+        s = self.view.sel() 
+        rel_path = os.path.relpath(args["path"],get_setting(self.view,"uploads_path"))
+        path = os.path.join(get_setting(self.view,"site_uploads_path"),rel_path)
+
+        # check if image
+        if imghdr.what(args["path"]) == None:
+            link_str = "[{0}]({1})".format(args["name"], path) 
+        else:
+            link_str = "![{0}]({1})".format(args["name"], path) 
+        
+        self.view.insert(edit, s[0].a, link_str)
 
 
 class JekyllInsertDateCommand(sublime_plugin.TextCommand):
