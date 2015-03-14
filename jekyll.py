@@ -55,7 +55,7 @@ def get_setting(view, key, default=None):
         settings = view.settings()
         if settings.has('Jekyll'):
             s = settings.get('Jekyll').get(key)
-            if s and len(s) > 0:
+            if s:
                 return s
             else:
                 pass
