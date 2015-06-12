@@ -30,13 +30,10 @@
     // absolute path.
     "uploads_path": "",
 
-    // this should be the base uploads directory in reference to your site.
-    // e.g. http://example.com/uploads
-    "site_uploads_path": "",
-
     // If you have multiple Jekyll blogs, but don't use Sublime Projects,
     // you can optionally have sublime-jekyll look for the `_posts` or `_drafts`
-    // folders open in your sidebar. This should have a value of true or false.
+    // or `uploads` folders open in your sidebar. This should have a value of 
+    // true or false.
     "automatically_find_paths": false,
 
     // This string value should represent the default syntax for a new post.

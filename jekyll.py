@@ -175,6 +175,11 @@ class JekyllNewPostBase(sublime_plugin.WindowCommand):
         p = get_setting(self.window.active_view(), 'drafts_path')
         return self.determine_path(p, '_drafts')
 
+    @catch_errors
+    def uploads_path_string(self):
+        p = get_setting(self.window.active_view(), 'uploads_path')
+        return self.determine_path(p, 'uploads')
+
     def create_file(self, filename):
         base, filename = os.path.split(filename)
         if filename != '':
@@ -302,11 +307,27 @@ class JekyllListPostsBase(JekyllNewPostBase):
             f = self.posts[index][1]
             syntax = self.get_syntax(self.posts[index][0])
             output_view = self.window.open_file(f)
-            output_view.settings().set("is_jekyll_post", True)
             if syntax and syntax == 'Markdown' or syntax == 'Textile':
                 get_syntax_path(output_view, syntax)
         else:
             self.posts = []
+
+    def list_files(self, path, name, filter_ext = True):
+        self.posts = []
+        if os.path.isdir(path):
+            for root, dirs, files in os.walk(path):
+                for f in files:
+                    if filter_ext and not self.get_syntax(f):
+                        continue
+                    fname = os.path.splitext(f)[0]
+                    fpath = os.path.join(root, f)
+                    self.posts.append([fname, fpath])
+            self.posts.sort(key=lambda x: os.path.getmtime(x[1]), reverse=True)
+        else:
+            self.posts.append(['{0} directory does not exist!'.format(name)])
+
+        if not len(self.posts) > 0:
+            self.posts.append(['No {0} found!'.format(name.lower())])
 
     def get_syntax(self, file):
         # Uses Github preferred file extensions as referenced here: http://superuser.com/a/285878
@@ -336,22 +357,8 @@ class JekyllOpenPostCommand(JekyllListPostsBase):
     syntax = None
 
     def run(self):
-        self.posts = []
         path = self.posts_path_string()
-        if os.path.isdir(path):
-            for root, dirs, files in os.walk(path):
-                for f in files:
-                    if self.get_syntax(f):
-                        fname = os.path.splitext(f)[0]
-                        fpath = os.path.join(root, f)
-                        self.posts.append([fname, fpath])
-        else:
-            self.posts.append(['Posts directory does not exist!'])
-
-        if not len(self.posts) > 0:
-            self.posts.append(['No posts found!'])
-
-        self.posts.sort(key=lambda x: os.path.getmtime(x[1]), reverse=True)
+        self.list_files(path, 'Posts')
         self.window.show_quick_panel(self.posts, self.callback)
 
 
@@ -364,22 +371,8 @@ class JekyllOpenDraftCommand(JekyllListPostsBase):
     syntax = None
 
     def run(self):
-        self.posts = []
         path = self.drafts_path_string()
-        if os.path.isdir(path):
-            for root, dirs, files in os.walk(path):
-                for f in files:
-                    if self.get_syntax(f):
-                        fname = os.path.splitext(f)[0]
-                        fpath = os.path.join(root, f)
-                        self.posts.append([fname, fpath])
-        else:
-            self.posts.append(['Drafts directory does not exist!'])
-
-        if not len(self.posts) > 0:
-            self.posts.append(['No drafts found!'])
-
-        self.posts.sort(key=lambda x: os.path.getmtime(x[1]), reverse=True)
+        self.list_files(path, 'Drafts')
         self.window.show_quick_panel(self.posts, self.callback)
 
 
@@ -430,22 +423,8 @@ class JekyllPromoteDraftCommand(JekyllListPostsBase):
             self.posts = []
 
     def run(self):
-        self.posts = []
         d_path = self.drafts_path_string()
-        if os.path.isdir(d_path):
-            for root, dirs, files in os.walk(d_path):
-                for f in files:
-                    if self.get_syntax(f):
-                        fname = os.path.splitext(f)[0]
-                        fpath = os.path.join(root, f)
-                        self.posts.append([fname, fpath])
-        else:
-            self.posts.append(['Drafts directory does not exist!'])
-
-        if not len(self.posts) > 0:
-            self.posts.append(['No drafts found!'])
-
-        self.posts.sort(key=lambda x: os.path.getmtime(x[1]), reverse=True)
+        self.list_files(d_path, 'Drafts')
         self.window.show_quick_panel(self.posts, self.move_post)
 
 
@@ -509,10 +488,7 @@ class JekyllPostFrontmatterCommand(sublime_plugin.TextCommand):
         path = args.get('path')
         frontmatter = args.get('frontmatter', '-there was an error-')
         syntax = get_setting(view, 'default_post_syntax', 'Markdown')
-
         output_view = self.view.window().open_file(path)
-
-        output_view.settings().set("is_jekyll_post", True)
 
         def update():
             if output_view.is_loading():
@@ -538,44 +514,22 @@ class JekyllPostFrontmatterCommand(sublime_plugin.TextCommand):
         update()
 
 
-class JekyllListUploadsCommand(sublime_plugin.WindowCommand):
+class JekyllListUploadsCommand(JekyllListPostsBase):
     """
     A subclass for displaying uploads in the upload directory.
 
     """
 
     def run(self):
-        self.posts = []
-        path = get_setting(self.window.active_view(),"uploads_path")
-        print(path)
-        if os.path.isdir(path):
-            for root, dirs, files in os.walk(path):
-                for f in files:
-                    fname = os.path.splitext(f)[0]
-                    fpath = os.path.join(root, f)
-                    self.posts.append([fname, fpath])
-        else:
-            self.posts.append(['Uploads directory does not exist!'])
-
-        if not len(self.posts) > 0:
-            self.posts.append(['No uploads found!'])
-
-        self.posts.sort(key=lambda x: os.path.getmtime(x[1]), reverse=True)
+        path = self.uploads_path_string()
+        self.list_files(path, 'Uploads', False)
         self.window.show_quick_panel(self.posts, self.get_upload)
-
-    def is_enabled(self):
-        is_jekyll_post = self.window.active_view().settings().get("is_jekyll_post")
-        if is_jekyll_post:
-            return True
-        else:
-            return False
 
     def get_upload(self, index):
         if index > -1 and type(self.posts[index]) is list:
             path = self.posts[index][1]
             fname = self.posts[index][0]
-        
-        self.window.active_view().run_command("jekyll_insert_upload",{ "name": fname , "path": path})
+            self.window.active_view().run_command("jekyll_insert_upload",{ "name": fname , "path": path})
 
 
 class JekyllInsertUpload(sublime_plugin.TextCommand):
@@ -585,14 +539,13 @@ class JekyllInsertUpload(sublime_plugin.TextCommand):
     """
     def run(self, edit, **args):
         s = self.view.sel() 
-        rel_path = os.path.relpath(args["path"],get_setting(self.view,"uploads_path"))
-        path = os.path.join(get_setting(self.view,"site_uploads_path"),rel_path)
+        rel_path = os.path.relpath(args["path"], os.path.dirname(get_setting(self.view,"uploads_path")))
 
         # check if image
         if imghdr.what(args["path"]) == None:
-            link_str = "[{0}]({1})".format(args["name"], path) 
+            link_str = "[{0}]({1}/{2})".format(args["name"], '{{ site.url }}', rel_path) 
         else:
-            link_str = "![{0}]({1})".format(args["name"], path) 
+            link_str = "![{0}]({1}/{2})".format(args["name"], '{{ site.url }}', rel_path) 
         
         self.view.insert(edit, s[0].a, link_str)
 
