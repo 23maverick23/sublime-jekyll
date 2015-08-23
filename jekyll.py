@@ -539,13 +539,14 @@ class JekyllInsertUpload(sublime_plugin.TextCommand):
     """
     def run(self, edit, **args):
         s = self.view.sel() 
-        rel_path = os.path.relpath(args["path"], os.path.dirname(get_setting(self.view,"uploads_path")))
+        rel_path = os.path.relpath(args["path"], os.path.dirname(get_setting(self.view, "uploads_path")))
+        uploads_baseurl = get_setting(self.view, 'uploads_baseurl')
 
         # check if image
         if imghdr.what(args["path"]) == None:
-            link_str = "[{0}]({1}/{2})".format(args["name"], '{{ site.url }}', rel_path) 
+            link_str = "[{0}]({1}/{2})".format(args["name"], uploads_baseurl, rel_path) 
         else:
-            link_str = "![{0}]({1}/{2})".format(args["name"], '{{ site.url }}', rel_path) 
+            link_str = "![{0}]({1}/{2})".format(args["name"], uploads_baseurl, rel_path) 
         
         self.view.insert(edit, s[0].a, link_str)
 
