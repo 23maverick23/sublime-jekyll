@@ -26,9 +26,23 @@
     // *nix systems should have a path similar to "/Users/username/site/_drafts".
     "drafts_path": "",
 
-    // If you have multiple Jekyll blogs, but don't use Sumblime Projects,
+    // This should point to the default uploads directory. This should be an
+    // absolute path.
+    "uploads_path": "",
+
+    // This string value should represent the baseurl for the uploads directory.
+    // For example, if your uploads directoy is "uploads/" and you have an image
+    // called "image.png", then the output of inserting the image in your post
+    // would be "<uploads_baseurl>/uploads/image.png", with <uploads_baseurl>
+    // replaced by its value.
+    // If you wish to have an absolute link and you have "url" defined in your jekyll
+    // config file, then you can set the value to: "{{ site.url }}/{{ site.baseurl }}"
+    "uploads_baseurl": "{{ site.baseurl }}",
+
+    // If you have multiple Jekyll blogs, but don't use Sublime Projects,
     // you can optionally have sublime-jekyll look for the `_posts` or `_drafts`
-    // folders open in your sidebar. This should have a value of true or false.
+    // or `uploads` folders open in your sidebar. This should have a value of 
+    // true or false.
     "automatically_find_paths": false,
 
     // This string value should represent the default syntax for a new post.
