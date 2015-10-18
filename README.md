@@ -1,6 +1,8 @@
 sublime-jekyll
 ==============
 
+[![Stories in Ready](https://badge.waffle.io/23maverick23/sublime-jekyll.svg?label=ready&title=Ready)](http://waffle.io/23maverick23/sublime-jekyll)
+
 A Sublime Text package for [Jekyll](http://jekyllrb.com/) static sites. This package should help maintaining Jekyll sites and posts easier by providing access to new post/draft shortcuts, key template tags and filters, as well as common completions and a current date/datetime command (for dating posts).
 
 ### New in this Release
@@ -34,8 +36,20 @@ You can install this package using [Package Control](https://sublime.wbond.net/p
 
 After installing this package, make sure you configure your User settings file. The most important piece of this is to set your `posts_path` location. This can also be set on a per-project basis later if you have multiple Jekyll sites you wish to manage.
 
-```python
+```json
 {
+    /** *****************************************************************************
+     * Be sure to configure these settings so that new posts
+     * and new drafts are created in the correct directory.
+     *
+     * You can also specify default settings about your posts.
+     * Settings entered here will override any frontmatter configuration
+     * defaults provided in your "config.yaml" file per the frontmatter
+     * default spec here:
+     *
+     * http://jekyllrb.com/docs/configuration/#frontmatter-defaults
+     * ******************************************************************************
+     */
 
     // This should point to your "_posts" directory.
     // NOTE: This should be an absolute path. Also, the path should
@@ -51,9 +65,23 @@ After installing this package, make sure you configure your User settings file. 
     // *nix systems should have a path similar to "/Users/username/site/_drafts".
     "drafts_path": "",
 
-    // If you have multiple Jekyll blogs, but don't use Sumblime Projects,
+    // This should point to the default uploads directory. This should be an
+    // absolute path.
+    "uploads_path": "",
+
+    // This string value should represent the baseurl for the uploads directory.
+    // For example, if your uploads directoy is "uploads/" and you have an image
+    // called "image.png", then the output of inserting the image in your post
+    // would be "<uploads_baseurl>/uploads/image.png", with <uploads_baseurl>
+    // replaced by its value.
+    // If you wish to have an absolute link and you have "url" defined in your jekyll
+    // config file, then you can set the value to: "{{ site.url }}/{{ site.baseurl }}"
+    "uploads_baseurl": "{{ site.baseurl }}",
+
+    // If you have multiple Jekyll blogs, but don't use Sublime Projects,
     // you can optionally have sublime-jekyll look for the `_posts` or `_drafts`
-    // folders open in your sidebar. This should have a value of true or false.
+    // or `uploads` folders open in your sidebar. This should have a value of 
+    // true or false.
     "automatically_find_paths": false,
 
     // This string value should represent the default syntax for a new post.
@@ -136,6 +164,7 @@ For per-project settings, make sure you add your Jekyll settings correctly (read
         {
             "posts_path": "/Users/username/site/_posts",
             "drafts_path": "/Users/username/site/_drafts",
+            "uploads_path": "/Users/username/site/_uploads",
         }
     }
 }
@@ -354,8 +383,6 @@ You can log issues from the menu at right, or by [clicking here](https://github.
 
 Contribute
 ----------
-
-[![Issue Stats](http://issuestats.com/github/23maverick23/sublime-jekyll/badge/pr?style=flat)](http://issuestats.com/github/23maverick23/sublime-jekyll)
 
 Read my [contributing guide ➭](CONTRIBUTING.md)
 

@@ -1,6 +1,10 @@
 sublime-jekyll changelog
 ========================
 
+## v2.2.5 (2015-10-18)
+
+- Closes #33
+
 ## v2.2.4 (2015-03-14)
 
 - Fix #34 (bug with get_setting method)
