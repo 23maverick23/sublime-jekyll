@@ -1,4 +1,0 @@
-[
-    { "keys": ["ctrl+k", "ctrl+p"], "command": "jekyll_new_post" },
-    { "keys": ["ctrl+k", "ctrl+f"], "command": "jekyll_new_draft" }
-]

@@ -1,6 +1,0 @@
-sublime-jekyll
-==============
-
-## v2.0.4 (2014-09-04)
-
-- Fixed issue with trailing commas in commands

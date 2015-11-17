@@ -1,4 +1,0 @@
-[
-    { "keys": ["super+k", "super+p"], "command": "jekyll_new_post" },
-    { "keys": ["super+k", "super+f"], "command": "jekyll_new_draft" }
-]
