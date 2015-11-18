@@ -2,7 +2,7 @@
 title: sublime-jekyll
 email: me@rymo.io
 description: A Sublime Text package for Jekyll static sites.
-baseurl: ""
+baseurl: "/sublime-jekyll"
 url: "https://rymo.io/"
 twitter_username: rymoio
 github_username:  23maverick23
