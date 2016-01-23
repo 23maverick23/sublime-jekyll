@@ -36,7 +36,7 @@ You can install this package using [Package Control](https://sublime.wbond.net/p
 
 After installing this package, make sure you configure your User settings file. The most important piece of this is to set your `posts_path` location. This can also be set on a per-project basis later if you have multiple Jekyll sites you wish to manage.
 
-```json
+```python
 {
     /** *****************************************************************************
      * Be sure to configure these settings so that new posts
