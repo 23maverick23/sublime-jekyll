@@ -11,26 +11,42 @@
          ÛÛÛ °ÛÛÛ                       ÛÛÛ °ÛÛÛ                                          
         °°ÛÛÛÛÛÛ                       °°ÛÛÛÛÛÛ                                           
          °°°°°°                         °°°°°°                                            
-
-
-                                Thanks for installing sublime-jekyll.
-                                   We hope you like what you see.
                             
                             http://23maverick23.github.io/sublime-jekyll/
-                          sublime-jekyll is licensed under the MIT license.
+                                  http://sublime-jekyll.rtfd.org/
+                           sublime-jekyll is licensed under the MIT license
        
 ***************************************************************************************************
 
+Version 3.0 is almost a complete re-write of the original sublime-jekyll package. We've kept most
+of the great features you used in previous releases, but expanded on the areas that were missing.
 
-This package should help maintaining Jekyll sites and posts easier by providing access to new post
-and draft shortcuts, key Liquid template tags and filters, as well as common filter completions and
-YAML front-matter templates for standardizing your posts.
+This new version contains all of these, and a bit more:
 
+    - Post templates!
 
-After installing this package, make sure you configure your User settings file. The most important
-piece of this is to set your `posts_path` and `drafts_path` locations. This can also be set on a
-per-project basis later if you have multiple Jekyll sites you wish to manage.
+        : No more sublime-settings keys for managing YAML front-matter!
+        : Write actual YAML front-matter and store them as templates
+        : Use Sublime snippet variables to easily populate YAML keys
 
+    - Namespaced package settings
 
-If you have any questions or issues, please visit the homepage where you can watch a short video and
-get quick access to RTFD documentation and Github to log issues.
+        : All settings have been prefixed with `jekyll`
+        : Debugging keys values is much easier in the console
+        : Jekyll Utility commands allow pre-3.0 settings to be migrated easily
+
+    - Built-in debugging
+
+        : Enable debug mode to print additional details to the console
+
+    - New package website
+
+        : We're now using a simpler Github Pages site!
+        : http://23maverick23.github.io/sublime-jekyll/
+
+    - RTFD documentation
+
+        : Cleaned up the README.md and moved all documentation to ReadTheDocs!
+        : http://sublime-jekyll.rtfd.org/
+
+If you run into any bugs, please make sure you report them! Thanks for using sublime-jekyll.

@@ -1,11 +1,10 @@
-<!-- See http://www.sublimetext.com/docs/snippets for more information -->
 <snippet>
 	<content><![CDATA[
 {% for $1 in $2 %}
-	$3
+$0
 {% endfor %}
 ]]>	</content>
     <tabTrigger>for</tabTrigger>
-    <scope>text.html.jekyll, text.html.markdown.jekyll, source.json.jekyll, text.html.textile.jekyll, text.html.markdown.multimarkdown, text.html.markdown</scope>
+    <scope>text.html, text.html.markdown, source.json, text.html.textile, source.sass, source.scss</scope>
     <description>for</description>
 </snippet>

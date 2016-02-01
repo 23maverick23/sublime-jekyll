@@ -1,4 +1,3 @@
-<!-- See http://www.sublimetext.com/docs/snippets for more information -->
 <snippet>
     <content><![CDATA[
 {% capture $1 %}
@@ -6,6 +5,6 @@ $0
 {% endcapture %}
 ]]></content>
     <tabTrigger>capture</tabTrigger>
-    <scope>text.html.jekyll, text.html.markdown.jekyll, source.json.jekyll, text.html.textile.jekyll, text.html.markdown.multimarkdown, text.html.markdown</scope>
+    <scope>text.html, text.html.markdown, source.json, text.html.textile, source.sass, source.scss</scope>
     <description>capture</description>
 </snippet>

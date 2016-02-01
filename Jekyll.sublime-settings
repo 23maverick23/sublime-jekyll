@@ -1,34 +1,47 @@
 {
-    /** *****************************************************************************
-     * Be sure to configure these settings so that new posts
-     * and new drafts are created in the correct directory.
-     *
-     * You can also specify default settings about your posts.
-     * Settings entered here will override any frontmatter configuration
-     * defaults provided in your "config.yaml" file per the frontmatter
-     * default spec here:
-     *
-     * http://jekyllrb.com/docs/configuration/#frontmatter-defaults
-     * ******************************************************************************
-     */
+    // ************************************************************************************
+    // 
+    //        ÛÛÛ           ÛÛÛÛÛ                 ÛÛÛÛ  ÛÛÛÛ      ÛÛÛÛÛÛÛÛ        ÛÛÛÛÛ   
+    //       °°°           °°ÛÛÛ                 °°ÛÛÛ °°ÛÛÛ     ÛÛÛ°°°°ÛÛÛ     ÛÛÛ°°°ÛÛÛ 
+    //       ÛÛÛÛÛ  ÛÛÛÛÛÛ  °ÛÛÛ ÛÛÛÛÛ ÛÛÛÛÛ ÛÛÛÛ °ÛÛÛ  °ÛÛÛ    °°°    °ÛÛÛ    ÛÛÛ   °°ÛÛÛ
+    //      °°ÛÛÛ  ÛÛÛ°°ÛÛÛ °ÛÛÛ°°ÛÛÛ °°ÛÛÛ °ÛÛÛ  °ÛÛÛ  °ÛÛÛ       ÛÛÛÛÛÛ°    °ÛÛÛ    °ÛÛÛ
+    //       °ÛÛÛ °ÛÛÛÛÛÛÛ  °ÛÛÛÛÛÛ°   °ÛÛÛ °ÛÛÛ  °ÛÛÛ  °ÛÛÛ      °°°°°°ÛÛÛ   °ÛÛÛ    °ÛÛÛ
+    //       °ÛÛÛ °ÛÛÛ°°°   °ÛÛÛ°°ÛÛÛ  °ÛÛÛ °ÛÛÛ  °ÛÛÛ  °ÛÛÛ     ÛÛÛ   °ÛÛÛ   °°ÛÛÛ   ÛÛÛ 
+    //       °ÛÛÛ °°ÛÛÛÛÛÛ  ÛÛÛÛ ÛÛÛÛÛ °°ÛÛÛÛÛÛÛ  ÛÛÛÛÛ ÛÛÛÛÛ   °°ÛÛÛÛÛÛÛÛ  ÛÛ °°°ÛÛÛÛÛ°  
+    //       °ÛÛÛ  °°°°°°  °°°° °°°°°   °°°°°ÛÛÛ °°°°° °°°°°     °°°°°°°°  °°    °°°°°°   
+    //   ÛÛÛ °ÛÛÛ                       ÛÛÛ °ÛÛÛ                                          
+    //  °°ÛÛÛÛÛÛ                       °°ÛÛÛÛÛÛ                                           
+    //   °°°°°°                         °°°°°°                                            
+    // 
+    // 
+    //              Be sure to configure these settings so that new posts
+    //               and new drafts are created in the correct directory.
+    //
+    // ************************************************************************************
 
     // This should point to your "_posts" directory.
     // NOTE: This should be an absolute path. Also, the path should
     // match your system convention. For example, Windows machines should
     // have a path similar to "C:\\Users\\username\\site\\_posts".
     // *nix systems should have a path similar to "/Users/username/site/_posts".
-    "posts_path": "",
+    "jekyll_posts_path": "",
 
     // This should point to your "_drafts" directory.
     // NOTE: This should be an absolute path. Also, the path should
     // match your system convention. For example, Windows machines should
     // have a path similar to "C:\\Users\\username\\site\\_drafts".
     // *nix systems should have a path similar to "/Users/username/site/_drafts".
-    "drafts_path": "",
+    "jekyll_drafts_path": "",
 
     // This should point to the default uploads directory. This should be an
     // absolute path.
-    "uploads_path": "",
+    "jekyll_uploads_path": "",
+
+    // If you have multiple Jekyll blogs, but don't use Sublime Projects,
+    // you can optionally have sublime-jekyll look for the `_posts` or `_drafts`
+    // or `uploads` folders open in your sidebar. This should have a value of 
+    // true or false.
+    "jekyll_auto_find_paths": false,
 
     // This string value should represent the baseurl for the uploads directory.
     // For example, if your uploads directoy is "uploads/" and you have an image
@@ -37,70 +50,39 @@
     // replaced by its value.
     // If you wish to have an absolute link and you have "url" defined in your jekyll
     // config file, then you can set the value to: "{{ site.url }}/{{ site.baseurl }}"
-    "uploads_baseurl": "{{ site.baseurl }}",
+    "jekyll_uploads_baseurl": "{{ site.baseurl }}",
 
-    // If you have multiple Jekyll blogs, but don't use Sublime Projects,
-    // you can optionally have sublime-jekyll look for the `_posts` or `_drafts`
-    // or `uploads` folders open in your sidebar. This should have a value of 
-    // true or false.
-    "automatically_find_paths": false,
+    // This determines the file type for new drafts and posts. Can be set to one of
+    // three accepted values: "Markdown", "Textile" or "HTML".
+    // NOTE: We use `.markdown` as the standard file extension for Markdown files as
+    // suggested by John Gruber, developer of Markdown, in his blog post here:
+    // http://daringfireball.net/linked/2014/01/08/markdown-extension
+    "jekyll_default_markup": "Markdown",
 
-    // This string value should represent the default syntax for a new post.
-    // Valid options are: "Markdown", "Textile"
-    "default_post_syntax": "Markdown",
-
-    /** *****************************************************************************
-     * Post Front-matter Defaults
-     *
-     * Set these values to make your life easier when composing new posts. This is
-     * similar to setting your defaults as part of the `_config.yml` file:
-     *
-     * http://jekyllrb.com/docs/configuration/#front-matter-defaults
-     * ******************************************************************************
-     */
-
-    // This string value should represent the default layout for new posts.
-    "default_post_layout": "",
-
-    // This value should represent the default categories for new posts.
-    // Each category should be entered as a list item in string format
-    // with commas separating values ["cat1", "cat2"]. To remove this key
-    // from your front-matter completely, pass a value of `null`.
-    "default_post_categories": [],
-
-    // This value should represent the default tags for new posts.
-    // Each tag should be entered as a list item in string format
-    // with commas separating values ["tag1", "tag2"]. To remove this key
-    // from your front-matter completely, pass a value of `null`.
-    "default_post_tags": [],
-
-    // A boolean specifying if you want new posts to be marked as published.
-    // To remove this key from your front-matter completely, pass a value of `null`.
-    "default_post_published": true,
-
-    // If you need to add additional front-matter `key: value` information to
-    // your posts, you can store them in a dictionary object using a format
-    // like {"foo": "bar", "baz": "qux"}. This dictionary will be appended to
-    // any of the enabled default keys above (Reminder: the `title` and `layout`
-    // keys will always be included, so **DO NOT** include them in the extras dictionary).
-    "default_post_extras": {},
-
-    /** ***********************************************************************************
-     * If for some reason you want to change the way either the date
-     * or the datetime string is formatted, you can override those formats
-     * here using valid Python datetime.strftime() format codes.
-     *
-     * If you need a refresher on these codes, have a look at the Python
-     * documentation found here:
-     *
-     * http://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior
-     * ******************************************************************************
-     */
+    // ************************************************************************************
+    // If for some reason you want to change the way either the date
+    // or the datetime string is formatted, you can override those formats
+    // here using valid Python datetime.strftime() format codes.
+    //
+    // If you need a refresher on these codes, have a look at the Python
+    // documentation found here:
+    //
+    // http://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior
+    // ************************************************************************************
 
     // A valid Python strftime string
-    "insert_date_format": "%Y-%m-%d",
+    "jekyll_date_format": "%Y-%m-%d",
 
     // A valid Python strftime string
-    "insert_datetime_format": "%Y-%m-%d %H:%M:%S"
+    "jekyll_datetime_format": "%Y-%m-%d %H:%M:%S",
 
+    // ************************************************************************************
+    // Package Debug
+    // ************************************************************************************
+    
+    // If set to true, will print Jekyll debug information to the Sublime Text console.
+    "jekyll_debug": false,
+
+    // If set to true, all Jekyll Utility commands will be hidden from menus and the Command Palatte.
+    "jekyll_utility_disable": false
 }

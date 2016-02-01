@@ -1,394 +1,843 @@
-from datetime import datetime
-import functools
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+import imghdr
 import os
 import re
 import shutil
-import sys
-import traceback
-import imghdr
-
 import sublime
 import sublime_plugin
+import sys
+import traceback
+import uuid
 
-PY3 = sys.version > '3'
+from datetime import datetime
+from functools import wraps
+
+try:
+    import simple_json as json
+except ImportError:
+    import json
+
+
+## ********************************************************************************************** ##
+#  BEGIN STATIC VARIABLES
+## ********************************************************************************************** ##
+
+
 ST3 = sublime.version() >= '3000'
+DEBUG = False
+ALLOWED_MARKUPS = ('Markdown', 'Textile', 'HTML', )
+POST_DATE_FORMAT = '%Y-%m-%d'
+
+settings = sublime.load_settings('Jekyll.sublime-settings')
+
+if settings.has('jekyll_debug') and settings.get('jekyll_debug') is True:
+    DEBUG = True
 
 
-## Exception Decorator                                                       ##
-## ------------------------------------------------------------------------- ##
-# This function allows for custom exceptions while preserving the stacktrace. #
-# See discussion on Stack Overflow here: http://stackoverflow.com/a/9006442   #
-## ------------------------------------------------------------------------- ##
+## ********************************************************************************************** ##
+#  BEGIN GLOBAL METHODS
+## ********************************************************************************************** ##
 
-class MissingPathException(Exception):
-    pass
+
+def plugin_loaded():
+    """
+
+    """
+    if DEBUG:
+        UTC_TIME = datetime.utcnow()
+        PYTHON = sys.version_info[:3]
+        VERSION = sublime.version()
+        PLATFORM = sublime.platform()
+        ARCH = sublime.arch()
+        PACKAGE = sublime.packages_path()
+        INSTALL = sublime.installed_packages_path()
+
+        message = (
+            'Jekyll debugging mode enabled...\n\n'
+            '\tUTC Time: {time}\n'
+            '\tSystem Python: {python}\n'
+            '\tSystem Platform: {plat}\n'
+            '\tSystem Architecture: {arch}\n'
+            '\tSublime Version: {ver}\n'
+            '\tSublime Packages Path: {package}\n'
+            '\tSublime Installed Packages Path: {install}\n'
+        ).format(time=UTC_TIME, python=PYTHON, plat=PLATFORM, arch=ARCH,
+                 ver=VERSION, package=PACKAGE, install=INSTALL)
+
+        sublime.status_message('Jekyll: Debugging enabled...')
+        debug('Plugin successfully loaded.', prefix='\n\nJekyll', level='info')
+        debug(message, prefix='Jekyll', level='info')
+
+
+def plugin_unloaded():
+    if DEBUG:
+        debug('Plugin successfully unloaded.\n\n', prefix='Jekyll', level='info')
+
+
+def debug(message, prefix='Jekyll', level='debug'):
+    """Console print utility method.
+
+    Prints a formatted console entry to the Sublime Text console
+    if debugging is enabled in the User settings file.
+
+    Args:
+        message (string): A message to print to the console
+        prefix (string): An optional prefix
+        level (string): One of debug, info, warning, error [Default: debug]
+
+    Return:
+        string: Issue a standard console print command.
+
+    """
+    if DEBUG:
+        print('{prefix}: [{level}] {message}'.format(
+            message=message,
+            prefix=prefix,
+            level=level
+        ))
 
 
 def catch_errors(fn):
-    @functools.wraps(fn)
+    """Generic function decorator for catching exceptions.
+
+    Use this to primarily catch and alert the user to path issues
+    which are needed for nearly every command.
+
+    Args:
+        fn (func): A function
+
+    Returns:
+        bool: Description of return value
+
+    """
+    @wraps(fn)
     def _fn(*args, **kwargs):
         try:
             return fn(*args, **kwargs)
 
         except MissingPathException:
-            sublime.error_message('Jekyll: Unable to find path information for Jekyll!')
+            sublime.error_message('Jekyll: Unable to resolve path information!')
+            debug('Unable to resolve path information!', prefix='Jekyll', level='error')
+
             user_settings_path = os.path.join(sublime.packages_path(), 'User', 'Jekyll.sublime-settings')
+
             if not os.path.exists(user_settings_path):
+                # If a User settings file for Jekyll is not found, copy the default settings
+                # to a new file and prompt the user to edit and save it.
+                debug('Jekyll.sublime-settings file doesn\'t exist in User directory')
+
                 default_settings_path = os.path.join(sublime.packages_path(), 'Jekyll', 'Jekyll.sublime-settings')
                 shutil.copy(default_settings_path, user_settings_path)
+
             sublime.active_window().open_file(user_settings_path)
 
         except:
-            traceback.print_exc()
-            sublime.error_message('Jekyll: unknown error (please, report a bug!)')
+            debug('Unexpected error. Stack trace:\n\t{stack}'.format(stack=traceback.print_exc()),
+                prefix='Jekyll', level='error')
+            sublime.error_message('Jekyll: Unexpected error (please, report a bug!)')
 
     return _fn
 
 
 def get_setting(view, key, default=None):
-    """
+    """Returns a specific setting key value or default.
+
     Get a Sublime Text setting value, starting in the project-specific
     settings file, then the user-specific settings file, and finally
     the package-specific settings file. Also accepts an optional default.
 
+    Args:
+        view (obj): A Sublime view object
+        key (string): A settings dictionary key
+
+    Returns:
+        bool: Description of return value
+
     """
     try:
+        debug('Getting key "{key}" from settings.'.format(key=key))
+
         settings = view.settings()
         if settings.has('Jekyll'):
             s = settings.get('Jekyll').get(key)
-            if s:
+
+            if s and s is not None:
                 return s
+
             else:
                 pass
+
         else:
             pass
+
     except:
         pass
+
     global_settings = sublime.load_settings('Jekyll.sublime-settings')
     return global_settings.get(key, default)
 
 
-def get_syntax_path(view, syntax='Markdown'):
-    """
-    Sets the view syntax.
-
-    """
-    full_syntax = os.path.join('Jekyll', 'Syntaxes', '{0} (Jekyll).tmLanguage'.format(syntax))
-
-    if PY3:
-        syntax_path = os.path.join('Packages', full_syntax)
-
-        if sublime.platform() == 'windows':
-            syntax_path = full_syntax.replace('\\', '/')
-        try:
-            sublime.load_resource(syntax_path)
-            view.set_syntax_file(syntax_path)
-        except:
-            pass
-    else:
-        syntax_path = os.path.join(sublime.packages_path(), full_syntax)
-        if os.path.exists(syntax_path):
-            view.set_syntax_file(syntax_path)
-
-
 def find_dir_path(window, dir_name):
-    """
-    Attempts to find a named directory in a given sublime window.
+    """Find a named directory in a given Sublime window.
 
-    Params:
-        window: a Sublime window object
-        dir_name: a string directory name
+    Searches the folder tree of the current window for
+    a named path and returns any potential matches.
+
+    Args:
+        window (obj): A Sublime window object
+        dir_name (string): A directory name
+
     Returns:
-        {Array} array of path strings
+        array: An array of potential path string matches
 
     """
     all_dirs = []
+    debug('Searching for directory "{name}" in folder tree.'.format(name=dir_name))
 
     for folder in window.folders():
+
         for root, dirs, files in os.walk(folder):
             dirs[:] = [d for d in dirs if not d[0] == '.']
 
             if all(x in dirs for x in [dir_name]):
                 all_dirs.append(os.path.abspath(os.path.join(root, dir_name)))
 
+    debug('Found these sub-folder(s) in the sidebar: {0}'.format(all_dirs))
     return all_dirs
 
 
-class JekyllNewPostBase(sublime_plugin.WindowCommand):
-    """
-    A Sublime window command base class for creating Jekyll posts.
+def clean_title_input(title, draft=False):
+    """Convert a string into a valide Jekyll filename.
+
+    Remove non-word characters, replace spaces and underscores with dashes,
+    and add a date stamp if the file is marked as a Post, not a Draft.
+
+    Args:
+        title (string): A string based title
+        draft (bool): A boolean indicating that the file is a draft
+
+    Returns:
+        string: a cleaned title for saving a new Jekyll post file
 
     """
-    def doCommand(self):
-        post_type = 'draft' if self.IS_DRAFT else 'post'
-        self.window.show_input_panel(
-            'Jekyll {0} title:'.format(post_type),
-            '',
-            self.title_input,
-            None,
-            None
-        )
+    title_clean = title.lower()
+    title_clean = re.sub(r'[^\w -]', '', title_clean)
+    title_clean = re.sub(r' |_', '-', title_clean)
+
+    today = datetime.today()
+    title_date = today.strftime('%Y-%m-%d')
+
+    return title_date + '-' + title_clean if not draft else title_clean
+
+
+def create_file(path):
+    """Create a new file using the directory path of the filename.
+
+    Args:
+        path (string): A full path string for the new file
+
+    Returns:
+        none
+
+    """
+    filename = os.path.split(path)[1]
+
+    if filename and filename != '':
+        open(path, 'a').close()
+
+
+## ********************************************************************************************** ##
+#  BEGIN BASE CLASSES
+## ********************************************************************************************** ##
+
+class MissingPathException(Exception):
+    pass
+
+
+class JekyllWindowBase(sublime_plugin.WindowCommand):
+    """Abstract base class for Jekyll window commands.
+
+    """
+    markup = None
+
 
     @catch_errors
-    def determine_path(self, p, d):
-        a = get_setting(self.window.active_view(), 'automatically_find_paths', False)
+    def posts_path_string(self):
+        p = get_setting(self.window.active_view(), 'jekyll_posts_path')
+        return self.determine_path(p, '_posts')
 
-        if not a:
-            if not p or p == '':
-                raise MissingPathException
-            return p
 
-        elif a:
-            self.dirs = find_dir_path(self.window, d)
+    @catch_errors
+    def drafts_path_string(self):
+        p = get_setting(self.window.active_view(), 'jekyll_drafts_path')
+        return self.determine_path(p, '_drafts')
+
+
+    @catch_errors
+    def uploads_path_string(self):
+        p = get_setting(self.window.active_view(), 'jekyll_uploads_path')
+        return self.determine_path(p, 'uploads')
+
+
+    def templates_path_string(self):
+        # TODO: allow for user-specific or project-specific template directories?
+        # TODO: specify where every template is saved, which slows down workflow?
+        return os.path.join(sublime.packages_path(), 'User', 'Jekyll Templates')
+
+
+    @catch_errors
+    def determine_path(self, path, dir_name):
+        """Determine a directory path.
+
+        Args:
+            path (string): A string directory path
+            dir_name (string): A string directory name
+
+        Returns:
+            string: a cleaned title for saving a new Jekyll post file
+
+        """
+        if not self.window.views():
+            view = self.window.new_file()
+
+        else:
+            view = self.window.active_view()
+
+        auto = get_setting(view, 'jekyll_auto_find_paths', False)
+
+        if auto:
+            self.dirs = find_dir_path(self.window, dir_name)
 
             if not self.dirs:
-                # there were no directories found, fallback to settings
-                if not p or p == '':
+
+                if not path or path == '':
+                    debug('Unable to resolve path information!'.format(
+                        path=path), prefix='Jekyll', level='error')
                     raise MissingPathException
-                return p
+
+                return path
 
             elif self.dirs and len(self.dirs) > 1:
-                # more than one directory was found, but we only support one currently
-                # TODO: figure out how to support many with a quick_panel?
-                msg = (
-                    'More than one folder was found in the active view:\n{0}'
-                    '\nClick confirm to use the first folder in the list, '
-                    'otherwise cancel and use Project settings instead'.format('\n'.join(self.dirs))
-                )
+                # more than one directory was found
+                # so choose which one to use
 
-                if sublime.ok_cancel_dialog(msg, 'Confirm'):
-                    return self.dirs[0]
-                else:
-                    return None
+                def callback(self, index):
+                    if index > -1 and type(self.dirs[index]) is list:
+                        return self.dirs[index]
+
+                    else:
+                        self.dirs = []
+                        return None
+
+                self.window.show_quick_panel(self.dirs, callback)
 
             elif self.dirs and len(self.dirs) == 1:
                 # only one directory was found, so use it
                 return self.dirs[0]
 
-    @catch_errors
-    def posts_path_string(self):
-        p = get_setting(self.window.active_view(), 'posts_path')
-        return self.determine_path(p, '_posts')
+        else:
+            if not path or path == '':
+                raise MissingPathException
 
-    @catch_errors
-    def drafts_path_string(self):
-        p = get_setting(self.window.active_view(), 'drafts_path')
-        return self.determine_path(p, '_drafts')
+            return path
 
-    @catch_errors
-    def uploads_path_string(self):
-        p = get_setting(self.window.active_view(), 'uploads_path')
-        return self.determine_path(p, 'uploads')
 
-    def create_file(self, filename):
-        base, filename = os.path.split(filename)
-        if filename != '':
-            creation_path = os.path.join(base, filename)
-            open(creation_path, 'a').close()
+    def create_post_frontmatter(self, title, comment=None):
+        """Create post frontmatter content.
 
-    def clean_title_input(self, title, draft=False):
-        t = title.lower()
-        t_str = re.sub(r'[^\w -]', '', t)
-        t_str = re.sub(r' |_', '-', t_str)
-        d = datetime.today()
-        POST_DATE_FORMAT = '%Y-%m-%d'
-        d_str = d.strftime(POST_DATE_FORMAT)
-        return d_str + '-' + t_str if not draft else t_str
+        Args:
+            title (str): A post title
+            comment (str): An optional comment block
 
-    def create_post_frontmatter(self, title):
-        view = self.window.active_view()
-        POST_CATEGORIES = get_setting(view, 'default_post_categories')
-        POST_TAGS = get_setting(view, 'default_post_tags')
-        POST_PUBLISHED = get_setting(view, 'default_post_published', True)
-        POST_EXTRAS = get_setting(view, 'default_post_extras', {})
+        Returns:
+            string: A Sublime snippet string
 
-        POST_TITLE_STR = str(title)
-        POST_LAYOUT_STR = str(get_setting(view, 'default_post_layout'))
+        """
+        if not comment or comment == '':
+            comment = ''
 
-        POST_CATEGORIES_STR = str(
-            'categories: {0}\n'.format(POST_CATEGORIES) if POST_CATEGORIES is not None else ''
-        )
-        POST_TAGS_STR = str(
-            'tags: {0}\n'.format(POST_TAGS) if POST_TAGS is not None else ''
-        )
-        POST_PUBLISHED_STR = str(
-            'published: {0}\n'.format(POST_PUBLISHED) if POST_PUBLISHED is not None else ''
-        )
-
-        def pretty_walk(settings_dict):
-            """
-            Walks through a multi-level dictionary and returns
-            a YAML-like string.
-
-            :param settings_dict: a dictionary object
-            :returns: formatted string
-            """
-            s = []
-
-            def walk(d, indent=-1):
-                """
-                Walk through a dictionary of key/values
-                and append the results in a placeholder list.
-
-                :param d: dictionary object
-                :param indent: the starting indent value; default -1
-                """
-                try:
-                    for key, value in d.items():
-                        if isinstance(value, dict):
-                            s.append('{0}{1}:\n'.format('\t' * (indent + 1), key))
-                            walk(value, indent + 1)
-                        else:
-                            s.append('{0}{1}: {2}\n'.format('\t' * (indent + 1), key, value))
-                except Exception as e:
-                    print('Jekyll: Settings parsing error - {0}'.format(e))
-                    return
-
-            walk(settings_dict)
-            return ''.join(s)
-
-        POST_EXTRAS_STR = pretty_walk(POST_EXTRAS)
+        else:
+            comment = '# {0}\n'.format(comment)
 
         frontmatter = (
-            '---\n'
-            'layout: {0}\n'
-            'title: {1}\n'
-            '{2}'
-            '{3}'
-            '{4}'
-            '{5}'
-            '\n---\n\n'
-        ).format(
-            POST_LAYOUT_STR,
-            POST_TITLE_STR,
-            POST_CATEGORIES_STR,
-            POST_TAGS_STR,
-            POST_PUBLISHED_STR,
-            POST_EXTRAS_STR
+            '{comment}---\n'
+            'title: {title}\n'
+        ).format(comment=str(comment), title=str(title))
+        frontmatter += (
+            'layout: ${1:post}\n'
+            '---\n$0'
         )
         return frontmatter
 
+
     @catch_errors
-    def title_input(self, title):
-        if self.IS_DRAFT:
-            post_dir = self.drafts_path_string()
-        else:
-            post_dir = self.posts_path_string()
+    def title_input(self, title, path=None):
+        """Sanitize a file title, save and open
+
+        Args:
+            title (string): A post title
+            path (string): A path string
+
+        Returns:
+            None
+
+        """
+        post_dir = self.path_string() if path is None else path
 
         if not post_dir:
             raise MissingPathException
 
-        syntax = get_setting(self.window.active_view(), 'default_post_syntax', 'Markdown')
-        if syntax == 'Textile':
-            file_ext = '.textile'
-        elif syntax == 'Markdown':
-            file_ext = '.md'
-        else:
-            file_ext = '.txt'
+        self.markup = get_setting(self.window.active_view(), 'jekyll_default_markup', 'Markdown')
 
-        clean_title = self.clean_title_input(title, self.IS_DRAFT) + file_ext
+        if self.markup == 'Textile':
+            file_ext = '.textile'
+
+        elif self.markup == 'HTML':
+            file_ext = '.html'
+
+        else:
+            file_ext = '.markdown'
+
+        clean_title = clean_title_input(title, self.IS_DRAFT) + file_ext
         full_path = os.path.join(post_dir, clean_title)
 
         if os.path.lexists(full_path):
             sublime.error_message('Jekyll: File already exists at "{0}"'.format(full_path))
             return
+
         else:
             frontmatter = self.create_post_frontmatter(title)
             self.create_and_open_file(full_path, frontmatter)
 
 
-class JekyllListPostsBase(JekyllNewPostBase):
-    """
-    A subclass for displaying Jekyll posts.
+    @catch_errors
+    def list_files(self, path, filter_ext=True):
+        """Create an array of string arrays for files
 
-    """
-    def callback(self, index):
-        if index > -1 and type(self.posts[index]) is list:
-            f = self.posts[index][1]
-            syntax = self.get_syntax(self.posts[index][0])
-            output_view = self.window.open_file(f)
-            if syntax and syntax == 'Markdown' or syntax == 'Textile':
-                get_syntax_path(output_view, syntax)
-        else:
-            self.posts = []
+        Args:
+            path (string): A directory path of files
+            filter_ext (bool): Filters files by type
 
-    def list_files(self, path, name, filter_ext = True):
-        self.posts = []
-        if os.path.isdir(path):
+        Returns:
+            None
+
+        """
+        self.item_list = []
+
+        if os.path.exists(path) and os.path.isdir(path):
+
             for root, dirs, files in os.walk(path):
+
                 for f in files:
-                    if filter_ext and not self.get_syntax(f):
+
+                    if filter_ext and not self.get_markup(f):
                         continue
+
                     fname = os.path.splitext(f)[0]
                     fpath = os.path.join(root, f)
-                    self.posts.append([fname, fpath])
-            self.posts.sort(key=lambda x: os.path.getmtime(x[1]), reverse=True)
+                    self.item_list.append([fname, fpath])
+
+            self.item_list.sort(key=lambda x: os.path.getmtime(x[1]), reverse=True)
+
         else:
-            self.posts.append(['{0} directory does not exist!'.format(name)])
+            self.item_list.append(['Directory does not exist!'])
 
-        if not len(self.posts) > 0:
-            self.posts.append(['No {0} found!'.format(name.lower())])
+        if not len(self.item_list) > 0:
+            self.item_list.append(['No items found!'])
 
-    def get_syntax(self, file):
-        # Uses Github preferred file extensions as referenced here: http://superuser.com/a/285878
-        f = file
+
+    def on_highlight(self, index):
+        self.window.open_file(self.item_list[index][1], sublime.TRANSIENT)
+
+
+    def get_markup(self, file):
         if (
-            f.endswith('.markdown') or
-            f.endswith('.mdown') or
-            f.endswith('.mkdn') or
-            f.endswith('.mkd') or
-            f.endswith('.md')
+            file.endswith('.markdown') or
+            file.endswith('.mdown') or
+            file.endswith('.mkdn') or
+            file.endswith('.mkd') or
+            file.endswith('.md')
         ):
-            self.syntax = 'Markdown'
-        elif f.endswith('.textile'):
-            self.syntax = 'Textile'
+            self.markup = 'Markdown'
+
+        elif (
+            file.endswith('.html') or
+            file.endswith('.htm')
+        ):
+            self.markup = 'HTML'
+
+        elif (
+            file.endswith('.textile')
+        ):
+            self.markup = 'Textile'
+
+        elif (
+            file.endswith('.yaml') or
+            file.endswith('.yml')
+        ):
+            self.markup = 'YAML'
+
         else:
-            self.syntax = None
+            self.markup = None
 
-        return self.syntax
+        return self.markup
 
 
-class JekyllOpenPostCommand(JekyllListPostsBase):
-    """
-    A subclass for displaying posts in the _posts directory.
+    @catch_errors
+    def create_and_open_file(self, path, frontmatter):
+        create_file(path)
 
-    """
+        if not self.window.views():
+            view = self.window.new_file()
 
-    syntax = None
+        else:
+            view = self.window.active_view()
+
+        view.run_command(
+            'jekyll_post_frontmatter',
+            {
+                'path': path,
+                'frontmatter': frontmatter
+            }
+        )
+
+
+    def remove_file(self, file, message):
+        delete = sublime.ok_cancel_dialog(message, 'Confirm Delete')
+
+        if delete is True:
+            self.window.run_command('close_file')
+            self.window.run_command('refresh_folder_list')
+            os.remove(file)
+
+        else:
+            return
+
+
+class JekyllPostBase(JekyllWindowBase):
+    IS_DRAFT = False
+
+    def path_string(self):
+        return self.posts_path_string()
+
+
+class JekyllDraftBase(JekyllWindowBase):
+    IS_DRAFT = True
+
+    def path_string(self):
+        return self.drafts_path_string()
+
+
+class JekyllUploadBase(JekyllWindowBase):
+    def path_string(self):
+        return self.uploads_path_string()
+
+
+class JekyllTemplateBase(JekyllWindowBase):
+    @catch_errors
+    def path_string(self):
+        return self.templates_path_string()
+
+
+    @catch_errors
+    def title_input(self, title, description=None):
+        template_dir = self.path_string()
+
+        if not os.path.exists(template_dir):
+                os.makedirs(template_dir)
+
+        clean_title = clean_title_input(title, True)
+        full_path = os.path.join(template_dir, title + '.yaml')
+
+        if os.path.lexists(full_path):
+            sublime.error_message('Jekyll: File already exists at "{0}"'.format(full_path))
+            return
+
+        else:
+            frontmatter = self.create_post_frontmatter(clean_title, description)
+            self.create_and_open_file(
+                full_path,
+                frontmatter
+            )
+
+
+class JekyllFromTemplateBase(JekyllTemplateBase):
+    @catch_errors
+    def title_input(self, title, content):
+
+        if not self.window.views():
+            view = self.window.new_file()
+
+        else:
+            view = self.window.active_view()
+
+        post_dir = self.drafts_path_string() if self.IS_DRAFT is True else self.posts_path_string()
+
+        if not post_dir:
+            raise MissingPathException
+
+        self.markup = get_setting(view, 'jekyll_default_markup', 'Markdown')
+
+        if self.markup == 'Textile':
+            file_ext = '.textile'
+
+        elif self.markup == 'HTML':
+            file_ext = '.html'
+
+        else:
+            file_ext = '.markdown'
+
+        clean_title = clean_title_input(title, self.IS_DRAFT) + file_ext
+        full_path = os.path.join(post_dir, clean_title)
+
+        if os.path.lexists(full_path):
+            sublime.error_message('Jekyll: File already exists at "{0}"'.format(full_path))
+            return
+
+        else:
+            yaml_title = 'title: {0}\n'.format(title)
+
+            # Check for existence of `title` key in YAML frontmatter
+            re_search_title = '(?<=\\n)(title.*?)(?:\\n)'
+            re_add_title = '(^---\\n)'
+            has_title_key = re.search(re_search_title, content)
+
+            if has_title_key:
+                yaml_content = re.sub(re_search_title, yaml_title, content)
+
+            else:
+                yaml_content = re.sub(re_add_title, '---\n' + yaml_title, content)
+
+            frontmatter = self.create_post_frontmatter(yaml_content)
+            self.create_and_open_file(
+                full_path,
+                frontmatter
+            )
+
+
+    def create_post_frontmatter(self, frontmatter):
+        return frontmatter
+
+
+## ********************************************************************************************** ##
+#  BEGIN WINDOW COMMAND CLASSES
+## ********************************************************************************************** ##
+
+
+class JekyllNewPostCommand(JekyllPostBase):
+    def on_done(self, title):
+        self.title_input(title)
+
 
     def run(self):
-        path = self.posts_path_string()
-        self.list_files(path, 'Posts')
-        self.window.show_quick_panel(self.posts, self.callback)
+        self.window.show_input_panel(
+            'Jekyll post title:',
+            '',
+            self.on_done,
+            None,
+            None
+        )
 
 
-class JekyllOpenDraftCommand(JekyllListPostsBase):
-    """
-    A subclass for displaying posts in the _drafts directory.
+class JekyllNewPostFromTemplateCommand(JekyllFromTemplateBase):
+    IS_DRAFT = False
 
-    """
 
-    syntax = None
+    def on_done(self, index):
+        if index > -1 and type(self.item_list[index]) is list:
+            template = self.item_list[index][1]
+
+            # Remove any leading comment from YAML frontmatter
+            with open(template, 'rU') as f:
+                first_line = f.readline().strip()
+
+                if first_line[:1] != '#':
+                    f.seek(0)
+
+                file_contents = f.read()
+
+
+            def on_done_inner(title):
+                self.title_input(title, file_contents)
+
+
+            self.window.show_input_panel(
+                'Jekyll post title:',
+                '',
+                on_done_inner,
+                None,
+                None
+            )
+
+        else:
+            self.item_list = []
+
 
     def run(self):
-        path = self.drafts_path_string()
-        self.list_files(path, 'Drafts')
-        self.window.show_quick_panel(self.posts, self.callback)
+        template_dir = self.templates_path_string()
+        self.list_files(template_dir)
+
+        if ST3:
+            self.window.show_quick_panel(
+                self.item_list,
+                self.on_done,
+                on_highlight=self.on_highlight
+            )
+
+        else:
+            self.window.show_quick_panel(
+                self.item_list,
+                self.on_done
+            )
 
 
-class JekyllPromoteDraftCommand(JekyllListPostsBase):
-    """
-    A subclass for displaying posts in the _drafts directory.
+    def is_enabled(self):
+        return True if os.path.exists(self.templates_path_string()) else False
 
-    """
 
-    syntax = None
+class JekyllOpenPostCommand(JekyllPostBase):
+    def on_done(self, index):
+        if index > -1 and type(self.item_list[index]) is list:
+            f = self.item_list[index][1]
+            output_view = self.window.open_file(f)
 
-    def move_post(self, index):
+        else:
+            self.item_list = []
+
+
+    def run(self):
+        path = self.path_string()
+        self.list_files(path)
+
+        if ST3:
+            self.window.show_quick_panel(
+                self.item_list,
+                self.on_done,
+                on_highlight=self.on_highlight
+            )
+
+        else:
+            self.window.show_quick_panel(
+            self.item_list,
+            self.on_done
+        )
+
+
+class JekyllRemovePostCommand(JekyllPostBase):
+    def on_done(self, index):
+
+        if index > -1 and type(self.item_list[index]) is list:
+            f = self.item_list[index][1]
+
+            confirm = (
+                'You are about to delete the selected Jekyll post. '
+                'This action is irreversable.'
+            )
+
+            self.remove_file(f, confirm)
+
+
+        else:
+            self.item_list = []
+
+
+    def run(self):
+        path = self.path_string()
+        self.list_files(path)
+
+        if ST3:
+            self.window.show_quick_panel(
+                self.item_list,
+                self.on_done,
+                on_highlight=self.on_highlight
+            )
+
+        else:
+            self.window.show_quick_panel(
+                self.item_list,
+                self.on_done
+            )
+
+
+class JekyllNewDraftCommand(JekyllDraftBase):
+    def on_done(self, title):
+        self.title_input(title)
+
+
+    def run(self):
+        self.window.show_input_panel(
+            'Jekyll draft title:',
+            '',
+            self.on_done,
+            None,
+            None
+        )
+
+
+class JekyllNewDraftFromTemplateCommand(JekyllFromTemplateBase):
+    IS_DRAFT = True
+
+
+    def on_done(self, index):
+        if index > -1 and type(self.item_list[index]) is list:
+            template = self.item_list[index][1]
+
+            # Remove any leading comment from YAML frontmatter
+            with open(template, 'rU') as f:
+                first_line = f.readline().strip()
+
+                if first_line[:1] != '#':
+                    f.seek(0)
+
+                file_contents = f.read()
+
+
+            def on_done_inner(title):
+                self.title_input(title, file_contents)
+
+
+            self.window.show_input_panel(
+                'Jekyll draft title:',
+                '',
+                on_done_inner,
+                None,
+                None
+            )
+
+        else:
+            self.item_list = []
+
+
+    def run(self):
+        template_dir = self.templates_path_string()
+        self.list_files(template_dir)
+
+        if ST3:
+            self.window.show_quick_panel(
+                self.item_list,
+                self.on_done,
+                on_highlight=self.on_highlight
+            )
+
+        else:
+            self.window.show_quick_panel(
+                self.item_list,
+                self.on_done
+            )
+
+
+    def is_enabled(self):
+        return True if os.path.exists(self.templates_path_string()) else False
+
+
+class JekyllPromoteDraftCommand(JekyllDraftBase):
+    def on_done(self, index):
         p_path = self.posts_path_string()
-        if index != -1 and type(self.posts[index]) is list:
-            f = self.posts[index][1]
-            syntax = self.get_syntax(self.posts[index][0])
+
+        if index != -1 and type(self.item_list[index]) is list:
+            f = self.item_list[index][1]
             # return a list of directory names using platform specific separator
             dirlist = f.rsplit(os.sep)
 
@@ -397,15 +846,11 @@ class JekyllPromoteDraftCommand(JekyllListPostsBase):
             # if you don't find one, add it
             dirlist[-1] = re.sub(r'(^\d{4}-\d{2}-\d{2}-)', '', dirlist[-1])
             d = datetime.today()
-            POST_DATE_FORMAT = '%Y-%m-%d'
             d_str = "{0}-".format(d.strftime(POST_DATE_FORMAT))
             dirlist[-1] = d_str + dirlist[-1]
 
-            # return the full dirpath after the drafts folder
             spath = dirlist[dirlist.index('_drafts')+1:]
-            # join the dirpath with the posts path
             fpath = os.path.join(p_path, *spath)
-            # get the new, full folder path for the file
             bpath = os.path.split(fpath)[0]
 
             # if the folder path doesn't yet exist, create it recursively
@@ -415,68 +860,235 @@ class JekyllPromoteDraftCommand(JekyllListPostsBase):
             if not os.path.exists(fpath):
                 shutil.move(f, fpath)
 
+            self.window.run_command('close_file')
+            self.window.run_command('refresh_folder_list')
             output_view = self.window.open_file(fpath)
-            if syntax:
-                get_syntax_path(output_view, syntax)
 
         else:
-            self.posts = []
+            self.item_list = []
+
 
     def run(self):
         d_path = self.drafts_path_string()
-        self.list_files(d_path, 'Drafts')
-        self.window.show_quick_panel(self.posts, self.move_post)
+        self.list_files(d_path)
+
+        if ST3:
+            self.window.show_quick_panel(
+                self.item_list,
+                self.on_done,
+                on_highlight=self.on_highlight
+            )
+
+        else:
+            self.window.show_quick_panel(
+                self.item_list,
+                self.on_done
+            )
 
 
-class JekyllNewPostCommand(JekyllNewPostBase):
-    """
-    A subclass for creating new posts
+class JekyllRemoveDraftCommand(JekyllDraftBase):
+    def on_done(self, index):
 
-    """
-    IS_DRAFT = False
+        if index > -1 and type(self.item_list[index]) is list:
+            f = self.item_list[index][1]
+
+            confirm = (
+                'You are about to delete the selected Jekyll draft. '
+                'This action is irreversable.'
+            )
+
+            self.remove_file(f, confirm)
+
+
+        else:
+            self.item_list = []
+
 
     def run(self):
-        self.doCommand()
+        path = self.path_string()
+        self.list_files(path)
 
-    def create_and_open_file(self, path, frontmatter):
-        self.create_file(path)
-        if not self.window.views():
-            view = self.window.new_file()
+        if ST3:
+            self.window.show_quick_panel(
+                self.item_list,
+                self.on_done,
+                on_highlight=self.on_highlight
+            )
+
         else:
-            view = self.window.active_view()
-        view.run_command(
-            'jekyll_post_frontmatter',
+            self.window.show_quick_panel(
+                self.item_list,
+                self.on_done
+            )
+
+
+class JekyllOpenDraftCommand(JekyllDraftBase):
+    def on_done(self, index):
+        if index > -1 and type(self.item_list[index]) is list:
+            f = self.item_list[index][1]
+            output_view = self.window.open_file(f)
+
+        else:
+            self.item_list = []
+
+    def run(self):
+        path = self.path_string()
+        self.list_files(path)
+
+        if ST3:
+            self.window.show_quick_panel(
+                self.item_list,
+                self.on_done,
+                on_highlight=self.on_highlight
+            )
+
+        else:
+            self.window.show_quick_panel(
+                self.item_list,
+                self.on_done
+            )
+
+
+class JekyllNewTemplateCommand(JekyllTemplateBase):
+    def on_done(self, title):
+        self.title = title
+
+        def on_done_inner(description):
+            self.title_input(self.title, description)
+
+
+        self.window.show_input_panel(
+            'Jekyll template description (optional):',
+            '',
+            on_done_inner,
+            None,
+            None
+        )
+
+
+    def run(self):
+        self.window.show_input_panel(
+            'Jekyll template name:',
+            '',
+            self.on_done,
+            None,
+            None
+        )
+
+
+class JekyllEditTemplateCommand(JekyllTemplateBase):
+    def on_done(self, index):
+        if index > -1 and type(self.item_list[index]) is list:
+            f = self.item_list[index][1]
+            output_view = self.window.open_file(f)
+
+        else:
+            self.item_list = []
+
+
+    def run(self):
+        template_dir = self.path_string()
+        self.list_files(template_dir)
+
+        if ST3:
+            self.window.show_quick_panel(
+                self.item_list,
+                self.on_done,
+                on_highlight=self.on_highlight
+            )
+
+        else:
+            self.window.show_quick_panel(
+                self.item_list,
+                self.on_done
+            )
+
+
+    def is_enabled(self):
+        return True if os.path.exists(self.templates_path_string()) else False
+
+
+class JekyllRemoveTemplateCommand(JekyllTemplateBase):
+    def on_done(self, index):
+        if index > -1 and type(self.item_list[index]) is list:
+            f = self.item_list[index][1]
+
+            confirm = (
+                'You are about to delete the selected Jekyll template. '
+                'This action is irreversable.'
+            )
+
+            self.remove_file(f, confirm)
+
+
+        else:
+            self.item_list = []
+
+
+    def run(self):
+        template_dir = self.path_string()
+        self.list_files(template_dir)
+
+        if ST3:
+            self.window.show_quick_panel(
+                self.item_list,
+                self.on_done,
+                on_highlight=self.on_highlight
+            )
+
+        else:
+            self.window.show_quick_panel(
+                self.item_list,
+                self.on_done
+            )
+
+
+    def is_enabled(self):
+        return True if os.path.exists(self.templates_path_string()) else False
+
+
+class JekyllBrowseTemplatesCommand(JekyllTemplateBase):
+    def run(self):
+        sublime.active_window().run_command(
+            'open_dir',
             {
-                'path': path,
-                'frontmatter': frontmatter
+                'dir': self.templates_path_string()
             }
         )
 
 
-class JekyllNewDraftCommand(JekyllNewPostBase):
+    def is_enabled(self):
+        return True if os.path.exists(self.templates_path_string()) else False
+
+
+class JekyllListUploadsCommand(JekyllUploadBase):
     """
-    A subclass for creating new draft posts.
+    A subclass for displaying uploads in the upload directory.
 
     """
-    IS_DRAFT = True
+    def on_done(self, index):
+        if index > -1 and type(self.item_list[index]) is list:
+            path = self.item_list[index][1]
+            fname = self.item_list[index][0]
+            view = self.window.active_view()
+            view.run_command(
+                'jekyll_insert_upload',
+                {
+                    'name': fname,
+                    'path': path
+                }
+            )
+
 
     def run(self):
-        self.doCommand()
+        path = self.uploads_path_string()
+        self.list_files(path, False)
+        self.window.show_quick_panel(self.item_list, self.on_done)
 
-    def create_and_open_file(self, path, frontmatter):
-        self.create_file(path)
-        if not self.window.views():
-            view = self.window.new_file()
-        else:
-            view = self.window.active_view()
-        view.run_command(
-            'jekyll_post_frontmatter',
-            {
-                'path': path,
-                'frontmatter': frontmatter
-            }
-        )
 
+## ********************************************************************************************** ##
+#  BEGIN TEXT COMMAND CLASSES
+## ********************************************************************************************** ##
 
 class JekyllPostFrontmatterCommand(sublime_plugin.TextCommand):
     """
@@ -484,71 +1096,30 @@ class JekyllPostFrontmatterCommand(sublime_plugin.TextCommand):
 
     """
     def run(self, edit, **args):
-        view = self.view
         path = args.get('path')
-        frontmatter = args.get('frontmatter', '-there was an error-')
-        syntax = get_setting(view, 'default_post_syntax', 'Markdown')
+        frontmatter = args.get('frontmatter', '')
         output_view = self.view.window().open_file(path)
 
         def update():
             if output_view.is_loading():
+
                 if ST3:
                     sublime.set_timeout_async(update, 1)
+
                 else:
                     sublime.set_timeout(update, 1)
+
             else:
-                if PY3:
-                    output_view.run_command(
-                        'insert_snippet',
-                        {
-                            'contents': frontmatter
-                        }
-                    )
-                else:
-                    edit = output_view.begin_edit()
-                    output_view.insert(edit, 0, frontmatter)
-                    output_view.end_edit(edit)
+                output_view.run_command(
+                    'insert_snippet',
+                    {
+                        'contents': frontmatter
+                    }
+                )
 
-                get_syntax_path(output_view, syntax)
                 output_view.run_command('save')
+
         update()
-
-
-class JekyllListUploadsCommand(JekyllListPostsBase):
-    """
-    A subclass for displaying uploads in the upload directory.
-
-    """
-
-    def run(self):
-        path = self.uploads_path_string()
-        self.list_files(path, 'Uploads', False)
-        self.window.show_quick_panel(self.posts, self.get_upload)
-
-    def get_upload(self, index):
-        if index > -1 and type(self.posts[index]) is list:
-            path = self.posts[index][1]
-            fname = self.posts[index][0]
-            self.window.active_view().run_command("jekyll_insert_upload",{ "name": fname , "path": path})
-
-
-class JekyllInsertUpload(sublime_plugin.TextCommand):
-    """
-    Insert the upload link at the current position
-
-    """
-    def run(self, edit, **args):
-        s = self.view.sel() 
-        rel_path = os.path.relpath(args["path"], os.path.dirname(get_setting(self.view, "uploads_path")))
-        uploads_baseurl = get_setting(self.view, 'uploads_baseurl')
-
-        # check if image
-        if imghdr.what(args["path"]) == None:
-            link_str = "[{0}]({1}/{2})".format(args["name"], uploads_baseurl, rel_path) 
-        else:
-            link_str = "![{0}]({1}/{2})".format(args["name"], uploads_baseurl, rel_path) 
-        
-        self.view.insert(edit, s[0].a, link_str)
 
 
 class JekyllInsertDateCommand(sublime_plugin.TextCommand):
@@ -559,15 +1130,18 @@ class JekyllInsertDateCommand(sublime_plugin.TextCommand):
     def run(self, edit, **args):
         DEFAULT_FORMAT = '%Y-%m-%d'
         view = self.view
-        date_format = get_setting(view, 'insert_date_format', '%Y-%m-%d')
-        datetime_format = get_setting(view, 'insert_datetime_format', '%Y-%m-%d %H:%M:%S')
+        date_format = get_setting(view, 'jekyll_date_format', '%Y-%m-%d')
+        datetime_format = get_setting(view, 'jekyll_datetime_format', '%Y-%m-%d %H:%M:%S')
 
         try:
             d = datetime.today()
+
             if args['format'] and args['format'] == 'date':
                 text = d.strftime(date_format)
+
             elif args['format'] and args['format'] == 'datetime':
                 text = d.strftime(datetime_format)
+
             else:
                 text = d.strftime(DEFAULT_FORMAT)
 
@@ -581,8 +1155,270 @@ class JekyllInsertDateCommand(sublime_plugin.TextCommand):
 
         # Do replacements
         for r in self.view.sel():
+
             # Insert when sel is empty to not select the contents
             if r.empty():
                 self.view.insert(edit, r.a, text)
+
             else:
                 self.view.replace(edit, r, text)
+
+
+class JekyllInsertUpload(sublime_plugin.TextCommand):
+    """
+    Insert the upload link at the current position
+
+    """
+    @catch_errors
+    def run(self, edit, **args):
+        uploads_path = get_setting(self.view, 'jekyll_uploads_path')
+        uploads_baseurl = get_setting(self.view, 'jekyll_uploads_baseurl')
+        relative_path = os.path.relpath(args["path"], os.path.dirname(uploads_path))
+
+        # check if image
+        link_str = "{0}[{1}]({2}/{3})".format(
+            '!' if imghdr.what(args["path"]) is not None else '',
+            '${1:' + args["name"] + '}', uploads_baseurl, relative_path
+        )
+
+        self.view.run_command(
+            'insert_snippet',
+            {
+                'contents': link_str
+            }
+        )
+
+
+## ********************************************************************************************** ##
+#  BEGIN MIGRATION CLASSES
+## ********************************************************************************************** ##
+
+class JekyllMigrateSettingsBase(sublime_plugin.WindowCommand):
+    """Base class to help migrate settings from pre-Jekyll 3.0 versions.
+
+    Converts pre-Jekyll 3.0 settings keys to their new values.
+    New values have been namespaced for easier management and
+    debugging.
+
+    """
+    settings_to_swap = {
+        "posts_path": "jekyll_posts_path",
+        "drafts_path": "jekyll_drafts_path",
+        "uploads_path": "jekyll_uploads_path",
+        "uploads_baseurl": "jekyll_uploads_baseurl",
+        "automatically_find_paths": "jekyll_auto_find_paths",
+
+        "default_post_syntax": "jekyll_default_markup",
+
+        "insert_date_format": "jekyll_date_format",
+        "insert_datetime_format": "jekyll_datetime_format"
+    }
+
+    def on_done(self):
+        self.window.show_input_panel(
+            'Type MIGRATE to continue with migration: ',
+            '',
+            self.validate_secret,
+            None,
+            None
+        )
+
+
+    def settings_path(self):
+        return os.path.join(sublime.packages_path(), 'User', 'Jekyll.sublime-settings')
+
+
+    def backups_path(self):
+        return os.path.join(sublime.packages_path(), 'User', 'Jekyll Backups')
+
+
+    def create_backup(self, type):
+        hex_string = uuid.uuid4().hex
+
+        if type and type == 'user':
+            src = self.settings_path()
+            dir = self.backups_path()
+
+            # Create a new backups directory if it doesn't exist yet
+            if not os.path.exists(dir):
+                os.makedirs(dir)
+
+            dst = os.path.join(dir, 'Jekyll.sublime-settings-backup-{hex}'.format(hex=hex_string))
+            shutil.copy(src, dst)
+            debug('User settings backed up to "{path}".'.format(path=dst), prefix='Jekyll Utility', level='info')
+
+        elif type and type == 'project':
+            src = self.window.project_file_name()
+            dir = self.backups_path()
+
+            if not os.path.exists(dir):
+                os.makedirs(dir)
+
+            dst = os.path.join(dir, '{filename}-{hex}'.format(filename=os.path.basename(src), hex=hex_string))
+            shutil.copy(src, dst)
+            debug('Project settings backed up to "{path}".'.format(path=dst), prefix='Jekyll Utility', level='info')
+
+        else:
+            debug('Unable to perform settings backup!', prefix='Jekyll Utility', level='warning')
+            pass
+
+    def validate_secret(self, secret):
+        """Validate a string against a known simple secret key.
+
+        Validates user input against a simple
+        text-based "secret" token. This is used
+        to help prevent accidental migrations.
+
+        Args:
+            self (class): A Jekyll Migrate base class
+            secret (string): A secret string
+
+        Returns:
+            none
+
+        """
+        if secret and secret == 'MIGRATE':
+            confirm = ("You are about to migrate your Jekyll settings to v3.0! "
+                       "\n\nThere is no automated undo command. "
+                       "Backup settings files are stored in a 'Jekyll Backups' "
+                       "directory inside your User and/or Project directory. "
+                       "\n\nClick the migrate button below to continue.\n\n")
+
+            migrate = sublime.ok_cancel_dialog(confirm, 'Migrate')
+
+            if migrate:
+                debug('Migration started...', prefix='Jekyll Utility', level='info')
+                sublime.set_timeout(lambda: self.begin_migration(), 100)
+
+            else:
+                sublime.message_dialog('Jekyll settings migration canceled!')
+                debug('Migration canceled by user.', prefix='Jekyll Utility', level='warning')
+
+        else:
+            sublime.message_dialog('You entered an incorrect secret. Try again')
+            debug('Migration canceled by user.', prefix='Jekyll Utility', level='warning')
+            sublime.set_timeout(lambda: self.on_done(), 100)
+
+
+class JekyllMigrateUserSettingsCommand(JekyllMigrateSettingsBase):
+    def run(self):
+        sublime.set_timeout(lambda: self.on_done(), 100)
+
+
+    def is_visible(self):
+        settings = sublime.load_settings('Jekyll.sublime-settings')
+
+        if settings.has('jekyll_utility_disable') and settings.get('jekyll_utility_disable') is True:
+            return False
+
+        else:
+            return True
+
+
+    def begin_migration(self):
+        sublime.set_timeout(lambda: self.create_backup('user'), 100)
+        settings = sublime.load_settings('Jekyll.sublime-settings')
+
+        for key in self.settings_to_swap:
+
+            if settings.has(key):
+                settings.set(self.settings_to_swap[key], settings.get(key))
+
+                debug('Migrated old settings key "{key}" to new settings key "{swap}"'.format(
+                    key=key, swap=self.settings_to_swap[key]
+                ), prefix='Jekyll Utility', level='info')
+
+                settings.erase(key)
+                debug('Deleted old settings key "{key}"'.format(key=key), prefix='Jekyll Utility', level='info')
+
+        sublime.save_settings('Jekyll.sublime-settings')
+
+
+class JekyllMigrateProjectSettingsCommand(JekyllMigrateSettingsBase):
+    def run(self):
+        sublime.set_timeout(lambda: self.on_done(), 100)
+
+
+    def is_enabled(self):
+        # NOTE: the Sublime API only exposes projects in v3+
+        return True if ST3 and self.window.project_file_name() else False
+
+
+    def is_visible(self):
+        settings = sublime.load_settings('Jekyll.sublime-settings')
+
+        if settings.has('jekyll_utility_disable') and settings.get('jekyll_utility_disable') is True:
+            return False
+
+        else:
+            return True
+
+
+    def begin_migration_old(self):
+        project_file_path = self.window.project_file_name()
+        debug('Project file path = {path}'.format(path=project_file_path), prefix='Jekyll Utility')
+
+        if os.path.exists(project_file_path):
+
+            with open(project_file_path, 'r+') as project_file:
+                project_data = json.load(project_file)
+
+                if not 'settings' in project_data:
+                    # No project settings found
+                    sublime.message_dialog('Unable to find project settings!')
+                    debug('Unable to find project settings.', prefix='Jekyll Utility', level='error')
+                    return
+
+                settings = project_data['settings']
+
+                if 'Jekyll' in settings:
+                    # Create backup of current project settings file
+                    sublime.set_timeout(lambda: self.create_backup('project'), 100)
+                    jekyll_settings = settings['Jekyll']
+
+                    for key in self.settings_to_swap:
+
+                        if key in jekyll_settings:
+                            jekyll_settings[self.settings_to_swap[key]] = jekyll_settings[key]
+                            debug('Migrated old settings key "{key}" to new settings key "{swap}"'.format(
+                                key=key, swap=self.settings_to_swap[key]
+                            ), prefix='Jekyll Utility', level='info')
+
+                            jekyll_settings.pop(key, None)
+                            debug('Deleted old settings key "{key}"'.format(key=key),
+                                prefix='Jekyll Utility', level='info')
+
+                    settings['Jekyll'] = jekyll_settings
+                    project_data['settings'] = settings
+                    project_file.seek(0)
+                    project_file.truncate()
+                    json.dump(project_data, project_file, indent=4, sort_keys=True)
+
+                else:
+                    # No Jekyll project settings found
+                    sublime.message_dialog('Unable to find Jekyll in project settings!')
+                    debug('Unable to find Jekyll in project settings.',
+                        prefix='Jekyll Utility', level='error')
+
+
+class JekyllBrowseBackupsCommand(JekyllMigrateSettingsBase):
+    def run(self):
+        sublime.active_window().run_command(
+            'open_dir',
+            {
+                'dir': self.backups_path()
+            }
+        )
+
+
+    def is_enabled(self):
+        return True if os.path.exists(self.backups_path()) else False
+
+    def is_visible(self):
+        settings = sublime.load_settings('Jekyll.sublime-settings')
+
+        if settings.has('jekyll_utility_disable') and settings.get('jekyll_utility_disable') is True:
+            return False
+
+        else:
+            return True

@@ -4,20 +4,52 @@
         "command": "jekyll_new_post"
     },
     {
+        "caption": "Jekyll: New post from template",
+        "command": "jekyll_new_post_from_template"
+    },
+    {
+        "caption": "Jekyll: Remove post",
+        "command": "jekyll_remove_post"
+    },
+    {
+        "caption": "Jekyll: Open post",
+        "command": "jekyll_open_post"
+    },
+    {
         "caption": "Jekyll: New draft",
         "command": "jekyll_new_draft"
     },
     {
-        "caption": "Jekyll: Open post...",
-        "command": "jekyll_open_post"
+        "caption": "Jekyll: New draft from template",
+        "command": "jekyll_new_draft_from_template"
     },
     {
-        "caption": "Jekyll: Open draft...",
+        "caption": "Jekyll: Promote draft to post",
+        "command": "jekyll_promote_draft"
+    },
+    {
+        "caption": "Jekyll: Remove draft",
+        "command": "jekyll_remove_draft"
+    },
+    {
+        "caption": "Jekyll: Open draft",
         "command": "jekyll_open_draft"
     },
     {
-        "caption": "Jekyll: Promote draft to post...",
-        "command": "jekyll_promote_draft"
+        "caption": "Jekyll: New template",
+        "command": "jekyll_new_template"
+    },
+    {
+        "caption": "Jekyll: Edit template",
+        "command": "jekyll_edit_template"
+    },
+    {
+        "caption": "Jekyll: Remove template",
+        "command": "jekyll_remove_template"
+    },
+    {
+        "caption": "Jekyll: Browse templates...",
+        "command": "jekyll_browse_templates"
     },
     {
         "caption": "Jekyll: Insert current date",
@@ -30,7 +62,19 @@
         "args": {"format": "datetime"}
     },
     {
-        "caption": "Jekyll: Insert upload...",
+        "caption": "Jekyll: Insert upload",
         "command": "jekyll_list_uploads"
+    },
+    {
+        "caption": "Jekyll Utility: Migrate user settings",
+        "command": "jekyll_migrate_user_settings"
+    },
+    {
+        "caption": "Jekyll Utility: Migrate project settings",
+        "command": "jekyll_migrate_project_settings"
+    },
+    {
+        "caption": "Jekyll Utility: Browse backups...",
+        "command": "jekyll_browse_backups"
     }
 ]

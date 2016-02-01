@@ -9,9 +9,30 @@
                 "command": "jekyll_new_post"
             },
             {
+                "caption": "New post from template",
+                "command": "jekyll_new_post_from_template"
+            },
+
+            { "caption": "-" },
+            
+            {
                 "caption": "New draft",
                 "command": "jekyll_new_draft"
             },
+            {
+                "caption": "New draft from template",
+                "command": "jekyll_new_draft_from_template"
+            },
+
+            { "caption": "-" },
+
+            {
+                "caption": "New template",
+                "command": "jekyll_new_template"
+            },
+
+            { "caption": "-" },
+
             {
                 "caption": "Insert current date",
                 "command": "jekyll_insert_date",
@@ -21,6 +42,10 @@
                 "caption": "Insert current datetime",
                 "command": "jekyll_insert_date",
                 "args": {"format": "datetime"}
+            },
+            {
+                "caption": "Insert upload tag",
+                "command": "jekyll_list_uploads"
             }
         ]
     },

@@ -1,0 +1,6 @@
+<snippet>
+    <content><![CDATA[{% include_relative $1 %}]]></content>
+    <tabTrigger>include_relative</tabTrigger>
+    <scope>text.html, text.html.markdown, source.json, text.html.textile, source.sass, source.scss</scope>
+    <description>include_relative</description>
+</snippet>

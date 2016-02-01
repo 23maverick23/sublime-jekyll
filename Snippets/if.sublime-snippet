@@ -1,11 +1,10 @@
-<!-- See http://www.sublimetext.com/docs/snippets for more information -->
 <snippet>
     <content><![CDATA[
 {% if $1 %}
-    $0
+$0
 {% endif %}
 ]]> </content>
     <tabTrigger>if</tabTrigger>
-    <scope>text.html.jekyll, text.html.markdown.jekyll, source.json.jekyll, text.html.textile.jekyll, text.html.markdown.multimarkdown, text.html.markdown</scope>
+    <scope>text.html, text.html.markdown, source.json, text.html.textile, source.sass, source.scss</scope>
     <description>if</description>
 </snippet>

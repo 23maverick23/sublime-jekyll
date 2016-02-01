@@ -1,15 +1,123 @@
 [
     {
-        "caption": "Preferences",
-        "mnemonic": "n",
+        "id": "tools",
+        "caption": "Tools",
+        "children":
+        [
+            {
+                "id": "jekyll",
+                "caption": "Jekyll",
+                "children":
+                [
+                    {
+                        "caption": "New post",
+                        "command": "jekyll_new_post"
+                    },
+                    {
+                        "caption": "New post from template",
+                        "command": "jekyll_new_post_from_template"
+                    },
+                    {
+                        "caption": "Remove post",
+                        "command": "jekyll_remove_post"
+                    },
+                    {
+                        "caption": "Open post",
+                        "command": "jekyll_open_post"
+                    },
+
+                    { "caption": "-" },
+
+                    {
+                        "caption": "New draft",
+                        "command": "jekyll_new_draft"
+                    },
+                    {
+                        "caption": "New draft from template",
+                        "command": "jekyll_new_draft_from_template"
+                    },
+                    {
+                        "caption": "Promote draft to post",
+                        "command": "jekyll_promote_draft"
+                    },
+                    {
+                        "caption": "Remove draft",
+                        "command": "jekyll_remove_draft"
+                    },
+                    {
+                        "caption": "Open draft",
+                        "command": "jekyll_open_draft"
+                    },
+
+                    { "caption": "-" },
+
+                    {
+                        "caption": "New template",
+                        "command": "jekyll_new_template"
+                    },
+                    {
+                        "caption": "Edit template",
+                        "command": "jekyll_edit_template"
+                    },
+                    {
+                        "caption": "Remove template",
+                        "command": "jekyll_remove_template"
+                    },
+                    {
+                        "caption": "Browse templates...",
+                        "command": "jekyll_browse_templates"
+                    },
+
+                    { "caption": "-" },
+
+                    {
+                        "caption": "Insert current date",
+                        "command": "jekyll_insert_date",
+                        "args": {"format": "date"}
+                    },
+                    {
+                        "caption": "Insert current datetime",
+                        "command": "jekyll_insert_date",
+                        "args": {"format": "datetime"}
+                    },
+                    {
+                        "caption": "Insert upload",
+                        "command": "jekyll_list_uploads"
+                    },
+
+                    { "caption": "-" },
+
+                    {
+                        "id": "jekyll-utilities",
+                        "caption": "Jekyll Utilities",
+                        "children": [
+                            {
+                                "caption": "Migrate user settings",
+                                "command": "jekyll_migrate_user_settings"
+                            },
+                            {
+                                "caption": "Migrate project settings",
+                                "command": "jekyll_migrate_project_settings"
+                            },
+                            {
+                                "caption": "Browse backups...",
+                                "command": "jekyll_browse_backups"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "id": "preferences",
+        "caption": "Preferences",
         "children":
         [
             {
                 // Include this information in case it is the only package using that menu
-                "caption": "Package Settings",
-                "mnemonic": "P",
                 "id": "package-settings",
+                "caption": "Package Settings",
                 "children":
                 [
                     {
@@ -24,7 +132,9 @@
                                     "file": "${packages}/Jekyll/README.md"
                                 }
                             },
+
                             { "caption": "-" },
+
                             // Settings - Default
                             {
                                 "caption": "Settings – Default",
@@ -41,7 +151,9 @@
                                     "file": "${packages}/User/Jekyll.sublime-settings"
                                 }
                             },
+
                             { "caption": "-" },
+
                             // Key Bindings - Default
                             {
                                 "caption": "Key Bindings – Default",
@@ -58,6 +170,29 @@
                                     "file": "${packages}/User/Default ($platform).sublime-keymap"
                                 }
                             },
+
+                            { "caption": "-" },
+
+                            {
+                                "caption": "Migrate user settings",
+                                "command": "jekyll_migrate_user_settings"
+                            },
+                            {
+                                "caption": "Migrate project settings",
+                                "command": "jekyll_migrate_project_settings"
+                            },
+
+                            { "caption": "-" },
+
+                            {
+                                "caption": "Browse templates...",
+                                "command": "jekyll_browse_templates"
+                            },
+                            {
+                                "caption": "Browse backups...",
+                                "command": "jekyll_browse_backups"
+                            },
+                            
                             { "caption": "-" }
                         ]
                     }
