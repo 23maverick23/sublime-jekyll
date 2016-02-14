@@ -34,7 +34,7 @@ User Settings
 ^^^^^^^^^^^^^^^^^^^^^^^
 
     :Default: None
-    :Description: This should point to your ``_uploads`` directory.
+    :Description: This should point to your ``uploads`` directory.
 
 
 .. warning::
@@ -48,14 +48,14 @@ User Settings
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     :Default: ``false``
-    :Description: If you don't want to hard-code your ``_posts``, ``_drafts``, or ``uploads`` paths into your settings file, you can optionally have sublime-jekyll look for ``_posts``, ``_drafts`` or ``_uploads`` folders open in your sidebar. If you don't name the folders appropriately, or you use a non-standard file structure for your Jekyll project, you have a higher chance of returning path exception errors. This should have a value of ``true`` or ``false``.
+    :Description: If you don't want to hard-code your ``_posts``, ``_drafts``, or ``uploads`` paths into your settings file, you can optionally have sublime-jekyll look for ``_posts``, ``_drafts`` or ``uploads`` folders open in your sidebar. If you don't name the folders appropriately, or you use a non-standard file structure for your Jekyll project, you have a higher chance of returning path exception errors. This should have a value of ``true`` or ``false``.
 
 
 ``jekyll_uploads_baseurl``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     :Default: ``{{ site.baseurl }}``
-    :Description: This string value should represent the **baseurl** for the uploads directory. For example, if your uploads directory is ``_uploads/`` and you have an image called ``image.png``, the output of inserting the image in your post would be ``{{ uploads_baseurl }}/uploads/image.png``, with ``{{ uploads_baseurl }}`` replace by its value.
+    :Description: This string value should represent the **baseurl** for the uploads directory. For example, if your uploads directory is ``uploads`` and you have an image called ``image.png``, the output of inserting the image in your post would be ``{{ uploads_baseurl }}/uploads/image.png``, with ``{{ uploads_baseurl }}`` replace by its value.
 
 
 .. note::
@@ -140,7 +140,7 @@ For per-project settings, make sure you add your Jekyll settings correctly to yo
             {
                 "posts_path": "/Users/username/site/_posts",
                 "drafts_path": "/Users/username/site/_drafts",
-                "uploads_path": "/Users/username/site/_uploads",
+                "uploads_path": "/Users/username/site/uploads",
             }
         }
     }

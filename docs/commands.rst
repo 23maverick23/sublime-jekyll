@@ -125,7 +125,7 @@ Insert upload
 ^^^^^^^^^^^^^
 
     :Command: ``jekyll_insert_upload``
-    :Description: Brings up a quick panel for choosing an existing file in your ``_uploads`` directory, and adds a pre-formatted link at the cursor.
+    :Description: Brings up a quick panel for choosing an existing file in your ``uploads`` directory, and adds a pre-formatted link at the cursor.
 
 
 Jekyll Utility
