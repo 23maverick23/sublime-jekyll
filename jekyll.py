@@ -312,8 +312,8 @@ class JekyllWindowBase(sublime_plugin.WindowCommand):
 
             if not self.dirs:
 
-                if not path or path == '':
-                    debug('Unable to resolve path information!'.format(
+                if not path or path == '' or not os.path.exists(path):
+                    debug('Unable to resolve path information! ({path})'.format(
                         path=path), prefix='Jekyll', level='error')
                     raise MissingPathException
 
@@ -338,7 +338,9 @@ class JekyllWindowBase(sublime_plugin.WindowCommand):
                 return self.dirs[0]
 
         else:
-            if not path or path == '':
+            if not path or path == '' or not os.path.exists(path):
+                debug('Invalid path! - ({path})'.format(
+                        path=path), prefix='Jekyll', level='error')
                 raise MissingPathException
 
             return path
