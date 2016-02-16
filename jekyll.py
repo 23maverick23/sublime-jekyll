@@ -1,10 +1,8 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 import imghdr
 import os
 import re
-import shutil
 import sublime
 import sublime_plugin
 import sys
@@ -118,25 +116,29 @@ def catch_errors(fn):
             return fn(*args, **kwargs)
 
         except MissingPathException:
-            sublime.error_message('Jekyll: Unable to resolve path information!')
             debug('Unable to resolve path information!', prefix='Jekyll', level='error')
-
-            user_settings_path = os.path.join(sublime.packages_path(), 'User', 'Jekyll.sublime-settings')
-
-            if not os.path.exists(user_settings_path):
-                # If a User settings file for Jekyll is not found, copy the default settings
-                # to a new file and prompt the user to edit and save it.
-                debug('Jekyll.sublime-settings file doesn\'t exist in User directory')
-
-                default_settings_path = os.path.join(sublime.packages_path(), 'Jekyll', 'Jekyll.sublime-settings')
-                shutil.copy(default_settings_path, user_settings_path)
-
-            sublime.active_window().open_file(user_settings_path)
+            message = (
+                'Jekyll: Unable to resolve path information!\n\n'
+                'Please double-check that you have defined absolute '
+                'paths to your Jekyll directories, or that you have '
+                'enabled the `jekyll_auto_find_paths` setting.\n\n'
+                'If you have set your path settings correctly, please '
+                'copy the console output and create a new issue.\n'
+            )
+            sublime.error_message(message)
 
         except:
             debug('Unexpected error. Stack trace:\n\t{stack}'.format(stack=traceback.print_exc()),
                 prefix='Jekyll', level='error')
-            sublime.error_message('Jekyll: Unexpected error (please, report a bug!)')
+            message = (
+                'Jekyll: Oops! - this is a bit embarassing\n\t\t¯\_(ツ)_/¯ \n\n'
+                'You\'ve encountered an unexpected error, which likely '
+                'means you\'ve found a bug in our code. It would be great '
+                'if you could copy any related console output into a new '
+                'issue and send it over to us. We\'ll take a look and get '
+                'back to you as soon as we can. Thanks!\n'
+            )
+            sublime.error_message(message)
 
     return _fn
 
@@ -263,19 +265,16 @@ class JekyllWindowBase(sublime_plugin.WindowCommand):
     markup = None
 
 
-    @catch_errors
     def posts_path_string(self):
         p = get_setting(self.window.active_view(), 'jekyll_posts_path')
         return self.determine_path(p, '_posts')
 
 
-    @catch_errors
     def drafts_path_string(self):
         p = get_setting(self.window.active_view(), 'jekyll_drafts_path')
         return self.determine_path(p, '_drafts')
 
 
-    @catch_errors
     def uploads_path_string(self):
         p = get_setting(self.window.active_view(), 'jekyll_uploads_path')
         return self.determine_path(p, 'uploads')
@@ -287,7 +286,6 @@ class JekyllWindowBase(sublime_plugin.WindowCommand):
         return os.path.join(sublime.packages_path(), 'User', 'Jekyll Templates')
 
 
-    @catch_errors
     def determine_path(self, path, dir_name):
         """Determine a directory path.
 
@@ -388,9 +386,6 @@ class JekyllWindowBase(sublime_plugin.WindowCommand):
         """
         post_dir = self.path_string() if path is None else path
 
-        if not post_dir:
-            raise MissingPathException
-
         self.markup = get_setting(self.window.active_view(), 'jekyll_default_markup', 'Markdown')
 
         if self.markup == 'Textile':
@@ -414,7 +409,6 @@ class JekyllWindowBase(sublime_plugin.WindowCommand):
             self.create_and_open_file(full_path, frontmatter)
 
 
-    @catch_errors
     def list_files(self, path, filter_ext=True):
         """Create an array of string arrays for files
 
@@ -487,7 +481,6 @@ class JekyllWindowBase(sublime_plugin.WindowCommand):
         return self.markup
 
 
-    @catch_errors
     def create_and_open_file(self, path, frontmatter):
         create_file(path)
 
@@ -538,12 +531,10 @@ class JekyllUploadBase(JekyllWindowBase):
 
 
 class JekyllTemplateBase(JekyllWindowBase):
-    @catch_errors
     def path_string(self):
         return self.templates_path_string()
 
 
-    @catch_errors
     def title_input(self, title, description=None):
         template_dir = self.path_string()
 
@@ -566,7 +557,6 @@ class JekyllTemplateBase(JekyllWindowBase):
 
 
 class JekyllFromTemplateBase(JekyllTemplateBase):
-    @catch_errors
     def title_input(self, title, content):
 
         if not self.window.views():
@@ -1171,7 +1161,6 @@ class JekyllInsertUpload(sublime_plugin.TextCommand):
     Insert the upload link at the current position
 
     """
-    @catch_errors
     def run(self, edit, **args):
         uploads_path = get_setting(self.view, 'jekyll_uploads_path')
         uploads_baseurl = get_setting(self.view, 'jekyll_uploads_baseurl')
