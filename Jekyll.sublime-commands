@@ -52,6 +52,10 @@
         "command": "jekyll_browse_templates"
     },
     {
+        "caption": "Jekyll: Edit _config.yml",
+        "command": "jekyll_edit_config"
+    },
+    {
         "caption": "Jekyll: Insert current date",
         "command": "jekyll_insert_date",
         "args": {"format": "date"}

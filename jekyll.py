@@ -556,6 +556,11 @@ class JekyllTemplateBase(JekyllWindowBase):
             )
 
 
+class JekyllTemplateBase(JekyllWindowBase):
+    def path_string(self):
+        return self.templates_path_string()
+
+
 class JekyllFromTemplateBase(JekyllTemplateBase):
     def title_input(self, title, content):
 
@@ -1076,6 +1081,22 @@ class JekyllListUploadsCommand(JekyllUploadBase):
         path = self.uploads_path_string()
         self.list_files(path, False)
         self.window.show_quick_panel(self.item_list, self.on_done)
+
+
+class JekyllEditConfigCommand(JekyllWindowBase):
+    def run(self):
+        site_dir = os.path.join(self.posts_path_string(), os.pardir)
+
+        if os.path.exists(site_dir):
+            config_file = os.path.join(site_dir, '_config.yml')
+
+            if os.path.exists(config_file):
+                self.window.open_file(config_file, sublime.TRANSIENT)
+
+
+    def is_enabled(self):
+        site_dir = os.path.join(self.posts_path_string(), os.pardir)
+        return True if os.path.exists(site_dir) else False
 
 
 ## ********************************************************************************************** ##

@@ -105,6 +105,13 @@ Browse templates...
     :Description: Opens your ``Jekyll Templates`` directory in your system-specific default file browser (helpful for managing templates directly).
 
 
+Edit _config.yml
+^^^^^^^^^^^^^^^^
+
+    :Command: ``jekyll_edit_config``
+    :Description: Opens your ``_config.yml`` file if it is found in your ``jekyll_posts_path`` parent directory. Helpful for making quick changes to Jekyll blog settings.
+
+
 Insert current date
 ^^^^^^^^^^^^^^^^^^^
 

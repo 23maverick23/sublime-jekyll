@@ -71,6 +71,13 @@
                     { "caption": "-" },
 
                     {
+                        "caption": "Edit _config.yml",
+                        "command": "jekyll_edit_config"
+                    },
+
+                    { "caption": "-" },
+
+                    {
                         "caption": "Insert current date",
                         "command": "jekyll_insert_date",
                         "args": {"format": "date"}
