@@ -75,6 +75,13 @@ User Settings
     We use ``.markdown`` as the standard file extension for Markdown files as suggested by John Gruber, developer of Markdown, in his blog post here: http://daringfireball.net/linked/2014/01/08/markdown-extension
 
 
+``jekyll_send_to_trash``
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+    :Default: ``false``
+    :Description: Determines if sublime-jekyll should send deleted drafts, posts and templates to the system trash/recycling bin, or immediately purge them from disk.
+
+
 ``jekyll_date_format``
 ^^^^^^^^^^^^^^^^^^^^^^
 

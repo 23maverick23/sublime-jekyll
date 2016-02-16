@@ -34,6 +34,12 @@ if settings.has('jekyll_debug') and settings.get('jekyll_debug') is True:
     DEBUG = True
 
 
+if ST3:
+    from .send2trash import send2trash
+else:
+    from send2trash import send2trash
+
+
 ## ********************************************************************************************** ##
 #  BEGIN GLOBAL METHODS
 ## ********************************************************************************************** ##
@@ -286,6 +292,7 @@ class JekyllWindowBase(sublime_plugin.WindowCommand):
         return os.path.join(sublime.packages_path(), 'User', 'Jekyll Templates')
 
 
+    @catch_errors
     def determine_path(self, path, dir_name):
         """Determine a directory path.
 
@@ -500,12 +507,30 @@ class JekyllWindowBase(sublime_plugin.WindowCommand):
 
 
     def remove_file(self, file, message):
+        to_trash = get_setting(self.window.active_view(), 'jekyll_send_to_trash', False)
+
+        if to_trash:
+            message = message + (
+                '\n\nYou seem to be using the `jekyll_send_to_trash` setting, so you '
+                'can retrieve this file later in your system Trash or Recylcing Bin.'
+            )
+        else:
+            message = message + (
+                '\n\nThis action is permanent and irreversible since you are not using '
+                'the `jekyll_send_to_trash` setting. Are you sure you want to continue?'
+            )
+
         delete = sublime.ok_cancel_dialog(message, 'Confirm Delete')
 
         if delete is True:
             self.window.run_command('close_file')
             self.window.run_command('refresh_folder_list')
-            os.remove(file)
+
+            if to_trash:
+                send2trash(file)
+
+            else:
+                os.remove(file)
 
         else:
             return
@@ -554,11 +579,6 @@ class JekyllTemplateBase(JekyllWindowBase):
                 full_path,
                 frontmatter
             )
-
-
-class JekyllTemplateBase(JekyllWindowBase):
-    def path_string(self):
-        return self.templates_path_string()
 
 
 class JekyllFromTemplateBase(JekyllTemplateBase):
@@ -728,10 +748,7 @@ class JekyllRemovePostCommand(JekyllPostBase):
         if index > -1 and type(self.item_list[index]) is list:
             f = self.item_list[index][1]
 
-            confirm = (
-                'You are about to delete the selected Jekyll post. '
-                'This action is irreversable.'
-            )
+            confirm = 'You are about to delete the selected Jekyll post.'
 
             self.remove_file(f, confirm)
 
@@ -889,10 +906,7 @@ class JekyllRemoveDraftCommand(JekyllDraftBase):
         if index > -1 and type(self.item_list[index]) is list:
             f = self.item_list[index][1]
 
-            confirm = (
-                'You are about to delete the selected Jekyll draft. '
-                'This action is irreversable.'
-            )
+            confirm = 'You are about to delete the selected Jekyll draft.'
 
             self.remove_file(f, confirm)
 
@@ -1010,10 +1024,7 @@ class JekyllRemoveTemplateCommand(JekyllTemplateBase):
         if index > -1 and type(self.item_list[index]) is list:
             f = self.item_list[index][1]
 
-            confirm = (
-                'You are about to delete the selected Jekyll template. '
-                'This action is irreversable.'
-            )
+            confirm = 'You are about to delete the selected Jekyll template.'
 
             self.remove_file(f, confirm)
 
@@ -1092,11 +1103,6 @@ class JekyllEditConfigCommand(JekyllWindowBase):
 
             if os.path.exists(config_file):
                 self.window.open_file(config_file, sublime.TRANSIENT)
-
-
-    def is_enabled(self):
-        site_dir = os.path.join(self.posts_path_string(), os.pardir)
-        return True if os.path.exists(site_dir) else False
 
 
 ## ********************************************************************************************** ##

@@ -59,6 +59,11 @@
     // http://daringfireball.net/linked/2014/01/08/markdown-extension
     "jekyll_default_markup": "Markdown",
 
+    // This determines if sublime-jekyll should send deleted drafts, posts and templates to
+    // the system trash/recycling bin, or immediately purge them from disk. The
+    // default value is `false` which means files are purged immediately.
+    "jekyll_send_to_trash": false,
+
     // ************************************************************************************
     // If for some reason you want to change the way either the date
     // or the datetime string is formatted, you can override those formats
