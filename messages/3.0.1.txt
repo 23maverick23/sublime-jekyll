@@ -1,0 +1,49 @@
+***************************************************************************************************
+       
+              ÛÛÛ           ÛÛÛÛÛ                 ÛÛÛÛ  ÛÛÛÛ      ÛÛÛÛÛÛÛÛ        ÛÛÛÛÛ   
+             °°°           °°ÛÛÛ                 °°ÛÛÛ °°ÛÛÛ     ÛÛÛ°°°°ÛÛÛ     ÛÛÛ°°°ÛÛÛ 
+             ÛÛÛÛÛ  ÛÛÛÛÛÛ  °ÛÛÛ ÛÛÛÛÛ ÛÛÛÛÛ ÛÛÛÛ °ÛÛÛ  °ÛÛÛ    °°°    °ÛÛÛ    ÛÛÛ   °°ÛÛÛ
+            °°ÛÛÛ  ÛÛÛ°°ÛÛÛ °ÛÛÛ°°ÛÛÛ °°ÛÛÛ °ÛÛÛ  °ÛÛÛ  °ÛÛÛ       ÛÛÛÛÛÛ°    °ÛÛÛ    °ÛÛÛ
+             °ÛÛÛ °ÛÛÛÛÛÛÛ  °ÛÛÛÛÛÛ°   °ÛÛÛ °ÛÛÛ  °ÛÛÛ  °ÛÛÛ      °°°°°°ÛÛÛ   °ÛÛÛ    °ÛÛÛ
+             °ÛÛÛ °ÛÛÛ°°°   °ÛÛÛ°°ÛÛÛ  °ÛÛÛ °ÛÛÛ  °ÛÛÛ  °ÛÛÛ     ÛÛÛ   °ÛÛÛ   °°ÛÛÛ   ÛÛÛ 
+             °ÛÛÛ °°ÛÛÛÛÛÛ  ÛÛÛÛ ÛÛÛÛÛ °°ÛÛÛÛÛÛÛ  ÛÛÛÛÛ ÛÛÛÛÛ   °°ÛÛÛÛÛÛÛÛ  ÛÛ °°°ÛÛÛÛÛ°  
+             °ÛÛÛ  °°°°°°  °°°° °°°°°   °°°°°ÛÛÛ °°°°° °°°°°     °°°°°°°°  °°    °°°°°°   
+         ÛÛÛ °ÛÛÛ                       ÛÛÛ °ÛÛÛ                                          
+        °°ÛÛÛÛÛÛ                       °°ÛÛÛÛÛÛ                                           
+         °°°°°°                         °°°°°°                                            
+                            
+                            http://23maverick23.github.io/sublime-jekyll/
+                                  http://sublime-jekyll.rtfd.org/
+                           sublime-jekyll is licensed under the MIT license
+       
+***************************************************************************************************
+
+This update squashes a few minor bugs and adds a few helpful features. We've added a bit more
+helpful path error reporting for when you forget to add your path settings (please don't forget to
+add those if you plan to use them). We've also removed some old ST2-only code that was causing
+issues for ST3 users - we missed this in the 3.0 upgrade.
+
+This update also adds a new command `Jekyll: Edit _config.yml` which will attempt to open your
+_config.yml file within your Jekyll site or blog. There is also a new setting named
+`jekyll_send_to_trash` which if enabled will send deleted posts, drafts and templates to your
+system trash or recycling bin instead of removing them from your system immediately.
+
+
+CHANGELOG
+=========
+
+## v3.0.1 (2016-02-16)
+
+- Close #59
+    + Add send2trash module
+    * Update remove_file methods to support send2trash
+    * Small bugfixes
+- Close #58
+    + Add new command for editing `_config.yml` file
+- Close #60
+    - Remove shutil copy method for settings files
+    - Remove duplicate decorators from path methods
+- Close #62
+    + Add basic path exists check to help with absolute vs. relative paths
+- Close #61
+    * Fix small typo in documentation
