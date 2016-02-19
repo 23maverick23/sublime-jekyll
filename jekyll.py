@@ -9,6 +9,8 @@ import sys
 import traceback
 import uuid
 
+import shutil
+
 from datetime import datetime
 from functools import wraps
 
