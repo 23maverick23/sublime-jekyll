@@ -1,6 +1,15 @@
 sublime-jekyll
 ==============
 
+.. image:: https://img.shields.io/github/license/23maverick23/sublime-jekyll.svg
+   :target: https://github.com/23maverick23/sublime-jekyll/blob/master/LICENSE
+.. image:: https://img.shields.io/github/tag/23maverick23/sublime-jekyll.svg
+   :target: https://github.com/23maverick23/sublime-jekyll/tags
+.. image:: https://img.shields.io/packagecontrol/dt/Jekyll.svg
+   :target: https://packagecontrol.io/packages/Jekyll
+.. image:: https://img.shields.io/maintenance/yes/2016.svg
+   :target: http://23maverick23.github.io/sublime-jekyll/
+
 `sublime-jekyll`_ is a `Sublime Text`_ package for `Jekyll`_ static sites. This package is aimed at streamlining the process of managing and creating new Jekyll posts. It does this by providing quick and easy access to new post and draft commands, snippets and completions for `Liquid`_ template tags and filters, as well as some handy commands for adding dates and upload links to your posts.
 
 If you use Jekyll as your static site generator, and Sublime Text as your text editor, you should absolutely install and use this package!

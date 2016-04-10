@@ -31,6 +31,7 @@ env/
 build/
 develop-eggs/
 dist/
+docs/_build/
 downloads/
 eggs/
 .eggs/
