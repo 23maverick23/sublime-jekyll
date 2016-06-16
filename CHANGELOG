@@ -1,6 +1,10 @@
 sublime-jekyll changelog
 ========================
 
+## v3.0.3 (2016-06-15)
+
+- Close #68 to add more verbose exception messages
+
 ## v3.0.2 (2016-02-18)
 
 - Close PR #63
