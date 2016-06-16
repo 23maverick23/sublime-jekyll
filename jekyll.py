@@ -48,9 +48,6 @@ else:
 
 
 def plugin_loaded():
-    """
-
-    """
     if DEBUG:
         UTC_TIME = datetime.utcnow()
         PYTHON = sys.version_info[:3]
@@ -61,7 +58,7 @@ def plugin_loaded():
         INSTALL = sublime.installed_packages_path()
 
         message = (
-            'Jekyll debugging mode enabled...\n\n'
+            'Jekyll debugging mode enabled...\n'
             '\tUTC Time: {time}\n'
             '\tSystem Python: {python}\n'
             '\tSystem Platform: {plat}\n'
@@ -123,30 +120,23 @@ def catch_errors(fn):
         try:
             return fn(*args, **kwargs)
 
-        except MissingPathException:
-            debug('Unable to resolve path information!', prefix='Jekyll', level='error')
-            message = (
-                'Jekyll: Unable to resolve path information!\n\n'
+        except MissingPathException as e:
+            debug('Unable to resolve path information! - {error}'.format(error=e),
+                  prefix='Jekyll', level='error')
+            text = (
+                'Jekyll: Unable to resolve path information!\n\n{error}\n\n'
                 'Please double-check that you have defined absolute '
                 'paths to your Jekyll directories, or that you have '
                 'enabled the `jekyll_auto_find_paths` setting.\n\n'
                 'If you have set your path settings correctly, please '
                 'copy the console output and create a new issue.\n'
             )
-            sublime.error_message(message)
+            sublime.error_message(text.format(error=e))
 
-        except:
-            debug('Unexpected error. Stack trace:\n\t{stack}'.format(stack=traceback.print_exc()),
-                prefix='Jekyll', level='error')
-            message = (
-                'Jekyll: Oops! - this is a bit embarassing\n\t\t¯\_(ツ)_/¯ \n\n'
-                'You\'ve encountered an unexpected error, which likely '
-                'means you\'ve found a bug in our code. It would be great '
-                'if you could copy any related console output into a new '
-                'issue and send it over to us. We\'ll take a look and get '
-                'back to you as soon as we can. Thanks!\n'
-            )
-            sublime.error_message(message)
+
+        except Exception as e:
+            debug('Unexpected error: {error}.\n\t\t¯\_(ツ)_/¯\n'.format(error=e),
+                  prefix='Jekyll', level='error')
 
     return _fn
 
@@ -263,7 +253,9 @@ def create_file(path):
 ## ********************************************************************************************** ##
 
 class MissingPathException(Exception):
-    pass
+    def __init__(self, message, *args, **kwargs):
+        # Call the base class constructor with the parameters it needs
+        super(MissingPathException, self).__init__(message, *args, **kwargs)
 
 
 class JekyllWindowBase(sublime_plugin.WindowCommand):
@@ -320,9 +312,10 @@ class JekyllWindowBase(sublime_plugin.WindowCommand):
             if not self.dirs:
 
                 if not path or path == '' or not os.path.exists(path):
-                    debug('Unable to resolve path information! ({path})'.format(
-                        path=path), prefix='Jekyll', level='error')
-                    raise MissingPathException
+                    debug('Unable to find for "{dir}" directory.'.format(
+                        dir=dir_name), prefix='Jekyll', level='error')
+                    raise MissingPathException('Unable to find for "{dir}" directory.'.format(
+                        dir=dir_name))
 
                 return path
 
@@ -345,10 +338,17 @@ class JekyllWindowBase(sublime_plugin.WindowCommand):
                 return self.dirs[0]
 
         else:
-            if not path or path == '' or not os.path.exists(path):
-                debug('Invalid path! - ({path})'.format(
-                        path=path), prefix='Jekyll', level='error')
-                raise MissingPathException
+            if not path or path == '':
+                debug('Path is null for "{dir}" directory.'.format(
+                        dir=dir_name), prefix='Jekyll', level='error')
+                raise MissingPathException('Path is null for "{dir}" directory.'.format(
+                    dir=dir_name))
+
+            elif not os.path.exists(path):
+                debug('Path "{path}" does not exist for "{dir}" directory.'.format(
+                        path=path, dir=dir_name), prefix='Jekyll', level='error')
+                raise MissingPathException('Path "{path}" does not exist for "{dir}" directory.'.format(
+                    path=path, dir=dir_name))
 
             return path
 
