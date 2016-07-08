@@ -3,6 +3,12 @@ Templates
 
 sublime-jekyll allows new drafts and posts to be created from user-defined YAML front-matter templates. This allows for a truly customized approach to writing posts.
 
+Templates are stored by default in the ``User/Jekyll Templates`` directory. You can change this by providing your own directory path in the ``jekyll_templates_path`` settings key.
+
+.. note::
+
+    If you plan on using the ``jekyll_auto_find_paths`` settings key, make sure you name your templates directory ``_templates``. This is what the plug-in will be looking for to locate a directory.
+
 
 The basic format of a post template should just include the front-matter.
 

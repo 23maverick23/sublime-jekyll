@@ -1,0 +1,25 @@
+*******************************************************************************
+                             _      _          _ _ 
+                            (_) ___| | ___   _| | |
+                            | |/ _ \ |/ / | | | | |
+                            | |  __/   <| |_| | | |
+                           _/ |\___|_|\_\\__, |_|_|
+                          |__/           |___/     
+                            
+                http://23maverick23.github.io/sublime-jekyll/
+                      http://sublime-jekyll.rtfd.org/
+               sublime-jekyll is licensed under the MIT license
+       
+*******************************************************************************
+
+
+CHANGELOG
+=========
+
+## v3.1.0 (2016-07-07)
+
+- Close #69 which adds a configurable templates directory path settings key
+  named `jekyll_templates_path`.
+
+  This is helpful if you want to store templates outside of the default
+  directory `Users/Jekyll Templates`. You can also use this feature with the `jekyll_auto_find_paths` setting if you name your directory `_templates`.

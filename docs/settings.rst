@@ -145,9 +145,9 @@ For per-project settings, make sure you add your Jekyll settings correctly to yo
         {
             "Jekyll":
             {
-                "posts_path": "/Users/username/site/_posts",
-                "drafts_path": "/Users/username/site/_drafts",
-                "uploads_path": "/Users/username/site/uploads",
+                "jekyll_posts_path": "/Users/username/site/_posts",
+                "jekyll_drafts_path": "/Users/username/site/_drafts",
+                "jekyll_uploads_path": "/Users/username/site/uploads",
             }
         }
     }

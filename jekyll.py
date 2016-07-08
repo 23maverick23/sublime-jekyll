@@ -31,10 +31,11 @@ ALLOWED_MARKUPS = ('Markdown', 'Textile', 'HTML', )
 POST_DATE_FORMAT = '%Y-%m-%d'
 
 settings = sublime.load_settings('Jekyll.sublime-settings')
+templates_dir_name = 'Jekyll Templates'
+templates_path = os.path.join(sublime.packages_path(), 'User', templates_dir_name)
 
 if settings.has('jekyll_debug') and settings.get('jekyll_debug') is True:
     DEBUG = True
-
 
 if ST3:
     from .send2trash import send2trash
@@ -161,7 +162,7 @@ def get_setting(view, key, default=None):
 
         settings = view.settings()
         if settings.has('Jekyll'):
-            s = settings.get('Jekyll').get(key)
+            s = settings.get('Jekyll').get(key, default)
 
             if s and s is not None:
                 return s
@@ -264,6 +265,10 @@ class JekyllWindowBase(sublime_plugin.WindowCommand):
     """
     markup = None
 
+    if not os.path.exists(templates_path):
+        os.makedirs(templates_path)
+        sublime.status_message('Jekyll: Created "{}" directory."'.format(templates_dir_name))
+
 
     def posts_path_string(self):
         p = get_setting(self.window.active_view(), 'jekyll_posts_path')
@@ -281,13 +286,13 @@ class JekyllWindowBase(sublime_plugin.WindowCommand):
 
 
     def templates_path_string(self):
-        # TODO: allow for user-specific or project-specific template directories?
         # TODO: specify where every template is saved, which slows down workflow?
-        return os.path.join(sublime.packages_path(), 'User', 'Jekyll Templates')
+        p = get_setting(self.window.active_view(), 'jekyll_templates_path')
+        return self.determine_path(p if p != '' else templates_path, '_templates')
 
 
     @catch_errors
-    def determine_path(self, path, dir_name):
+    def determine_path(self, path, dir_name=None):
         """Determine a directory path.
 
         Args:
@@ -306,7 +311,7 @@ class JekyllWindowBase(sublime_plugin.WindowCommand):
 
         auto = get_setting(view, 'jekyll_auto_find_paths', False)
 
-        if auto:
+        if auto and dir_name:
             self.dirs = find_dir_path(self.window, dir_name)
 
             if not self.dirs:

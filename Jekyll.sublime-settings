@@ -33,15 +33,27 @@
     // *nix systems should have a path similar to "/Users/username/site/_drafts".
     "jekyll_drafts_path": "",
 
-    // This should point to the default uploads directory. This should be an
-    // absolute path.
-    "jekyll_uploads_path": "",
+    // Optionally override the location of the templates directory.
+    // Make sure your override directory is named "_templates", especially
+    // if you plan on using the "jekyll_auto_find_paths" setting.
+    // NOTE: This should be an absolute path. Also, the path should
+    // match your system convention. For example, Windows machines should
+    // have a path similar to "C:\\Users\\username\\site\\templates".
+    // *nix systems should have a path similar to "/Users/username/site/_templates".
+    "jekyll_templates_path": "",
 
     // If you have multiple Jekyll blogs, but don't use Sublime Projects,
     // you can optionally have sublime-jekyll look for the `_posts` or `_drafts`
     // or `uploads` folders open in your sidebar. This should have a value of 
     // true or false.
     "jekyll_auto_find_paths": false,
+
+    // This should point to the default uploads directory.
+    // NOTE: This should be an absolute path. Also, the path should
+    // match your system convention. For example, Windows machines should
+    // have a path similar to "C:\\Users\\username\\site\\uploads".
+    // *nix systems should have a path similar to "/Users/username/site/uploads".
+    "jekyll_uploads_path": "",
 
     // This string value should represent the baseurl for the uploads directory.
     // For example, if your uploads directoy is "uploads/" and you have an image

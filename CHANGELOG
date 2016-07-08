@@ -1,6 +1,11 @@
 sublime-jekyll changelog
 ========================
 
+## v3.1.0 (2016-07-07)
+
+- Close #69 which adds a configurable templates directory path settings key
+  named `jekyll_templates_path`.
+
 ## v3.0.3 (2016-06-15)
 
 - Close #68 to add more verbose exception messages
