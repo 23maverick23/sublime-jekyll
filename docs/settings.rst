@@ -16,6 +16,13 @@ sublime-jekyll ships with a number of configurable settings. These can be overri
 User Settings
 -------------
 
+.. warning::
+
+    Unless otherwise stated, all path strings should be **absolute paths**, not relative paths!
+
+    Also, path strings should follow your system-specific path convention. For example, Windows machines should have a path similar to ``C:\\Users\\username\\site\\_posts``, while Unix/Linux systems should have a path similar to ``/Users/username/site/_posts``.
+
+
 ``jekyll_posts_path``
 ^^^^^^^^^^^^^^^^^^^^^
 
@@ -30,25 +37,25 @@ User Settings
     :Description: This should point to your ``_drafts`` directory.
 
 
-``jekyll_uploads_path``
-^^^^^^^^^^^^^^^^^^^^^^^
+``jekyll_templates_path``
+^^^^^^^^^^^^^^^^^^^^^^
 
-    :Default: None
-    :Description: This should point to your ``uploads`` directory.
-
-
-.. warning::
-
-    These should be **absolute paths**, not relative paths!
-
-    Also, the paths should follow your system-specific path convention. For example, Windows machines should have a path similar to ``C:\\Users\\username\\site\\_posts``. Unix/Linux systems should have a path similar to ``/Users/username/site/_posts``.
+    :Default: None (if left blank, ``User/Jekyll Templates`` will be used as a fallback)
+    :Description: This should point to your ``_templates`` directory.
 
 
 ``jekyll_auto_find_paths``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     :Default: ``false``
-    :Description: If you don't want to hard-code your ``_posts``, ``_drafts``, or ``uploads`` paths into your settings file, you can optionally have sublime-jekyll look for ``_posts``, ``_drafts`` or ``uploads`` folders open in your sidebar. If you don't name the folders appropriately, or you use a non-standard file structure for your Jekyll project, you have a higher chance of returning path exception errors. This should have a value of ``true`` or ``false``.
+    :Description: If you don't want to hard-code your ``_posts``, ``_drafts``, ``uploads``, or ``_templates`` paths into your settings file, you can optionally have sublime-jekyll look for ``_posts``, ``_drafts``, ``uploads``, and/or ``_templates`` folders open in your sidebar. If you don't name the folders appropriately, or you use a non-standard file structure for your Jekyll project, you have a higher chance of returning path exception errors. This should have a value of ``true`` or ``false``.
+
+
+``jekyll_uploads_path``
+^^^^^^^^^^^^^^^^^^^^^^^
+
+    :Default: None
+    :Description: This should point to your ``uploads`` directory.
 
 
 ``jekyll_uploads_baseurl``
@@ -148,6 +155,7 @@ For per-project settings, make sure you add your Jekyll settings correctly to yo
                 "jekyll_posts_path": "/Users/username/site/_posts",
                 "jekyll_drafts_path": "/Users/username/site/_drafts",
                 "jekyll_uploads_path": "/Users/username/site/uploads",
+                "jekyll_templates_path": "/Users/username/site/_templates",
             }
         }
     }
