@@ -1,0 +1,23 @@
+*******************************************************************************
+                             _      _          _ _ 
+                            (_) ___| | ___   _| | |
+                            | |/ _ \ |/ / | | | | |
+                            | |  __/   <| |_| | | |
+                           _/ |\___|_|\_\\__, |_|_|
+                          |__/           |___/     
+                            
+                http://23maverick23.github.io/sublime-jekyll/
+                      http://sublime-jekyll.rtfd.org/
+               sublime-jekyll is licensed under the MIT license
+       
+*******************************************************************************
+
+
+CHANGELOG
+=========
+
+## v3.1.1 (2016-07-11)
+
+- Close #70 which addresses somewhat recursive exception loop
+  
+  (Apologies to those who had a bad experience with the 3.1.0 update!)

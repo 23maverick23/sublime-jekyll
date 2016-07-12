@@ -31,9 +31,6 @@ ALLOWED_MARKUPS = ('Markdown', 'Textile', 'HTML', )
 POST_DATE_FORMAT = '%Y-%m-%d'
 
 settings = sublime.load_settings('Jekyll.sublime-settings')
-templates_dir_name = 'Jekyll Templates'
-templates_path = os.path.join(sublime.packages_path(), 'User', templates_dir_name)
-
 if settings.has('jekyll_debug') and settings.get('jekyll_debug') is True:
     DEBUG = True
 
@@ -264,10 +261,8 @@ class JekyllWindowBase(sublime_plugin.WindowCommand):
 
     """
     markup = None
-
-    if not os.path.exists(templates_path):
-        os.makedirs(templates_path)
-        sublime.status_message('Jekyll: Created "{}" directory."'.format(templates_dir_name))
+    templates_dir_name = 'Jekyll Templates'
+    templates_path = os.path.join(sublime.packages_path(), 'User', templates_dir_name)
 
 
     def posts_path_string(self):
@@ -286,6 +281,10 @@ class JekyllWindowBase(sublime_plugin.WindowCommand):
 
 
     def templates_path_string(self):
+        if not os.path.exists(templates_path):
+            os.makedirs(templates_path)
+            sublime.status_message('Jekyll: Created "{}" directory."'.format(templates_dir_name))
+
         # TODO: specify where every template is saved, which slows down workflow?
         p = get_setting(self.window.active_view(), 'jekyll_templates_path')
         return self.determine_path(p if p != '' else templates_path, '_templates')
@@ -571,10 +570,10 @@ class JekyllTemplateBase(JekyllWindowBase):
         template_dir = self.path_string()
 
         if not os.path.exists(template_dir):
-                os.makedirs(template_dir)
+            os.makedirs(template_dir)
 
         clean_title = clean_title_input(title, True)
-        full_path = os.path.join(template_dir, title + '.yaml')
+        full_path = os.path.join(template_dir, clean_title + '.yaml')
 
         if os.path.lexists(full_path):
             sublime.error_message('Jekyll: File already exists at "{0}"'.format(full_path))
