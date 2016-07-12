@@ -1,0 +1,23 @@
+*******************************************************************************
+                             _      _          _ _ 
+                            (_) ___| | ___   _| | |
+                            | |/ _ \ |/ / | | | | |
+                            | |  __/   <| |_| | | |
+                           _/ |\___|_|\_\\__, |_|_|
+                          |__/           |___/     
+                            
+                http://23maverick23.github.io/sublime-jekyll/
+                      http://sublime-jekyll.rtfd.org/
+               sublime-jekyll is licensed under the MIT license
+       
+*******************************************************************************
+
+
+CHANGELOG
+=========
+
+## v3.1.2 (2016-07-12)
+
+- Close #71
+  
+  (Apologies to those who had a bad experience with the 3.1.0 update!)

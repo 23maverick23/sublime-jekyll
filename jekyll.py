@@ -261,8 +261,6 @@ class JekyllWindowBase(sublime_plugin.WindowCommand):
 
     """
     markup = None
-    templates_dir_name = 'Jekyll Templates'
-    templates_path = os.path.join(sublime.packages_path(), 'User', templates_dir_name)
 
 
     def posts_path_string(self):
@@ -281,6 +279,9 @@ class JekyllWindowBase(sublime_plugin.WindowCommand):
 
 
     def templates_path_string(self):
+        templates_dir_name = 'Jekyll Templates'
+        templates_path = os.path.join(sublime.packages_path(), 'User', templates_dir_name)
+
         if not os.path.exists(templates_path):
             os.makedirs(templates_path)
             sublime.status_message('Jekyll: Created "{}" directory."'.format(templates_dir_name))
