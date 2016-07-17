@@ -39,8 +39,8 @@ When you create a new project in Sublime Text, you are asked to save a file with
         {
             "Jekyll":
             {
-                "posts_path": "/Users/username/site/_posts",
-                "drafts_path": "/Users/username/site/_drafts",
+                "jekyll_posts_path": "/Users/username/site/_posts",
+                "jekyll_drafts_path": "/Users/username/site/_drafts",
             }
         }
     }
