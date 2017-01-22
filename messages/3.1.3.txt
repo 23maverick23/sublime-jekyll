@@ -1,0 +1,23 @@
+*******************************************************************************
+                             _      _          _ _ 
+                            (_) ___| | ___   _| | |
+                            | |/ _ \ |/ / | | | | |
+                            | |  __/   <| |_| | | |
+                           _/ |\___|_|\_\\__, |_|_|
+                          |__/           |___/     
+                            
+                http://23maverick23.github.io/sublime-jekyll/
+                      http://sublime-jekyll.rtfd.org/
+               sublime-jekyll is licensed under the MIT license
+       
+*******************************************************************************
+
+Change Log
+----------
+
+## [3.1.3] - 2017-01-22
+### Added
+- Override default Markdown file extenion for new drafts/posts (Close #73)
+### Changed
+- Re-wrote CHANGELOG file to support new formatting
+- Updated documentation for new settings key
