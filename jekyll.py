@@ -28,6 +28,10 @@ except ImportError:
 ST3 = sublime.version() >= '3000'
 DEBUG = False
 ALLOWED_MARKUPS = ('Markdown', 'Textile', 'HTML', )
+VALID_MARKDOWN_EXT = ('markdown', 'mdown', 'mkdn', 'mkd', 'md', )
+VALID_HTML_EXT = ('html', 'htm', )
+VALID_TEXTILE_EXT = ('textile', )
+VALID_YAML_EXT = ('yaml', 'yml', )
 POST_DATE_FORMAT = '%Y-%m-%d'
 
 settings = sublime.load_settings('Jekyll.sublime-settings')
@@ -401,6 +405,8 @@ class JekyllWindowBase(sublime_plugin.WindowCommand):
         post_dir = self.path_string() if path is None else path
 
         self.markup = get_setting(self.window.active_view(), 'jekyll_default_markup', 'Markdown')
+        self.extension = get_setting(self.window.active_view(), 'jekyll_markdown_extension', 'markdown')
+        self.extension = '.' + self.extension if self.extension in VALID_MARKDOWN_EXT else '.markdown'
 
         if self.markup == 'Textile':
             file_ext = '.textile'
@@ -409,7 +415,7 @@ class JekyllWindowBase(sublime_plugin.WindowCommand):
             file_ext = '.html'
 
         else:
-            file_ext = '.markdown'
+            file_ext = self.extension
 
         clean_title = clean_title_input(title, self.IS_DRAFT) + file_ext
         full_path = os.path.join(post_dir, clean_title)
@@ -463,30 +469,16 @@ class JekyllWindowBase(sublime_plugin.WindowCommand):
 
 
     def get_markup(self, file):
-        if (
-            file.endswith('.markdown') or
-            file.endswith('.mdown') or
-            file.endswith('.mkdn') or
-            file.endswith('.mkd') or
-            file.endswith('.md')
-        ):
+        if file.endswith(VALID_MARKDOWN_EXT):
             self.markup = 'Markdown'
 
-        elif (
-            file.endswith('.html') or
-            file.endswith('.htm')
-        ):
+        elif file.endswith(VALID_HTML_EXT):
             self.markup = 'HTML'
 
-        elif (
-            file.endswith('.textile')
-        ):
+        elif file.endswith(VALID_TEXTILE_EXT):
             self.markup = 'Textile'
 
-        elif (
-            file.endswith('.yaml') or
-            file.endswith('.yml')
-        ):
+        elif file.endswith(VALID_YAML_EXT):
             self.markup = 'YAML'
 
         else:
@@ -603,6 +595,8 @@ class JekyllFromTemplateBase(JekyllTemplateBase):
             raise MissingPathException
 
         self.markup = get_setting(view, 'jekyll_default_markup', 'Markdown')
+        self.extension = get_setting(self.window.active_view(), 'jekyll_markdown_extension', 'markdown')
+        self.extension = '.' + self.extension if self.extension in VALID_MARKDOWN_EXT else '.markdown'
 
         if self.markup == 'Textile':
             file_ext = '.textile'
@@ -611,7 +605,7 @@ class JekyllFromTemplateBase(JekyllTemplateBase):
             file_ext = '.html'
 
         else:
-            file_ext = '.markdown'
+            file_ext = self.extension
 
         clean_title = clean_title_input(title, self.IS_DRAFT) + file_ext
         full_path = os.path.join(post_dir, clean_title)

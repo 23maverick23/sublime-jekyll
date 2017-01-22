@@ -66,10 +66,14 @@
 
     // This determines the file type for new drafts and posts. Can be set to one of
     // three accepted values: "Markdown", "Textile" or "HTML".
-    // NOTE: We use `.markdown` as the standard file extension for Markdown files as
-    // suggested by John Gruber, developer of Markdown, in his blog post here:
-    // http://daringfireball.net/linked/2014/01/08/markdown-extension
     "jekyll_default_markup": "Markdown",
+
+    // Optionally override the file extension format for Markdown files. Valid options
+    // include: markdown, mdown, mkdn, mkd, md. Do not include the dot in your string value.
+    // NOTE: We use "markdown" as the standard file extension for Markdown files
+    // as suggested by John Gruber, developer of Markdown, in his blog post here:
+    // http://daringfireball.net/linked/2014/01/08/markdown-extension
+    "jekyll_markdown_extension": "markdown",
 
     // This determines if sublime-jekyll should send deleted drafts, posts and templates to
     // the system trash/recycling bin, or immediately purge them from disk. The

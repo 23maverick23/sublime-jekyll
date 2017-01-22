@@ -77,9 +77,15 @@ User Settings
     :Description: This string value determines the file type for new drafts and posts. It can be set to one of three accepted values: ``Markdown``, ``Textile`` or ``HTML``.
 
 
+``jekyll_markdown_extension``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+    :Default: ``markdown``
+    :Description: Optionally override the file extension format for Markdown files. Valid options include: ``markdown``, ``mdown``, ``mkdn``, ``mkd``, ``md``. Do not include the dot in your string value.
+
 .. note::
 
-    We use ``.markdown`` as the standard file extension for Markdown files as suggested by John Gruber, developer of Markdown, in his blog post here: http://daringfireball.net/linked/2014/01/08/markdown-extension
+    We use ``.markdown`` as the standard file extension for Markdown files as suggested by John Gruber, developer of Markdown, in his blog post here: http://daringfireball.net/linked/2014/01/08/markdown-extension.
 
 
 ``jekyll_send_to_trash``

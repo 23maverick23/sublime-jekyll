@@ -1,209 +1,253 @@
-sublime-jekyll changelog
-========================
+sublime-jekyll change log
+=========================
 
-## v3.1.2 (2016-07-12)
+All notable changes to this project will be documented in this file.
 
-- Close #71
+The format is based on [Keep a Changelog](http://keepachangelog.com/) 
+and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## v3.1.1 (2016-07-11)
+## [3.1.3] - 2017-01-22
+### Added
+- Override default Markdown file extenion for new drafts/posts (Close #73)
 
-- Close #70 which addresses somewhat recursive exception loop
+### Changed
+- Re-wrote CHANGELOG file to support new formatting
+- Updated documentation for new settings key
 
-## v3.1.0 (2016-07-07)
+## [3.1.2] - 2016-07-12
+### Changed
+- Fix template creation bug (Close #71)
 
-- Close #69 which adds a configurable templates directory path settings key
-  named `jekyll_templates_path`.
+## [3.1.1] - 2016-07-11
+### Changed
+- Fix recursive exception loop (Close #70)
 
-## v3.0.3 (2016-06-15)
+## [3.1.0] - 2016-07-07
+### Added
+- Adds a configurable templates directory path settings key
+  named `jekyll_templates_path` (Close #69)
 
-- Close #68 to add more verbose exception messages
+## [3.0.3] - 2016-06-15
+### Added
+- Add more verbose exception messages (Close #68)
 
-## v3.0.2 (2016-02-18)
+## [3.0.2] - 2016-02-18
+### Changed
+- Add back `shutil` module removed by #60 (Close #63)
 
-- Close PR #63
-    - Add back `shutil` module removed by #60
+## [3.0.1] - 2016-02-16
+### Added
+- Add new command for editing `_config.yml` file (Close #58)
+- Add send2trash module (Close #59)
+- Add basic path exists check to help with absolute vs. relative
+  paths (Close #62)
 
-## v3.0.1 (2016-02-16)
+### Changed
+- Update remove_file methods to support send2trash (Close #59)
+- Fix small typo in documentation (Close #61)
 
-- Close #59
-    - Add send2trash module
-    - Update remove_file methods to support send2trash
-    - Small bugfixes
-- Close #58
-    - Add new command for editing `_config.yml` file
-- Close #60
-    - Remove shutil copy method for settings files
-    - Remove duplicate decorators from path methods
-- Close #62
-    - Add basic path exists check to help with absolute vs. relative paths
-- Close #61
-    - Fix small typo in documentation
+### Removed
+- Remove shutil copy method for settings files (Close #60)
+- Remove duplicate decorators from path methods (Close #60)
 
-## v3.0.0 (2016-01-31)
+## [3.0.0] - 2016-01-31
+(**Major Release 3.0.0**)
+### Added
+- Create user and project settings migration commands (Close #43)
+- Create backup directory with quick access command (Close #43)
+- Add package debugging (Close #44)
+- Add `jekyll_debug` settings key (Close #44)
+- Add RTFD documentation (Close #45)
+- Add new snippets and completions (Close #46)
+- Add new commands to context menu (Close #47)
+- Add `jekyll_utility_disable` settings key (Close #48)
+- Add ability to create YAML templates (Close #50)
 
-* Major Release 3.0.0
+### Changed
+- Move main menu to Tools (Close #47)
+- Fix minor formatting bugs in snippets (Close #49)
+- Remove reliance on settings keys (Close #53)
 
-- Close #36
-- Close #38
-- Close #39
-- Close #51
-- Close #52
-    - Deprecate Jekyll syntax files
-    - Remove auto-set syntax logic
-    - Move open syntax issues to new repo
-- Close #53
-    - Remove reliance on settings keys (see templates)
-- Close #43
-    - Create user and project settings migration commands
-    - Create backup directory with quick access command
-- Close #44
-    - Add package debugging
-    - Add `jekyll_debug` settings key
-- Close #45
-    - Add RTFD documentation
-- Close #46
-    - Add new snippets and completions
-- Close #47
-    - Move main menu to Tools
-    - Add new commands to context menu
-- Close #48
-    - Add `jekyll_utility_disable` settings key
-- Close #49
-    - Fix minor formatting bugs in snippets
-- Close #50
-    - Add ability to create YAML templates
-- Remove default keybindings for all platforms
+### Removed
+- Deprecate Jekyll syntax files (Close #36, Close #38, Close #39, Close #51, Close #52)
+- Remove default keybindings for all platforms (Close #50)
+- Remove auto-set syntax logic
+- Move open syntax issues to new repo
 
+## [2.2.5] - 2015-10-18
+### Added
+- Added uploads directory via pull request (Close #33)
 
-## v2.2.5 (2015-10-18)
+## [2.2.4] - 2015-03-14
+### Changed
+- Fix bug with get_setting method (Close #34)
 
-- Close #33
+## [2.2.3] - 2015-03-05
+### Added
+- Add date into draft using the 'Promote draft to post' command (Close #31)
 
-## v2.2.4 (2015-03-14)
+## Changed
+- Address small issue for ST2 when creating posts from an empty view (Close #32)
+- Small updates to .gitignore
 
-- Fix #34 (bug with get_setting method)
+### Removed
+- Remove date from draft file name (Close #31)
 
-## v2.2.3 (2015-03-05)
+## [2.2.2] - 2015-03-03
+### Added
+- Add support for opening posts/drafts in subdirectories (Close #30)
+- Add support for promoting drafts to posts while maintaining directory tree (Close #30)
 
-- Close #31
-    - Remove date from draft file name
-    - Add date into draft using the 'Promote draft to post' command
-    - Small updates to .gitignore
-- Fix #32
-    - Address small issue for ST2 when creating posts from an empty view
+## [2.2.1] - 2015-02-08
+### Added
+- Add support for finding Jekyll folders in active view (Close #27)
 
-## v2.2.2 (2015-03-03)
+## [2.1.3] - 2015-01-28
+### Changed
+- Fix ST2 bug with format strings related to Python 2.6 (Close #25)
 
-- Fix #30
-- Add support for opening posts/drafts in subdirectories
-- Add support for promoting drafts to posts while maintaining directory tree
+## [2.1.2] - 2015-01-18
+### Added
+- Add support for multi-level dictionary in front-matter defaults (Close #23)
 
-## v2.2.1 (2015-02-08)
+### Changed
+- Update JekyllPostFrontmatterCommand to use insert_snippet (Close #23)
 
-- Closes PR #27
-- Add support for finding Jekyll folders in active view
-    - Enable in user or project settings
-    - Will attempt to recursively find the `_posts` and `_drafts` directories
-    - Falls back to project settings if none are found
+### Removed
+- Remove date/datetime keybindings that clash with ST defaults (Close #24)
 
-## v2.1.3 (2015-01-28)
-
-- Close #25
-- Fix ST2 bug with format strings (related to Python 2.6)
-
-## v2.1.2 (2015-01-18)
-
-- Close #24
-- Remove date/datetime keybindings that clash with ST defaults
-
-## v2.1.2 (2014-12-17)
-
-- Close #23
-- Add support for multi-level dictionary in front-matter defaults
-- Update JekyllPostFrontmatterCommand to use insert_snippet
-
-## v2.1.0 (2014-12-07)
-
+## [2.1.0] - 2014-12-07
+### Added
 - Implement new post front-matter extras (Close #22)
 - Allow for default post keys to be hidden using `null`
+
+### Changed
 - Update default Jekyll settings file to include instructions
 - Small changes to README
 
-## v2.0.8 (2014-11-30)
+## [2.0.8] - 2014-11-30
+### Changed
+- Messages directory naming convention, only affects Linux systems (Closes #14)
 
-- Fixes #14 with messages directory naming convention (only affects Linux systems)
+## [2.0.7] - 2014-11-24
+### Added
+- Merge pull request for correcting snippets (Close #18)
 
-## v2.0.7
-
-- Merge pull request #18 from calledT/master
-
-## v2.0.6 (2014-11-01)
-
-- Merge pull request #17 from @fk128
-- Fix duplicates from showing in Quick Panel
+## [2.0.6] - 2014-11-01
+### Added
 - Add directory check (in cases where drafts/posts paths do not exist)
 - Add sorting of posts by last modified date
 
-## v2.0.5 (2014-10-16)
+### Changed
+- Merge pull request from @fk128 (Close #17)
+- Fix duplicates from showing in Quick Panel
 
+## [2.0.5] - 2014-10-16
+### Changed
 - Fix ST2 specific bug in run_commands and set_timeout
 
-## v2.0.4 (2014-09-04)
-
+## [2.0.4] - 2014-09-04
+### Changed
 - Fix issue with trailing commas in commands
 
-## v2.0.3 (2014-07-31)
-
-- Small changes to default settings and front-matter snippet
+## [2.0.3] - 2014-07-31
+### Added
 - Add screenshot for new github.io project site page
 - Add support for install and update messages
+
+### Changed
+- Small changes to default settings and front-matter snippet
 - Small updates to README.md
 
-## v2.0.2 (2014-07-04)
-
+## [2.0.2] - 2014-07-04
+### Added
 - Add support for converting drafts to posts (Close #11)
+
+### Changed
 - Small updates to README.md
 - Small bug fixes to "open" commands
 
-## v2.0.1 (2014-06-18)
-
-- Fix #7
-- Fix #9
+## [2.0.1] - 2014-06-18
+### Added
 - Add support for ST2 (Close #8)
 - Add default keymaps back
 
-## v2.0.0 (2014-06-16)
+### Changed
+- Fixed path bug (Close #7)
+- Fixed syntax loading bug (Close #9)
 
+## [2.0.0] - 2014-06-16
+### Added
 - Add Jekyll 2.0 snippets and completions
 - Add brand new commands for post interaction
+
+### Changed
 - Clean up code in most files for easier reading
+
+### Removed
 - Remove default keybindings
 
-## v1.0.1 (2014-01-17)
-
+## [1.0.1] - 2014-01-17
+### Added
 - Add documentation for configuring a Jekyll build system
+
+### Changed
 - Small updates to `README.md` and `Main.sublime-menu`
 
-## v1.0.0 (2014-01-12)
-
+## [1.0.0] - 2014-01-12
+### Added
 - Add platform specific key bindings to menu (previously missing)
 - Add Textile (Jekyll) syntax file, and Update snippets/completions scope
 - Add Textile comments and syntax specific preferences
 - Add text.textile file to Tests directory
+
+### Changed
 - Bumping version officially to v1.0.0
 
-## v0.1.2 (2014-01-05)
+## [0.1.2] - 2014-01-05
+### Changed
+- Updates to snippets (Close #2)
 
-- Fix #2 (updates to snippets)
+## [0.1.1] - 2014-01-04
+### Added
+- Add keymap files
 
-## v0.1.1 (2014-01-04)
-
+### Changed
 - Update `insert_date` command to support multiple formats
 - Update syntax settings in all snippet files
 - Update snippets
 - Update `README.md` documentation
-- Add keymap files
 
-## v0.1.0 (2014-01-04)
-
+## 0.1.0 - 2014-01-04
+### Added
 - Initial commit
+
+[3.1.3]: https://github.com/23maverick23/sublime-jekyll/compare/v3.1.2...v3.1.3
+[3.1.2]: https://github.com/23maverick23/sublime-jekyll/compare/v3.1.1...v3.1.2
+[3.1.1]: https://github.com/23maverick23/sublime-jekyll/compare/v3.1.0...v3.1.1
+[3.1.0]: https://github.com/23maverick23/sublime-jekyll/compare/v3.0.3...v3.1.0
+[3.0.3]: https://github.com/23maverick23/sublime-jekyll/compare/v3.0.2...v3.0.3
+[3.0.2]: https://github.com/23maverick23/sublime-jekyll/compare/v3.0.1...v3.0.2
+[3.0.1]: https://github.com/23maverick23/sublime-jekyll/compare/v3.0.0...v3.0.1
+[3.0.0]: https://github.com/23maverick23/sublime-jekyll/compare/v2.2.5...v3.0.0
+[2.2.5]: https://github.com/23maverick23/sublime-jekyll/compare/v2.2.4...v2.2.5
+[2.2.4]: https://github.com/23maverick23/sublime-jekyll/compare/v2.2.3...v2.2.4
+[2.2.3]: https://github.com/23maverick23/sublime-jekyll/compare/v2.2.2...v2.2.3
+[2.2.2]: https://github.com/23maverick23/sublime-jekyll/compare/v2.2.1...v2.2.2
+[2.2.1]: https://github.com/23maverick23/sublime-jekyll/compare/v2.1.3...v2.2.1
+[2.1.3]: https://github.com/23maverick23/sublime-jekyll/compare/v2.1.2...v2.1.3
+[2.1.2]: https://github.com/23maverick23/sublime-jekyll/compare/v2.1.0...v2.1.2
+[2.1.0]: https://github.com/23maverick23/sublime-jekyll/compare/v2.0.8...v2.1.0
+[2.0.8]: https://github.com/23maverick23/sublime-jekyll/compare/v2.0.7...v2.0.8
+[2.0.7]: https://github.com/23maverick23/sublime-jekyll/compare/v2.0.6...v2.0.7
+[2.0.6]: https://github.com/23maverick23/sublime-jekyll/compare/v2.0.5...v2.0.6
+[2.0.5]: https://github.com/23maverick23/sublime-jekyll/compare/v2.0.4...v2.0.5
+[2.0.4]: https://github.com/23maverick23/sublime-jekyll/compare/v2.0.3...v2.0.4
+[2.0.3]: https://github.com/23maverick23/sublime-jekyll/compare/v2.0.2...v2.0.3
+[2.0.2]: https://github.com/23maverick23/sublime-jekyll/compare/v2.0.1...v2.0.2
+[2.0.1]: https://github.com/23maverick23/sublime-jekyll/compare/v2.0.0...v2.0.1
+[2.0.0]: https://github.com/23maverick23/sublime-jekyll/compare/v1.0.1...v2.0.0
+[1.0.1]: https://github.com/23maverick23/sublime-jekyll/compare/v1.0.0...v1.0.1
+[1.0.0]: https://github.com/23maverick23/sublime-jekyll/compare/v0.1.2...v1.0.0
+[0.1.2]: https://github.com/23maverick23/sublime-jekyll/compare/v0.1.1...v0.1.2
+[0.1.1]: https://github.com/23maverick23/sublime-jekyll/compare/v0.1.0...v0.1.1
