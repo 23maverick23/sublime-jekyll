@@ -22,7 +22,7 @@ From what I can tell, a project-specific build system needs to be used, as oppos
             {
                 "name": "Jekyll",
                 // Change this directory to match your top-level Jekyll project folder
-                "working_dir": "/path/to/jekyll/project/root",
+                "working_dir": "$project_path",
                 "cmd": "jekyll build -t",
                 "shell": true,
                 "encoding": "UTF-8"
