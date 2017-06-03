@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import imghdr
+import io
 import os
 import re
 import sublime
@@ -247,7 +248,7 @@ def create_file(path):
     filename = os.path.split(path)[1]
 
     if filename and filename != '':
-        open(path, 'a').close()
+        io.open(path, 'a', encoding="utf-8").close()
 
 
 ## ********************************************************************************************** ##
@@ -668,7 +669,7 @@ class JekyllNewPostFromTemplateCommand(JekyllFromTemplateBase):
             template = self.item_list[index][1]
 
             # Remove any leading comment from YAML frontmatter
-            with open(template, 'rU') as f:
+            with io.open(template, 'rU', encoding="utf-8") as f:
                 first_line = f.readline().strip()
 
                 if first_line[:1] != '#':
@@ -800,7 +801,7 @@ class JekyllNewDraftFromTemplateCommand(JekyllFromTemplateBase):
             template = self.item_list[index][1]
 
             # Remove any leading comment from YAML frontmatter
-            with open(template, 'rU') as f:
+            with io.open(template, 'rU', encoding="utf-8") as f:
                 first_line = f.readline().strip()
 
                 if first_line[:1] != '#':
@@ -1379,7 +1380,7 @@ class JekyllMigrateProjectSettingsCommand(JekyllMigrateSettingsBase):
 
         if os.path.exists(project_file_path):
 
-            with open(project_file_path, 'r+') as project_file:
+            with io.open(project_file_path, 'r+', encoding="utf-8") as project_file:
                 project_data = json.load(project_file)
 
                 if not 'settings' in project_data:
