@@ -1,0 +1,37 @@
+*******************************************************************************
+                             _      _          _ _ 
+                            (_) ___| | ___   _| | |
+                            | |/ _ \ |/ / | | | | |
+                            | |  __/   <| |_| | | |
+                           _/ |\___|_|\_\\__, |_|_|
+                          |__/           |___/     
+                            
+                http://23maverick23.github.io/sublime-jekyll/
+                      http://sublime-jekyll.rtfd.org/
+               sublime-jekyll is licensed under the MIT license
+       
+*******************************************************************************
+
+This update has very minor changes to documentation and completions. It also
+addresses a bug that I ran into when using ascii characters in post templates.
+
+I moved all `open()` methods to the Python 2 `io.open()` method, which is
+actually what Python 3 uses as the standard `open()` method anyway. It should
+resolve the previous errors I was seeing when combined with the `utf-8` encoding
+option. I went with this over the `codecs.open()` method as I wanted to be
+guaranteed of a unicode string output, rather than a bytestring. If you
+experience any errors related to opening, editing, or promoting - in either ST2
+or ST3 - please log an issue.
+
+Thanks for using sublime-jekyll!
+
+
+Change Log
+----------
+
+## [3.1.4] - 2017-06-03
+### Changed
+- Updated documentation (Close #77)
+- Moved to io.open to resolve ascii codec bug (Close #78)
+- Updated completions (Close #79)
+- Updated LICENSE
