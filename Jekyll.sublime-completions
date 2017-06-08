@@ -113,7 +113,7 @@
             { "trigger": "strip_newlines\tJekyll",               "contents": "strip_newlines" },
             { "trigger": "truncate\tJekyll",                     "contents": "truncate:$2, '$1'" },
             { "trigger": "truncatewords\tJekyll",                "contents": "truncatewords" },
-            { "trigger": "upcase\tJekyll",                       "contents": "upcase" }
+            { "trigger": "upcase\tJekyll",                       "contents": "upcase" },
 
             { "trigger": "abs\tJekyll",                          "contents": "abs:$1" },
             { "trigger": "ceil\tJekyll",                         "contents": "ceil:$1" },
