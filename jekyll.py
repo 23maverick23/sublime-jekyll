@@ -28,11 +28,11 @@ except ImportError:
 
 ST3 = sublime.version() >= '3000'
 DEBUG = False
-ALLOWED_MARKUPS = ('Markdown', 'Textile', 'HTML', )
 VALID_MARKDOWN_EXT = ('markdown', 'mdown', 'mkdn', 'mkd', 'md', )
 VALID_HTML_EXT = ('html', 'htm', )
 VALID_TEXTILE_EXT = ('textile', )
 VALID_YAML_EXT = ('yaml', 'yml', )
+VALID_PLAIN_TEXT_EXT = ('txt', )
 POST_DATE_FORMAT = '%Y-%m-%d'
 
 settings = sublime.load_settings('Jekyll.sublime-settings')
@@ -415,6 +415,9 @@ class JekyllWindowBase(sublime_plugin.WindowCommand):
         elif self.markup == 'HTML':
             file_ext = '.html'
 
+        elif self.markup == 'Plain text':
+            file_ext = '.txt'
+
         else:
             file_ext = self.extension
 
@@ -478,6 +481,9 @@ class JekyllWindowBase(sublime_plugin.WindowCommand):
 
         elif file.endswith(VALID_TEXTILE_EXT):
             self.markup = 'Textile'
+
+        elif file.endswith(VALID_PLAIN_TEXT_EXT):
+            self.markup = 'Plain text'
 
         elif file.endswith(VALID_YAML_EXT):
             self.markup = 'YAML'

@@ -1,0 +1,25 @@
+*******************************************************************************
+                             _      _          _ _ 
+                            (_) ___| | ___   _| | |
+                            | |/ _ \ |/ / | | | | |
+                            | |  __/   <| |_| | | |
+                           _/ |\___|_|\_\\__, |_|_|
+                          |__/           |___/     
+                            
+                http://23maverick23.github.io/sublime-jekyll/
+                      http://sublime-jekyll.rtfd.org/
+               sublime-jekyll is licensed under the MIT license
+       
+*******************************************************************************
+
+This update adds plain text file support for posts (thanks to @dylan-k for submitting this enhancement request).
+
+Thanks for using sublime-jekyll!
+
+
+Change Log
+----------
+
+## [3.1.6] - 2017-12-27
+### Added
+- Add support for plain text (.txt) files (Close #86)

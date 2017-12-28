@@ -74,7 +74,7 @@ User Settings
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
     :Default: ``Markdown``
-    :Description: This string value determines the file type for new drafts and posts. It can be set to one of three accepted values: ``Markdown``, ``Textile`` or ``HTML``.
+    :Description: This string value determines the file type for new drafts and posts. It can be set to one of three accepted values: ``Markdown``, ``Textile``, ``HTML``, or ``Plain text``.
 
 
 ``jekyll_markdown_extension``

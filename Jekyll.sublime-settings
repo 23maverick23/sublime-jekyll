@@ -65,7 +65,7 @@
     "jekyll_uploads_baseurl": "{{ site.baseurl }}",
 
     // This determines the file type for new drafts and posts. Can be set to one of
-    // three accepted values: "Markdown", "Textile" or "HTML".
+    // three accepted values: "Markdown", "Textile", "HTML" or "Plain text".
     "jekyll_default_markup": "Markdown",
 
     // Optionally override the file extension format for Markdown files. Valid options
