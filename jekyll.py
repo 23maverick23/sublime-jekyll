@@ -468,6 +468,42 @@ class JekyllWindowBase(sublime_plugin.WindowCommand):
             self.item_list.append(['No items found!'])
 
 
+    def list_images(self, path):
+        """Create an array of string arrays for images
+
+        Args:
+            path (string): A directory path of files
+
+        Returns:
+            None
+
+        """
+        self.image_list = []
+
+        if os.path.exists(path) and os.path.isdir(path):
+
+            for root, dirs, files in os.walk(path):
+
+                for f in files:
+
+                    fname = os.path.splitext(f)[0]
+                    fpath = os.path.join(root, f)
+
+                    if imghdr.what(fpath) is None:
+                        # Check if it's image
+                        continue
+
+                    self.image_list.append([fname, fpath])
+
+            self.image_list.sort(key=lambda x: os.path.getmtime(x[1]), reverse=True)
+
+        else:
+            self.image_list.append(['Directory does not exist!'])
+
+        if not len(self.image_list) > 0:
+            self.image_list.append(['No items found!'])
+
+
     def on_highlight(self, index):
         self.window.open_file(self.item_list[index][1], sublime.TRANSIENT)
 
@@ -1102,6 +1138,31 @@ class JekyllListUploadsCommand(JekyllUploadBase):
         self.window.show_quick_panel(self.item_list, self.on_done)
 
 
+class JekyllListImagesCommand(JekyllUploadBase):
+    """
+    A subclass for displaying images in the upload directory.
+
+    """
+    def on_done(self, index):
+        if index > -1 and type(self.image_list[index]) is list:
+            path = self.image_list[index][1]
+            fname = self.image_list[index][0]
+            view = self.window.active_view()
+            view.run_command(
+                'jekyll_insert_clickable_image',
+                {
+                    'name': fname,
+                    'path': path
+                }
+            )
+
+
+    def run(self):
+        path = self.uploads_path_string()
+        self.list_images(path)
+        self.window.show_quick_panel(self.image_list, self.on_done)
+
+
 class JekyllEditConfigCommand(JekyllWindowBase):
     def run(self):
         site_dir = os.path.join(self.posts_path_string(), os.pardir)
@@ -1205,6 +1266,34 @@ class JekyllInsertUpload(sublime_plugin.TextCommand):
         link_str = "{0}[{1}]({2}/{3})".format(
             '!' if imghdr.what(args["path"]) is not None else '',
             '${1:' + args["name"] + '}', uploads_baseurl, relative_path
+        )
+
+        self.view.run_command(
+            'insert_snippet',
+            {
+                'contents': link_str
+            }
+        )
+
+
+class JekyllInsertClickableImage(sublime_plugin.TextCommand):
+    """
+    Insert the upload link at the current position
+
+    """
+
+    def run(self, edit, **args):
+        uploads_path = get_setting(self.view, 'jekyll_uploads_path')
+        uploads_baseurl = get_setting(self.view, 'jekyll_uploads_baseurl')
+        relative_path = os.path.relpath(args["path"], os.path.dirname(uploads_path))
+
+        # Relative link to image
+        link_to_image = "{0}/{1}".format(uploads_baseurl, relative_path)
+
+        link_str = "[![{0}]({1})]({2})".format(
+            '${1:' + args["name"] + '}',
+            link_to_image,
+            link_to_image
         )
 
         self.view.run_command(

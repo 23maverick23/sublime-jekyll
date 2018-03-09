@@ -46,6 +46,10 @@
             {
                 "caption": "Insert upload tag",
                 "command": "jekyll_list_uploads"
+            },
+            {
+                "caption": "Insert clickable image",
+                "command": "jekyll_list_images"
             }
         ]
     },

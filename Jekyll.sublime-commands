@@ -70,6 +70,10 @@
         "command": "jekyll_list_uploads"
     },
     {
+        "caption": "Jekyll: Insert clickable image",
+        "command": "jekyll_list_images"
+    },
+    {
         "caption": "Jekyll Utility: Migrate user settings",
         "command": "jekyll_migrate_user_settings"
     },
