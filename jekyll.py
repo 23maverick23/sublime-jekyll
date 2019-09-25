@@ -1200,8 +1200,9 @@ class JekyllInsertUpload(sublime_plugin.TextCommand):
         uploads_path = get_setting(self.view, 'jekyll_uploads_path')
         uploads_baseurl = get_setting(self.view, 'jekyll_uploads_baseurl')
         relative_path = os.path.relpath(args["path"], os.path.dirname(uploads_path))
+        relative_path = relative_path.replace(os.sep, '/')
 
-        # check if image
+        # build image URL
         link_str = "{0}[{1}]({2}/{3})".format(
             '!' if imghdr.what(args["path"]) is not None else '',
             '${1:' + args["name"] + '}', uploads_baseurl, relative_path
