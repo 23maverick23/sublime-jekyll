@@ -128,11 +128,11 @@ Insert current datetime
     :Description: Inserts the current datetime at the cursor using the format specified by the ``jekyll_datetime_format`` setting.
 
 
-Insert upload
-^^^^^^^^^^^^^
+Insert upload tag
+^^^^^^^^^^^^^^^^^
 
     :Command: ``jekyll_insert_upload``
-    :Description: Brings up a quick panel for choosing an existing file in your ``uploads`` directory, and adds a pre-formatted link at the cursor.
+    :Description: Brings up a quick panel allowing you to choose an existing file from your ``jekyll_uploads_path`` directory, and creates a pre-formatted link at the cursor. This won't move the selected file, nor will it check if the realtive URL it creates points to an actual file.
 
 
 Jekyll Utility
