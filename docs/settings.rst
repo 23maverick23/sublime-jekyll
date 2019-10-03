@@ -61,13 +61,13 @@ User Settings
 ``jekyll_uploads_baseurl``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    :Default: ``{{ site.baseurl }}``
-    :Description: This string value should represent the **baseurl** for the uploads directory. For example, if your uploads directory is ``uploads`` and you have an image called ``image.png``, the output of inserting the image in your post would be ``{{ uploads_baseurl }}/uploads/image.png``, with ``{{ uploads_baseurl }}`` replace by its value.
+    :Default: ``{{site.baseurl}}``
+    :Description: This string value should represent the **baseurl** for the uploads directory of your site. For example, if your uploads directory is ``/uploads`` and you have an image called ``image.png``, the output of inserting the image in your post with the ``Insert upload tag`` command would be ``{{ uploads_baseurl }}/uploads/image.png``, with ``{{ uploads_baseurl }}`` replaced by its value.
 
 
 .. note::
 
-    If you wish to have an absolute link and you have ``url`` defined in your Jekyll ``config.yml`` file, then you can set the value to ``{{ site.url }}/{{ site.baseurl }}``.
+    If you wish to have an absolute link and you have ``url`` defined in your Jekyll ``config.yml`` file, then you can set the value to ``{{site.url}}/{{site.baseurl}}``.
 
 
 ``jekyll_default_markup``
@@ -144,7 +144,7 @@ For per-project settings, make sure you add your Jekyll settings correctly to yo
 .. code-block:: python
 
     # some-file.sublime-settings
-    
+
     {
         "folders":
         [
