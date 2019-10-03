@@ -1,0 +1,25 @@
+*******************************************************************************
+                             _      _          _ _ 
+                            (_) ___| | ___   _| | |
+                            | |/ _ \ |/ / | | | | |
+                            | |  __/   <| |_| | | |
+                           _/ |\___|_|\_\\__, |_|_|
+                          |__/           |___/     
+                            
+                http://23maverick23.github.io/sublime-jekyll/
+                      http://sublime-jekyll.rtfd.org/
+               sublime-jekyll is licensed under the MIT license
+       
+*******************************************************************************
+
+This update fixes an issue with upload path separators (thanks to @aklef  for submitting the pull request).
+
+Thanks for using sublime-jekyll!
+
+
+Change Log
+----------
+
+## [3.1.7] - 2019-10-03
+### Fixed
+- Force upload path output to use forward slashes (Close #92)
