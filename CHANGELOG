@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.1.7] - 2019-10-03
+### Fixed
+- Force upload path output to use forward slashes (Close #92)
+
 ## [3.1.6] - 2017-12-27
 ### Added
 - Add support for plain text (.txt) files (Close #86)
