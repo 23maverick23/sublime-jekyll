@@ -1,16 +1,44 @@
-Jekyll 4.0.0
-============
+*******************************************************************************
+                             _      _          _ _
+                            (_) ___| | ___   _| | |
+                            | |/ _ \ |/ / | | | | |
+                            | |  __/   <| |_| | | |
+                           _/ |\___|_|\_\\__, |_|_|
+                          |__/           |___/
 
-Requires Sublime Text 4, build 4050 or later.
+                http://23maverick23.github.io/sublime-jekyll/
+                      http://sublime-jekyll.rtfd.org/
+               sublime-jekyll is licensed under the MIT license
 
-This release uses the modern Python plugin host and supports Python 3.8 through 3.14.
-Project settings now take precedence, including false values. Paths can be absolute,
-use Sublime variables such as ${project_path}, or be relative to the first open folder
-(or the saved project directory when no folders are open).
+*******************************************************************************
 
-Site folders containing _config.yml or _config.yaml are detected automatically.
-Optional recursive path discovery is limited to four levels and skips dependency
-and build folders. Multiple matches open a directory picker.
+Version 4.0.0 restores compatibility with current Sublime Text 4 and fixes
+outstanding bugs in settings, path lookup, templates, uploads, and draft promotion.
+It requires Sublime Text 4, build 4050 or later. ST3 users should stay on 3.1.7.
 
-Fixes include safe file deletion, dated draft promotion, escaped titles, plain text
-templates, and upload links. Legacy settings migration commands have been removed.
+Paths now support ${project_path}, ${folder}, ~, and relative paths. Site folders
+containing _config.yml or _config.yaml are detected automatically.
+
+Breaking changes: support for ST2/ST3, settings migration commands, backup
+browsing, and jekyll_utility_disable have been removed. Update old settings by
+hand using the format in the documentation.
+
+The package is now in maintenance mode and is no longer in active development.
+No new features are planned. Bug-fix PRs may be reviewed as time allows.
+
+Thanks for using sublime-jekyll!
+
+
+Change Log
+----------
+
+## [4.0.0] - 2026-11-07
+### Changed
+- Require Sublime Text 4 build 4050+.
+- Support relative paths and variables, and auto-detect Jekyll site roots.
+- Use a draft's front-matter date when promoting it, or today's date as a fallback.
+### Removed
+- Remove ST2/ST3 support and legacy settings migration commands.
+### Fixed
+- Fix loading on Python 3.13+, menu errors, settings lookup, and path selection.
+- Fix deletion, promotion, upload insertion, and template title escaping.

@@ -19,8 +19,15 @@
     //
     // ************************************************************************************
 
+    // Paths accept absolute paths, ${project_path}, ${folder}, and ~.
+    // Relative paths use the first open folder, or the saved project directory
+    // when no folders are open. Configured paths must already be directories.
+    // If a posts/drafts/uploads path is blank, check open folders and their immediate
+    // children for _config.yml or _config.yaml and use the matching site directory.
+    // Optional auto-find runs only if that finds no matching directory.
+    // Project settings under settings > Jekyll override user settings, even if false.
+
     // This should point to your "_posts" directory.
-    // Use an absolute path, ${project_path}, or a path relative to the first open folder.
     // The path should
     // match your system convention. For example, Windows machines should
     // have a path similar to "C:\\Users\\username\\site\\_posts".
@@ -28,7 +35,6 @@
     "jekyll_posts_path": "",
 
     // This should point to your "_drafts" directory.
-    // Use an absolute path, ${project_path}, or a path relative to the first open folder.
     // The path should
     // match your system convention. For example, Windows machines should
     // have a path similar to "C:\\Users\\username\\site\\_drafts".
@@ -37,21 +43,20 @@
 
     // Optionally override the location of the templates directory.
     // If unset, uses Packages/User/Jekyll Templates when a template command runs.
-    // Use an absolute path, ${project_path}, or a path relative to the first open folder.
     // The path should
     // match your system convention. For example, Windows machines should
     // have a path similar to "C:\\Users\\username\\site\\templates".
     // *nix systems should have a path similar to "/Users/username/site/_templates".
     "jekyll_templates_path": "",
 
-    // If you have multiple Jekyll blogs, but don't use Sublime Projects,
-    // you can optionally have sublime-jekyll look for the `_posts` or `_drafts`
-    // or `uploads` folders open in your sidebar. This should have a value of 
-    // true or false. Search is limited to depth 4 and skips build and dependency folders.
+    // If site auto-detection finds no matching directory, optionally search open
+    // folders for _posts, _drafts, or uploads. Templates do not use auto-find.
+    // Search runs only when a command needs a path, is limited to depth 4,
+    // and skips hidden, build, and dependency folders. Large trees can still be slow.
+    // Multiple matches open a directory chooser. Set to true or false.
     "jekyll_auto_find_paths": false,
 
     // This should point to the default uploads directory.
-    // Use an absolute path, ${project_path}, or a path relative to the first open folder.
     // The path should
     // match your system convention. For example, Windows machines should
     // have a path similar to "C:\\Users\\username\\site\\uploads".
@@ -91,7 +96,7 @@
     // If you need a refresher on these codes, have a look at the Python
     // documentation found here:
     //
-    // http://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior
+    // https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior
     // ************************************************************************************
 
     // A valid Python strftime string

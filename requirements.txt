@@ -1,3 +1,1 @@
-sphinx
-sphinx_rtd_theme
-sphinx-autobuild
+-r docs/requirements.txt

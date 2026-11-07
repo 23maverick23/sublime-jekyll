@@ -4,11 +4,7 @@ Commands
 sublime-jekyll ships with a number of commands for helping you get things done more efficiently.
 
 
-.. warning::
-
-    Users who are upgrading from pre-v3.0 will want to review the **Jekyll Utility** commands. These allow you to easily migrate over your ``sublime-settings`` so that you can continue using sublime-jekyll moving forward.
-
-    If you prefer to hide these commands and remove them from the Command Palatte, you can set the settings key ``jekyll_utility_disable`` to ``true`` and restart Sublime Text.
+Paths are resolved when a command runs. See :doc:`settings` for explicit paths, site auto-detection, and the optional fallback search. Opening a menu or the Command Palette does not search folders or create an untitled document.
 
 
 Jekyll
@@ -19,20 +15,20 @@ New post
 ^^^^^^^^
 
     :Command: ``jekyll_new_post``
-    :Description: Brings up an input panel for naming and creating a new post in your ``_posts`` directory. The post title is automatically slugified, and the current date is appended to the title.
+    :Description: Brings up an input panel for naming and creating a new post in your ``_posts`` directory. The filename uses a slug of the title prefixed with the current date. The title is escaped for YAML and Sublime snippet syntax.
 
 
 New post from template
 ^^^^^^^^^^^^^^^^^^^^^^
 
     :Command: ``jekyll_new_post_from_template``
-    :Description: Brings up a quick panel for selecting a post template. Once selected, brings up an input panel for naming and creating a new post in your ``_posts`` directory. The post title is automatically slugified, and the current date is appended to the title.
+    :Description: Brings up a quick panel for selecting a post template. Once selected, brings up an input panel for naming and creating a new post in your ``_posts`` directory. The filename uses a slug of the title prefixed with the current date. The title is escaped for YAML and Sublime snippet syntax.
 
 Remove post
 ^^^^^^^^^^^
 
     :Command: ``jekyll_remove_post``
-    :Description: Brings up a quick panel for choosing a post in your ``_posts`` directory to delete. This action is irreversible.
+    :Description: Brings up a quick panel for choosing a post in your ``_posts`` directory to delete. A confirmation dialog is shown. With ``jekyll_send_to_trash: true``, the file goes to system Trash; otherwise deletion is permanent. Only the selected file's tab is closed.
 
 
 Open post...
@@ -60,14 +56,14 @@ Promote draft to post
 ^^^^^^^^^^^^^^^^^^^^^
 
     :Command: ``jekyll_promote_draft``
-    :Description: Brings up a quick panel for choosing an existing draft in your ``_drafts`` directory to move to the ``_posts`` directory. The post title is automatically updated with the current date.
+    :Description: Brings up a quick panel for choosing an existing draft in your ``_drafts`` directory to move to the ``_posts`` directory. The filename uses a valid leading ``YYYY-MM-DD`` date from the saved draft's top-level ``date:`` front-matter field, including quoted dates or dates with a time. Missing, invalid, or unsupported dates fall back to today's local date. The front matter itself is unchanged. Subdirectories are kept, and custom draft directory names are supported. Save or revert an unsaved draft before promoting it. An existing target reports an error and leaves the draft in place.
 
 
 Remove draft
 ^^^^^^^^^^^^
 
     :Command: ``jekyll_remove_draft``
-    :Description: Brings up a quick panel for choosing a post in your ``_drafts`` directory to delete. This action is irreversible.
+    :Description: Brings up a quick panel for choosing a post in your ``_drafts`` directory to delete. A confirmation dialog is shown. With ``jekyll_send_to_trash: true``, the file goes to system Trash; otherwise deletion is permanent. Only the selected file's tab is closed.
 
 
 Open draft
@@ -95,7 +91,7 @@ Remove template
 ^^^^^^^^^^^^^^^
 
     :Command: ``jekyll_remove_template``
-    :Description: Brings up a quick panel for choosing an existing template in your ``Jekyll Templates`` directory to delete. This action is irreversible.
+    :Description: Brings up a quick panel for choosing an existing template in your ``Jekyll Templates`` directory to delete. A confirmation dialog is shown. With ``jekyll_send_to_trash: true``, the file goes to system Trash; otherwise deletion is permanent. Only the selected file's tab is closed.
 
 
 Browse templates...
@@ -109,7 +105,7 @@ Edit _config.yml
 ^^^^^^^^^^^^^^^^
 
     :Command: ``jekyll_edit_config``
-    :Description: Opens your ``_config.yml`` file if it is found in your ``jekyll_posts_path`` parent directory. Helpful for making quick changes to Jekyll blog settings.
+    :Description: Looks for ``_config.yml`` or ``_config.yaml`` in the parent of resolved post directories and in detected site roots. Multiple matches open a chooser. If none is found, a status message asks you to open the site folder.
 
 
 Insert current date
@@ -123,7 +119,7 @@ Insert current date
 Insert current datetime
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-    :Command: ``jekyll_insert_datetime``
+    :Command: ``jekyll_insert_date``
     :Args: ``{"format": "datetime"}``
     :Description: Inserts the current datetime at the cursor using the format specified by the ``jekyll_datetime_format`` setting.
 
@@ -131,35 +127,5 @@ Insert current datetime
 Insert upload tag
 ^^^^^^^^^^^^^^^^^
 
-    :Command: ``jekyll_insert_upload``
-    :Description: Brings up a quick panel allowing you to choose an existing file from your ``jekyll_uploads_path`` directory, and creates a pre-formatted link at the cursor. This won't move the selected file, nor will it check if the realtive URL it creates points to an actual file.
-
-
-Jekyll Utility
---------------
-
-
-Migrate user settings
-^^^^^^^^^^^^^^^^^^^^^
-
-    :Command: ``jekyll_migrate_user_settings``
-    :Description: Attempts to migrate pre-v3.0 User Settings files to the new v3.0 format. This command only needs to be run once per machine/user. Settings backup files can be found in the ``Jekyll Backup`` folder within your ``User`` directory.
-
-
-Migrate project settings
-^^^^^^^^^^^^^^^^^^^^^^^^
-
-    :Command: ``jekyll_migrate_project_settings``
-    :Description: Attempts to migrate pre-v3.0 Project Settings files to the new v3.0 format. This command should be run for each Project using sublime-jekyll settings keys. Settings backup files can be found in the ``Jekyll Backup`` folder within your ``User`` directory.
-
-
-.. note::
-
-    Users of Sublime Text 2 will not see the ``Migrate project settings`` command, as there is no project API. You will need to update your project settings manually.
-
-
-Browse backups...
-^^^^^^^^^^^^^^^^^
-
-    :Command: ``jekyll_browse_backups``
-    :Description: Opens your ``Jekyll Backups`` directory in your system-specific default file browser (helpful for managing backups directly).
+    :Command: ``jekyll_list_uploads``
+    :Description: Brings up a quick panel allowing you to choose an existing file from your ``jekyll_uploads_path`` directory, and creates a pre-formatted link at the cursor. Images are identified by file extension and receive Markdown image syntax; other files receive a Markdown link. Open a document before running this command. This will not move the selected file, nor will it check if the relative URL it creates points to an actual file.

@@ -7,7 +7,7 @@ Templates are stored by default in the ``User/Jekyll Templates`` directory. You 
 
 .. note::
 
-    If you plan on using the ``jekyll_auto_find_paths`` settings key, make sure you name your templates directory ``_templates``. This is what the plug-in will be looking for to locate a directory.
+    Templates do not use ``jekyll_auto_find_paths``. Set ``jekyll_templates_path`` to an existing directory, using an absolute path, a relative path, or a variable such as ``${project_path}/_templates``. If unset, ``Packages/User/Jekyll Templates`` is created when a template command runs.
 
 
 The basic format of a post template should just include the front-matter.
@@ -43,7 +43,7 @@ Although the post ``title`` key will be added automatically as the first key in 
     category: blog
     ---
 
-When creating a new template, you will be able to optionally pass in a description of what that template is used for. This is helpful if you have multiple templates and you want to remember what each is used for. The description will show in the quick panel under the name of the template. The description is stored as a YAML comment on the first line of the file, and will be stripped out when a new draft or post is created.
+When creating a new template, you will be able to optionally pass in a description of what that template is used for. This is helpful if you have multiple templates and you want to remember what each is used for. The quick panel shows each template's name and relative path. The description is stored as a YAML comment on the first line of the file, and will be stripped out when a new draft or post is created.
 
 .. code-block:: yaml
 

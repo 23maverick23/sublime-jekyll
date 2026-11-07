@@ -6,15 +6,46 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [4.0.0] - Unreleased
+## [4.0.0] - 2026-11-07
+### Added
+- Add tests and CI checks for path discovery, settings, and command behaviour.
+- Add support for SVG, WebP, and AVIF upload image links by file extension.
+
 ### Changed
-- Require Sublime Text 4 build 4050+ and the modern Python plugin host.
-- Remove legacy settings migration commands.
-- Share file panels and use bounded, callback-based path discovery.
+- Require Sublime Text 4 build 4050+ and use the modern Python plugin host.
+- Expand path variables such as `${project_path}` and `${folder}`, support `~`,
+  and resolve relative paths against the first open folder or saved project directory (Close #84).
+- Auto-detect site roots containing `_config.yml` or `_config.yaml` in open
+  folders and their immediate children (Close #96).
+- Use a valid front-matter date when promoting drafts, with today's date as a fallback (Close #81).
+- Enter maintenance mode: no new features planned; bug-fix PRs may be reviewed as time allows.
+
+### Removed
+- Remove Sublime Text 2 and Sublime Text 3 support; ST3 users should stay on 3.1.7.
+- Remove settings migration and backup browsing commands, and `jekyll_utility_disable`.
+
 ### Fixed
-- Support Python 3.8 through 3.14 without imghdr or universal-newline open modes.
-- Read project settings without creating untitled buffers and preserve falsy overrides.
-- Fix draft promotion, file deletion, title escaping, template markup, and upload paths.
+- Replace `imghdr` with extension-based image detection to load on Python 3.13+
+  and remove invalid string escapes (Close #100).
+- Restore package compatibility with current Sublime Text 4; Package Control
+  distribution also needs the separate channel update (Close #99).
+- Stop creating an untitled document when opening the Command Palette in an empty window (Close #98).
+- Stop path errors when opening the palette, context menu, or Preferences in non-Jekyll folders (Close #95).
+- Correct the missing-directory error text (Close #93).
+- Run auto-find only when a command needs a path, limit search to depth four,
+  and skip hidden, dependency, and build folders (Close #91).
+- Rewrite settings lookup to read user settings at command time and preserve
+  project overrides, including `false`; this should fix user Markdown extensions (Close #90).
+- Fix the `rU` file mode crash in commands that create posts or drafts from templates.
+- Fix the chooser for multiple matching folders and continue after a directory is selected.
+- Eliminate the project settings migration crash by removing the obsolete command.
+- Close the selected file's tab when deleting or promoting, rather than the active tab.
+- Promote drafts from custom-named draft directories while keeping subdirectories.
+- Report an error when a promotion target exists instead of silently claiming success.
+- Fix insert-upload with auto-find by passing the chosen uploads directory to the insertion command.
+- Escape titles for Sublime snippets and YAML, including dollar signs, braces, colons, and quotes.
+- Report unexpected errors in a dialog and the console instead of silently swallowing exceptions.
+- Read settings after the plugin API is ready instead of at import time.
 
 ## [3.1.7] - 2019-10-03
 ### Fixed
@@ -251,6 +282,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Initial commit
 
+[4.0.0]: https://github.com/23maverick23/sublime-jekyll/compare/v3.1.7...v4.0.0
 [3.1.3]: https://github.com/23maverick23/sublime-jekyll/compare/v3.1.2...v3.1.3
 [3.1.2]: https://github.com/23maverick23/sublime-jekyll/compare/v3.1.1...v3.1.2
 [3.1.1]: https://github.com/23maverick23/sublime-jekyll/compare/v3.1.0...v3.1.1

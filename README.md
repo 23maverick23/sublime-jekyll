@@ -1,7 +1,9 @@
 sublime-jekyll
 ==============
 
-[![GitHub license](https://img.shields.io/github/license/23maverick23/sublime-jekyll.svg)](https://github.com/23maverick23/sublime-jekyll/blob/master/LICENSE) [![GitHub tag](https://img.shields.io/github/tag/23maverick23/sublime-jekyll.svg)](https://github.com/23maverick23/sublime-jekyll/tags) [![Package Control](https://img.shields.io/packagecontrol/dt/Jekyll.svg)](https://packagecontrol.io/packages/Jekyll) [![Maintenance](https://img.shields.io/maintenance/yes/2017.svg)](http://23maverick23.github.io/sublime-jekyll/)
+[![GitHub license](https://img.shields.io/github/license/23maverick23/sublime-jekyll.svg)](https://github.com/23maverick23/sublime-jekyll/blob/master/LICENSE) [![GitHub tag](https://img.shields.io/github/tag/23maverick23/sublime-jekyll.svg)](https://github.com/23maverick23/sublime-jekyll/tags) [![Package Control](https://img.shields.io/packagecontrol/dt/Jekyll.svg)](https://packagecontrol.io/packages/Jekyll)
+
+> **Maintenance mode:** This package is no longer in active development. Version 4.0.0 restores compatibility with current Sublime Text 4 and fixes outstanding bugs. No new features are planned. Bug-fix PRs may be reviewed as time allows.
 
 [sublime-jekyll](http://23maverick23.github.io/sublime-jekyll/) is a [Sublime Text](http://www.sublimetext.com/) package for [Jekyll](http://jekyllrb.com/) static sites.
 
@@ -12,9 +14,18 @@ If you use Jekyll as your static site generator, and Sublime Text as your text e
 Installation
 ------------
 
-Version 4.0.0 requires Sublime Text 4, build 4050 or later, and uses the modern Python plugin host.
+Version 4.0.0 requires Sublime Text 4, build 4050 or later, and uses the modern Python plugin host. **Sublime Text 3 users should stay on 3.1.7.**
 
 The recommended way to install and update this package is using [Package Control](https://packagecontrol.io/). Search for `Jekyll` and install the latest version. If you prefer to install this package manually, you can `git clone` this repo or extract the ZIP archive into your Sublime Text `Packages` folder.
+
+Settings and paths
+------------------
+
+Paths can be absolute, use Sublime variables such as `${project_path}` (the saved project directory) and `${folder}` (the first open folder), or start with `~` for your home directory. Relative paths use the first open folder, or the saved project directory if no folders are open.
+
+Explicit paths take priority. Otherwise, the package checks open folders and their immediate children for `_config.yml` or `_config.yaml`, then uses existing `_posts`, `_drafts`, or `uploads` folders in those sites. Optional `jekyll_auto_find_paths` searches to depth four if no site match is found. Templates use `jekyll_templates_path` or `Packages/User/Jekyll Templates`.
+
+The old settings migration and backup browsing commands, and `jekyll_utility_disable`, have been removed. Update old settings by hand using the [settings guide](docs/settings.rst), which also covers lookup order and project overrides.
 
 Documentation
 -------------

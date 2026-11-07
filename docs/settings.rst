@@ -4,43 +4,48 @@ Settings
 sublime-jekyll ships with a number of configurable settings. These can be overridden globally in your User Settings file, or on a per-Project basis using the recommended Project Settings syntax.
 
 
-.. warning::
+Settings lookup
+---------------
 
-    **sublime-jekyll settings prior to v3.0 have been deprecated!**
+Settings are read when a command runs. Values in ``settings > Jekyll`` in the current ``.sublime-project`` file take priority over ``Jekyll.sublime-settings`` (User settings and package defaults). A project value of ``false`` or an empty string still overrides the user value. Edit User settings through *Preferences > Package Settings > Jekyll > Settings - User*.
 
-    We know that is a bit of a pain - we get it - but it was for the best moving forward.
+Path resolution
+---------------
 
-    To help with the transition, we have created some **Jekyll Utility** commands that automatically migrate your old, deprecated settings to new, fully supported settings. You can find these in the Command Palatte by searching for *Jekyll Utility*.
+Paths may be absolute, contain Sublime variables such as ``${project_path}`` (the directory of the saved project file) or ``${folder}`` (the first open folder), or start with ``~`` for the home directory. Variables expand first, then ``~``. Relative paths resolve against the first open folder, or the saved project directory if no folders are open. Without either, use an absolute path. Variables need the matching project or folder context to be available.
 
+For posts, drafts, and uploads, paths are resolved in this order:
+
+1. Use the explicit ``jekyll_posts_path``, ``jekyll_drafts_path``, or ``jekyll_uploads_path`` setting. The directory must exist; an invalid explicit path reports an error instead of falling back.
+2. Check each open folder and its immediate children for ``_config.yml`` or ``_config.yaml``. Use existing ``_posts``, ``_drafts``, or ``uploads`` directories directly under those site roots. This works even when ``jekyll_auto_find_paths`` is ``false``. The config file identifies the site; its contents are not parsed for custom directory names.
+3. If there are no matching site directories and ``jekyll_auto_find_paths`` is ``true``, search open folders recursively to depth four. Skip hidden directories, ``node_modules``, ``_site``, ``vendor``, ``.jekyll-cache``, ``.sass-cache``, and ``bower_components``. Search does not follow directory symlinks. Large trees can still take time; use explicit paths to avoid a search.
+4. If no path is found, show an error with setup guidance. Multiple matches open a directory chooser; cancelling stops the command.
+
+Templates use an explicit ``jekyll_templates_path`` or ``Packages/User/Jekyll Templates``, which is created when a template command runs. Templates do not use site detection or recursive auto-find.
+
+Path strings must follow your system's path conventions. In JSON, escape Windows backslashes, for example ``C:\\Users\\username\\site\\_posts``. Paths such as ``${project_path}/_posts`` and ``_drafts`` are also accepted.
 
 User Settings
 -------------
 
-.. warning::
-
-    Unless otherwise stated, all path strings should be **absolute paths**, not relative paths!
-
-    Also, path strings should follow your system-specific path convention. For example, Windows machines should have a path similar to ``C:\\Users\\username\\site\\_posts``, while Unix/Linux systems should have a path similar to ``/Users/username/site/_posts``.
-
-
 ``jekyll_posts_path``
 ^^^^^^^^^^^^^^^^^^^^^
 
-    :Default: None
+    :Default: ``""`` (uses path resolution above)
     :Description: This should point to your ``_posts`` directory.
 
 
 ``jekyll_drafts_path``
 ^^^^^^^^^^^^^^^^^^^^^^
 
-    :Default: None
+    :Default: ``""`` (uses path resolution above)
     :Description: This should point to your ``_drafts`` directory.
 
 
 ``jekyll_templates_path``
-^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    :Default: None (if left blank, ``User/Jekyll Templates`` will be used as a fallback)
+    :Default: ``""`` (uses ``Packages/User/Jekyll Templates`` when a template command runs)
     :Description: This should point to your ``_templates`` directory.
 
 
@@ -48,13 +53,13 @@ User Settings
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     :Default: ``false``
-    :Description: If you don't want to hard-code your ``_posts``, ``_drafts``, ``uploads``, or ``_templates`` paths into your settings file, you can optionally have sublime-jekyll look for ``_posts``, ``_drafts``, ``uploads``, and/or ``_templates`` folders open in your sidebar. If you don't name the folders appropriately, or you use a non-standard file structure for your Jekyll project, you have a higher chance of returning path exception errors. This should have a value of ``true`` or ``false``.
+    :Description: Enable the depth-four fallback search for ``_posts``, ``_drafts``, and ``uploads`` described above. It runs only when a command needs a path and site detection finds no matching directory. It does not search for templates.
 
 
 ``jekyll_uploads_path``
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-    :Default: None
+    :Default: ``""`` (uses path resolution above)
     :Description: This should point to your ``uploads`` directory.
 
 
@@ -74,7 +79,7 @@ User Settings
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
     :Default: ``Markdown``
-    :Description: This string value determines the file type for new drafts and posts. It can be set to one of three accepted values: ``Markdown``, ``Textile``, ``HTML``, or ``Plain text``.
+    :Description: This string value determines the file type for new drafts and posts. It can be set to one of four accepted values: ``Markdown``, ``Textile``, ``HTML``, or ``Plain text``.
 
 
 ``jekyll_markdown_extension``
@@ -113,7 +118,7 @@ User Settings
 
     If for some reason you want to change the way either the date or the datetime string is formatted, you can override those formats using valid Python ``datetime.strftime()`` format codes.
 
-    If you need a refresher on these codes, have a look at the Python documentation found here: http://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior.
+    If you need a refresher on these codes, have a look at the Python documentation found here: https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior.
 
 
 ``jekyll_debug``
@@ -123,27 +128,12 @@ User Settings
     :Description: If set to ``true``, the application will print Jekyll debug information to the Sublime Text console and can be retrieved by using ``Ctrl + ```.
 
 
-``jekyll_utility_disable``
-^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-    :Default: ``false``
-    :Description: If set to ``true``, the application will hide the **Jekyll Utility** commands from the Command Palatte, and disable the commands from the menu.
-
-
 Project Settings
 ----------------
 
 For per-project settings, make sure you add your Jekyll settings correctly to your Project settings file. You can typically edit your Project file under *Project > Edit Project*.
 
-.. warning::
-    These should be **absolute paths**, not relative paths!
-
-    Also, the paths should follow your system-specific path convention. For example, Windows machines should have a path similar to ``C:\\Users\\username\\site\\_posts``. Unix/Linux systems should have a path similar to ``/Users/username/site/_posts``.
-
-
-.. code-block:: python
-
-    # some-file.sublime-settings
+.. code-block:: json
 
     {
         "folders":
@@ -158,10 +148,11 @@ For per-project settings, make sure you add your Jekyll settings correctly to yo
         {
             "Jekyll":
             {
-                "jekyll_posts_path": "/Users/username/site/_posts",
-                "jekyll_drafts_path": "/Users/username/site/_drafts",
-                "jekyll_uploads_path": "/Users/username/site/uploads",
-                "jekyll_templates_path": "/Users/username/site/_templates",
+                "jekyll_posts_path": "${folder}/_posts",
+                "jekyll_drafts_path": "_drafts",
+                "jekyll_uploads_path": "uploads",
+                "jekyll_templates_path": "${project_path}/_templates",
+                "jekyll_auto_find_paths": false
             }
         }
     }
