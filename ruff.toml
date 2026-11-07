@@ -1,0 +1,8 @@
+target-version = "py38"
+line-length = 120
+extend-exclude = ["send2trash/", "docs/"]
+
+[lint]
+select = ["E", "F", "W", "B", "UP"]
+# Keep runtime annotations and APIs compatible with the Python 3.8 host.
+ignore = ["UP006", "UP007", "UP045"]

@@ -98,3 +98,6 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+.pytest_cache/
+.ruff_cache/

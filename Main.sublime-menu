@@ -90,27 +90,6 @@
                     {
                         "caption": "Insert upload",
                         "command": "jekyll_list_uploads"
-                    },
-
-                    { "caption": "-" },
-
-                    {
-                        "id": "jekyll-utilities",
-                        "caption": "Jekyll Utilities",
-                        "children": [
-                            {
-                                "caption": "Migrate user settings",
-                                "command": "jekyll_migrate_user_settings"
-                            },
-                            {
-                                "caption": "Migrate project settings",
-                                "command": "jekyll_migrate_project_settings"
-                            },
-                            {
-                                "caption": "Browse backups...",
-                                "command": "jekyll_browse_backups"
-                            }
-                        ]
                     }
                 ]
             }
@@ -181,23 +160,8 @@
                             { "caption": "-" },
 
                             {
-                                "caption": "Migrate user settings",
-                                "command": "jekyll_migrate_user_settings"
-                            },
-                            {
-                                "caption": "Migrate project settings",
-                                "command": "jekyll_migrate_project_settings"
-                            },
-
-                            { "caption": "-" },
-
-                            {
                                 "caption": "Browse templates...",
                                 "command": "jekyll_browse_templates"
-                            },
-                            {
-                                "caption": "Browse backups...",
-                                "command": "jekyll_browse_backups"
                             },
                             
                             { "caption": "-" }

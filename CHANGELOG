@@ -6,6 +6,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.0.0] - Unreleased
+### Changed
+- Require Sublime Text 4 build 4050+ and the modern Python plugin host.
+- Remove legacy settings migration commands.
+- Share file panels and use bounded, callback-based path discovery.
+### Fixed
+- Support Python 3.8 through 3.14 without imghdr or universal-newline open modes.
+- Read project settings without creating untitled buffers and preserve falsy overrides.
+- Fix draft promotion, file deletion, title escaping, template markup, and upload paths.
+
 ## [3.1.7] - 2019-10-03
 ### Fixed
 - Force upload path output to use forward slashes (Close #92)

@@ -1,0 +1,5 @@
+/tests export-ignore
+/.github export-ignore
+/docs export-ignore
+ruff.toml export-ignore
+.gitattributes export-ignore

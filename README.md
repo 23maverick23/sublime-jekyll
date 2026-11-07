@@ -12,6 +12,8 @@ If you use Jekyll as your static site generator, and Sublime Text as your text e
 Installation
 ------------
 
+Version 4.0.0 requires Sublime Text 4, build 4050 or later, and uses the modern Python plugin host.
+
 The recommended way to install and update this package is using [Package Control](https://packagecontrol.io/). Search for `Jekyll` and install the latest version. If you prefer to install this package manually, you can `git clone` this repo or extract the ZIP archive into your Sublime Text `Packages` folder.
 
 Documentation

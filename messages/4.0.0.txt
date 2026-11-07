@@ -1,0 +1,16 @@
+Jekyll 4.0.0
+============
+
+Requires Sublime Text 4, build 4050 or later.
+
+This release uses the modern Python plugin host and supports Python 3.8 through 3.14.
+Project settings now take precedence, including false values. Paths can be absolute,
+use Sublime variables such as ${project_path}, or be relative to the first open folder
+(or the saved project directory when no folders are open).
+
+Site folders containing _config.yml or _config.yaml are detected automatically.
+Optional recursive path discovery is limited to four levels and skips dependency
+and build folders. Multiple matches open a directory picker.
+
+Fixes include safe file deletion, dated draft promotion, escaped titles, plain text
+templates, and upload links. Legacy settings migration commands have been removed.

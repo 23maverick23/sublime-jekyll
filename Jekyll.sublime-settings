@@ -20,23 +20,25 @@
     // ************************************************************************************
 
     // This should point to your "_posts" directory.
-    // NOTE: This should be an absolute path. Also, the path should
+    // Use an absolute path, ${project_path}, or a path relative to the first open folder.
+    // The path should
     // match your system convention. For example, Windows machines should
     // have a path similar to "C:\\Users\\username\\site\\_posts".
     // *nix systems should have a path similar to "/Users/username/site/_posts".
     "jekyll_posts_path": "",
 
     // This should point to your "_drafts" directory.
-    // NOTE: This should be an absolute path. Also, the path should
+    // Use an absolute path, ${project_path}, or a path relative to the first open folder.
+    // The path should
     // match your system convention. For example, Windows machines should
     // have a path similar to "C:\\Users\\username\\site\\_drafts".
     // *nix systems should have a path similar to "/Users/username/site/_drafts".
     "jekyll_drafts_path": "",
 
     // Optionally override the location of the templates directory.
-    // Make sure your override directory is named "_templates", especially
-    // if you plan on using the "jekyll_auto_find_paths" setting.
-    // NOTE: This should be an absolute path. Also, the path should
+    // If unset, uses Packages/User/Jekyll Templates when a template command runs.
+    // Use an absolute path, ${project_path}, or a path relative to the first open folder.
+    // The path should
     // match your system convention. For example, Windows machines should
     // have a path similar to "C:\\Users\\username\\site\\templates".
     // *nix systems should have a path similar to "/Users/username/site/_templates".
@@ -45,11 +47,12 @@
     // If you have multiple Jekyll blogs, but don't use Sublime Projects,
     // you can optionally have sublime-jekyll look for the `_posts` or `_drafts`
     // or `uploads` folders open in your sidebar. This should have a value of 
-    // true or false.
+    // true or false. Search is limited to depth 4 and skips build and dependency folders.
     "jekyll_auto_find_paths": false,
 
     // This should point to the default uploads directory.
-    // NOTE: This should be an absolute path. Also, the path should
+    // Use an absolute path, ${project_path}, or a path relative to the first open folder.
+    // The path should
     // match your system convention. For example, Windows machines should
     // have a path similar to "C:\\Users\\username\\site\\uploads".
     // *nix systems should have a path similar to "/Users/username/site/uploads".
@@ -65,11 +68,11 @@
     "jekyll_uploads_baseurl": "{{ site.baseurl }}",
 
     // This determines the file type for new drafts and posts. Can be set to one of
-    // three accepted values: "Markdown", "Textile", "HTML" or "Plain text".
+    // four accepted values: "Markdown", "Textile", "HTML" or "Plain text".
     "jekyll_default_markup": "Markdown",
 
     // Optionally override the file extension format for Markdown files. Valid options
-    // include: markdown, mdown, mkdn, mkd, md. Do not include the dot in your string value.
+    // include: markdown, mdown, mkdn, mkd, md. A leading dot is optional.
     // NOTE: We use "markdown" as the standard file extension for Markdown files
     // as suggested by John Gruber, developer of Markdown, in his blog post here:
     // http://daringfireball.net/linked/2014/01/08/markdown-extension
@@ -102,8 +105,5 @@
     // ************************************************************************************
     
     // If set to true, will print Jekyll debug information to the Sublime Text console.
-    "jekyll_debug": false,
-
-    // If set to true, all Jekyll Utility commands will be hidden from menus and the Command Palatte.
-    "jekyll_utility_disable": false
+    "jekyll_debug": false
 }
