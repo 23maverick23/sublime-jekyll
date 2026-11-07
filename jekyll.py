@@ -1,4 +1,4 @@
-"""Jekyll 4.0.0 commands for Sublime Text 4 (build 4050+)."""
+"""Jekyll 4.0.0 commands for Sublime Text 4 (build 4083+)."""
 
 import os
 import re
@@ -19,8 +19,10 @@ from .jekyll_utils import (
     file_extension,
     find_site_roots,
     is_image,
+    markdown_label,
     promote_destination,
     resolve_relative,
+    url_path,
     yaml_quote,
 )
 
@@ -219,6 +221,10 @@ class JekyllWindowBase(sublime_plugin.WindowCommand):
             view.close()
 
     def remove_file(self, path):
+        open_view = self.window.find_open_file(path)
+        if open_view is not None and open_view.is_dirty():
+            sublime.error_message(f'Jekyll: Save or revert "{os.path.basename(path)}" before deleting it.')
+            return
         to_trash = get_setting(self.window, 'jekyll_send_to_trash', False)
         message = f'Delete this Jekyll file?\n\n{path}'
         message += '\n\nYou can recover it from the system Trash.' if to_trash else '\n\nThis is permanent.'
@@ -427,6 +433,6 @@ class JekyllInsertUpload(sublime_plugin.TextCommand):
         baseurl = get_setting(window, 'jekyll_uploads_baseurl', '') or ''
         relative = os.path.relpath(path, os.path.dirname(uploads_dir)).replace(os.sep, '/')
         link = '{}[${{1:{}}}]({}/{})'.format(
-            '!' if is_image(path) else '', escape_snippet(name),
-            escape_snippet(baseurl.rstrip('/')), escape_snippet(relative))
+            '!' if is_image(path) else '', escape_snippet(markdown_label(name)),
+            escape_snippet(baseurl.rstrip('/')), escape_snippet(url_path(relative)))
         self.view.run_command('insert_snippet', {'contents': link})

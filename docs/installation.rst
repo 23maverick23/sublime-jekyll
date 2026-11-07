@@ -4,7 +4,7 @@ Installation
 Requirements
 ------------
 
-Version 4.0.0 requires **Sublime Text 4, build 4050 or later**. Sublime Text 3 users should stay on **3.1.7**; do not install 4.0.0 or the current branch on ST3.
+Version 4.0.0 requires **Sublime Text 4, build 4083 or later**. Sublime Text 3 users should stay on **3.1.7**; do not install 4.0.0 or the current branch on ST3.
 
 Package Control
 ---------------

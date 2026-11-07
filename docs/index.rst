@@ -9,7 +9,7 @@ sublime-jekyll
    :target: https://packagecontrol.io/packages/Jekyll
 .. note::
 
-   **Maintenance mode:** This package is no longer in active development. Version 4.0.0 restores compatibility with current Sublime Text 4 and fixes outstanding bugs. No new features are planned; bug-fix PRs may be reviewed as time allows. Requires Sublime Text 4 build 4050+; ST3 users should stay on 3.1.7.
+   **Maintenance mode:** This package is no longer in active development. Version 4.0.0 restores compatibility with current Sublime Text 4 and fixes outstanding bugs. No new features are planned; bug-fix PRs may be reviewed as time allows. Requires Sublime Text 4 build 4083+; ST3 users should stay on 3.1.7.
 
 `sublime-jekyll`_ is a `Sublime Text`_ package for `Jekyll`_ static sites. This package is aimed at streamlining the process of managing and creating new Jekyll posts. It does this by providing quick and easy access to new post and draft commands, snippets and completions for `Liquid`_ template tags and filters, as well as some handy commands for adding dates and upload links to your posts.
 

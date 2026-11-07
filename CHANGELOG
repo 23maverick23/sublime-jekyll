@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add support for SVG, WebP, and AVIF upload image links by file extension.
 
 ### Changed
-- Require Sublime Text 4 build 4050+ and use the modern Python plugin host.
+- Require Sublime Text 4 build 4083+ and use the modern Python plugin host.
 - Expand path variables such as `${project_path}` and `${folder}`, support `~`,
   and resolve relative paths against the first open folder or saved project directory (Close #84).
 - Auto-detect site roots containing `_config.yml` or `_config.yaml` in open
@@ -25,6 +25,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Remove settings migration and backup browsing commands, and `jekyll_utility_disable`.
 
 ### Fixed
+- Refuse to delete or promote a file with unsaved changes open in a tab.
+- Percent-encode upload link paths and escape Markdown label characters; recognise TIFF and other legacy image types.
 - Replace `imghdr` with extension-based image detection to load on Python 3.13+
   and remove invalid string escapes (Close #100).
 - Restore package compatibility with current Sublime Text 4; Package Control

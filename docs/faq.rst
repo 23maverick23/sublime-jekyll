@@ -53,7 +53,7 @@ When you create a new project in Sublime Text, you are asked to save a file with
 How do I log a bug?
 -------------------
 
-The package is in maintenance mode and requires Sublime Text 4 build 4050+. No new features are planned; bug-fix PRs may be reviewed as time allows. A clear report helps with review, but a response or fix is not guaranteed.
+The package is in maintenance mode and requires Sublime Text 4 build 4083+. No new features are planned; bug-fix PRs may be reviewed as time allows. A clear report helps with review, but a response or fix is not guaranteed.
 
 * First, **enable debug mode** for sublime-jekyll by setting the ``jekyll_debug`` setting to ``true``, and restart Sublime Text.
 * Next, try to reproduce the bug again. If it still happens, open up the Sublime console ( ``Ctrl + ``` or *View > Show Console*) and copy the Jekyll-specific debugging output (include any traceback as well as messages with a ``Jekyll`` prefix).

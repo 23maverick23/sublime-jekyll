@@ -3,6 +3,7 @@
 import json
 import os
 import re
+from urllib.parse import quote
 from datetime import datetime
 
 
@@ -20,7 +21,8 @@ def clean_title_input(title, draft=False):
 
 def is_image(path):
     return os.path.splitext(path)[1].lower() in {
-        '.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg', '.avif', '.bmp', '.ico'
+        '.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg', '.avif', '.bmp', '.ico',
+        '.tif', '.tiff', '.pbm', '.pgm', '.ppm', '.xbm', '.ras', '.rgb', '.exr',
     }
 
 
@@ -116,3 +118,14 @@ def resolve_relative(path, base):
             raise ValueError('A relative path needs an open folder or a saved project.')
         path = os.path.join(base, path)
     return os.path.abspath(path)
+
+
+
+def markdown_label(text):
+    """Escape characters that would end or break a Markdown link label."""
+    return re.sub(r'([\\\[\]])', r'\\\1', text)
+
+
+def url_path(path):
+    """Percent-encode a relative URL path, keeping '/' separators."""
+    return quote(path, safe='/-._~')

@@ -14,7 +14,7 @@
 
 Version 4.0.0 restores compatibility with current Sublime Text 4 and fixes
 outstanding bugs in settings, path lookup, templates, uploads, and draft promotion.
-It requires Sublime Text 4, build 4050 or later. ST3 users should stay on 3.1.7.
+It requires Sublime Text 4, build 4083 or later. ST3 users should stay on 3.1.7.
 
 Paths now support ${project_path}, ${folder}, ~, and relative paths. Site folders
 containing _config.yml or _config.yaml are detected automatically.
@@ -34,7 +34,7 @@ Change Log
 
 ## [4.0.0] - 2026-11-07
 ### Changed
-- Require Sublime Text 4 build 4050+.
+- Require Sublime Text 4 build 4083+.
 - Support relative paths and variables, and auto-detect Jekyll site roots.
 - Use a draft's front-matter date when promoting it, or today's date as a fallback.
 ### Removed
