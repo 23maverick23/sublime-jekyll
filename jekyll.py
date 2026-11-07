@@ -247,15 +247,22 @@ class JekyllWindowBase(sublime_plugin.WindowCommand):
             sublime.error_message(f'Jekyll: Save or revert "{os.path.basename(path)}" before deleting it.')
             return
         to_trash = get_setting(self.window, "jekyll_send_to_trash", False)
+        send2trash = None
+        if to_trash:
+            # Sublime Text 4 bundles send2trash in its Default package.
+            try:
+                from Default.send2trash import send2trash  # pyright: ignore[reportMissingImports]
+            except ImportError:
+                sublime.error_message(
+                    "Jekyll: Sublime's bundled send2trash module is unavailable, so the file was not deleted. "
+                    "Set jekyll_send_to_trash to false to delete permanently."
+                )
+                return
         message = f"Delete this Jekyll file?\n\n{path}"
         message += "\n\nYou can recover it from the system Trash." if to_trash else "\n\nThis is permanent."
         if not sublime.ok_cancel_dialog(message, "Confirm Delete"):
             return
-        if to_trash:
-            try:
-                from Default.send2trash import send2trash  # pyright: ignore[reportMissingImports]
-            except ImportError:
-                from .send2trash import send2trash
+        if send2trash is not None:
             send2trash(path)
         else:
             os.remove(path)

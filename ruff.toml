@@ -1,6 +1,6 @@
 target-version = "py38"
 line-length = 120
-extend-exclude = ["send2trash/", "docs/"]
+extend-exclude = ["docs/"]
 
 [lint]
 select = ["E", "F", "W", "B", "UP"]

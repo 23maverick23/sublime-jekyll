@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Enter maintenance mode: no new features planned; bug-fix PRs may be reviewed as time allows.
 
 ### Removed
+- Remove the vendored `send2trash` package; use the copy bundled with Sublime Text 4.
 - Remove Sublime Text 2 and Sublime Text 3 support; ST3 users should stay on 3.1.7.
 - Remove settings migration and backup browsing commands, and `jekyll_utility_disable`.
 

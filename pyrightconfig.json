@@ -6,7 +6,6 @@
         "tests"
     ],
     "exclude": [
-        "send2trash",
         "docs",
         "**/__pycache__",
         ".venv"
