@@ -10,7 +10,7 @@ from functools import wraps
 import sublime
 import sublime_plugin
 
-from .jekyll_utils import (
+from .jekyll_utils import (  # type: ignore  # Sublime loads this repo as package "Jekyll"
     MARKDOWN_EXTENSIONS,
     bounded_find_dirs,
     clean_title_input,
@@ -251,7 +251,7 @@ class JekyllWindowBase(sublime_plugin.WindowCommand):
         if to_trash:
             # Sublime Text 4 bundles send2trash in its Default package.
             try:
-                from Default.send2trash import send2trash  # pyright: ignore[reportMissingImports]
+                from Default.send2trash import send2trash  # type: ignore  # lives in Sublime's zipped Default package
             except ImportError:
                 sublime.error_message(
                     "Jekyll: Sublime's bundled send2trash module is unavailable, so the file was not deleted. "

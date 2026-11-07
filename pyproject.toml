@@ -4,3 +4,12 @@ target-version = ["py38"]
 extend-exclude = '''
 ^/docs/
 '''
+
+[tool.ty.environment]
+python-version = "3.8"
+python = ".venv"
+# Sublime Text's plugin API modules (sublime, sublime_plugin) ship inside the app bundle.
+extra-paths = ["/Applications/Sublime Text.app/Contents/MacOS/Lib/python38"]
+
+[tool.ty.src]
+exclude = ["docs", ".venv"]
