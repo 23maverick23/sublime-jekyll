@@ -39,6 +39,12 @@ def get_setting(window, key, default=None):
     return sublime.load_settings('Jekyll.sublime-settings').get(key, default)
 
 
+def get_str_setting(window, key, default=''):
+    """Like get_setting, but falls back to default when the value isn't a string."""
+    value = get_setting(window, key, default)
+    return value if isinstance(value, str) else default
+
+
 def is_debug():
     return get_setting(sublime.active_window(), 'jekyll_debug', False)
 
@@ -232,7 +238,7 @@ class JekyllWindowBase(sublime_plugin.WindowCommand):
             return
         if to_trash:
             try:
-                from Default.send2trash import send2trash
+                from Default.send2trash import send2trash  # pyright: ignore[reportMissingImports]
             except ImportError:
                 from .send2trash import send2trash
             send2trash(path)
@@ -411,7 +417,7 @@ class JekyllInsertDateCommand(sublime_plugin.TextCommand):
         window = self.view.window() or sublime.active_window()
         key = 'jekyll_datetime_format' if format == 'datetime' else 'jekyll_date_format'
         default = '%Y-%m-%d %H:%M:%S' if format == 'datetime' else '%Y-%m-%d'
-        text = datetime.today().strftime(get_setting(window, key, default))
+        text = datetime.today().strftime(get_str_setting(window, key, default) or default)
         if not text.strip():
             return
         for region in reversed(list(self.view.sel())):
@@ -423,14 +429,17 @@ class JekyllInsertDateCommand(sublime_plugin.TextCommand):
 
 class JekyllInsertUpload(sublime_plugin.TextCommand):
     @catch_errors
-    def run(self, edit, name, path, uploads_dir=None):
+    def run(self, edit, name='', path='', uploads_dir=None):
+        if not path:
+            raise ValueError('jekyll_insert_upload requires a "path" argument')
+        name = name or os.path.splitext(os.path.basename(path))[0]
         window = self.view.window() or sublime.active_window()
         if uploads_dir is None:
             resolver = JekyllWindowBase(window)
             resolver.resolve_path('uploads', lambda directory: self.view.run_command(
                 'jekyll_insert_upload', {'name': name, 'path': path, 'uploads_dir': directory}))
             return
-        baseurl = get_setting(window, 'jekyll_uploads_baseurl', '') or ''
+        baseurl = get_str_setting(window, 'jekyll_uploads_baseurl', '')
         relative = os.path.relpath(path, os.path.dirname(uploads_dir)).replace(os.sep, '/')
         link = '{}[${{1:{}}}]({}/{})'.format(
             '!' if is_image(path) else '', escape_snippet(markdown_label(name)),

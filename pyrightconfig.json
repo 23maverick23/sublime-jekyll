@@ -1,0 +1,20 @@
+{
+    "pythonVersion": "3.8",
+    "include": [
+        "jekyll.py",
+        "jekyll_utils.py",
+        "tests"
+    ],
+    "exclude": [
+        "send2trash",
+        "docs",
+        "**/__pycache__",
+        ".venv"
+    ],
+    "extraPaths": [
+        "/Applications/Sublime Text.app/Contents/MacOS/Lib/python38"
+    ],
+    "reportMissingModuleSource": "none",
+    "venvPath": ".",
+    "venv": ".venv"
+}

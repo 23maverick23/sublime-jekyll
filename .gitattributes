@@ -3,3 +3,4 @@
 /docs export-ignore
 ruff.toml export-ignore
 .gitattributes export-ignore
+pyrightconfig.json export-ignore
