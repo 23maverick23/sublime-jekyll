@@ -14,4 +14,6 @@ jobs:
       - run: python -m pip install pytest ruff
       - run: pytest -q
       - run: ruff check .
+      - if: matrix.python-version == '3.13'
+        run: python -m pip install "black>=26,<27" && black --check .
       - run: python -W error -m py_compile jekyll.py jekyll_utils.py
