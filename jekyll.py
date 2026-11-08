@@ -448,7 +448,29 @@ class JekyllPostFrontmatterCommand(sublime_plugin.TextCommand):
         insert_when_loaded(view, frontmatter)
 
 
-class JekyllInsertDateCommand(sublime_plugin.TextCommand):
+class JekyllInsertDateCommand(sublime_plugin.WindowCommand):
+    """Public entry point. A WindowCommand so that an empty window doesn't get a new document created for it."""
+
+    def document_view(self):
+        # In an empty window active_view() still returns a hidden placeholder view; writing to it creates a
+        # new document. Only accept a view that is one of the window's open documents.
+        view = self.window.active_view()
+        if view is None or view.id() not in {v.id() for v in self.window.views()}:
+            return None
+        return view
+
+    def is_enabled(self, format="date"):
+        return self.document_view() is not None
+
+    @catch_errors
+    def run(self, format="date"):
+        view = self.document_view()
+        if view is None:
+            return
+        view.run_command("jekyll_insert_date_text", {"format": format})
+
+
+class JekyllInsertDateTextCommand(sublime_plugin.TextCommand):
     @catch_errors
     def run(self, edit, format="date"):
         window = self.view.window() or sublime.active_window()
