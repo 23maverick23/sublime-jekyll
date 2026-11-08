@@ -146,3 +146,29 @@ def markdown_label(text):
 def url_path(path):
     """Percent-encode a relative URL path, keeping '/' separators."""
     return quote(path, safe="/-._~")
+
+
+def set_frontmatter_title(frontmatter, title_line):
+    """Replace the top-level ``title`` entry (including any multiline value) or prepend ``title_line``.
+
+    ``frontmatter`` is the text between the ``---`` markers. A top-level key's value continues on following lines
+    that are indented, blank (inside a block scalar), or compact sequence items (``- item``).
+    """
+    lines = frontmatter.splitlines(keepends=True)
+    start = next((i for i, line in enumerate(lines) if re.match(r"title\s*:", line)), None)
+    if start is None:
+        return title_line + frontmatter
+    end = start + 1
+    last_value_line = start
+    while end < len(lines):
+        line = lines[end]
+        if line.strip() == "":
+            end += 1
+            continue
+        if line[0] in " \t" or re.match(r"-(\s|$)", line):
+            last_value_line = end
+            end += 1
+            continue
+        break
+    # Keep blank lines that separate the title from the next key.
+    return "".join(lines[:start]) + title_line + "".join(lines[last_value_line + 1 :])

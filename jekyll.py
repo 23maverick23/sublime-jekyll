@@ -1,7 +1,6 @@
 """Jekyll 4.0.0 commands for Sublime Text 4 (build 4083+)."""
 
 import os
-import re
 import shutil
 import traceback
 from datetime import datetime, timezone
@@ -22,6 +21,7 @@ from .jekyll_utils import (  # type: ignore  # Sublime loads this repo as packag
     markdown_label,
     promote_destination,
     resolve_relative,
+    set_frontmatter_title,
     url_path,
     yaml_quote,
 )
@@ -43,6 +43,18 @@ def get_str_setting(window, key, default=""):
     """Like get_setting, but falls back to default when the value isn't a string."""
     value = get_setting(window, key, default)
     return value if isinstance(value, str) else default
+
+
+def document_view(window):
+    """Return the window's active document view, or None.
+
+    In an empty window active_view() still returns a hidden placeholder view; writing to it creates a new document.
+    Only accept a view that is one of the window's open documents.
+    """
+    view = window.active_view()
+    if view is None or view.id() not in {v.id() for v in window.views()}:
+        return None
+    return view
 
 
 def is_debug():
@@ -224,12 +236,7 @@ class JekyllWindowBase(sublime_plugin.WindowCommand):
             end = next((i for i in range(1, len(lines)) if lines[i].strip() == "---"), None)
             if lines and lines[0].strip() == "---" and end is not None:
                 frontmatter = "".join(lines[1:end])
-                if re.search(r"^title\s*:", frontmatter, flags=re.MULTILINE):
-                    frontmatter = re.sub(
-                        r"^title\s*:.*(?:\n|$)", lambda _match: title_line, frontmatter, flags=re.MULTILINE
-                    )
-                else:
-                    frontmatter = title_line + frontmatter
+                frontmatter = set_frontmatter_title(frontmatter, title_line)
                 contents = "---\n" + frontmatter + "".join(lines[end:])
             else:
                 contents = "---\n" + title_line + "---\n" + content
@@ -396,9 +403,12 @@ class JekyllBrowseTemplatesCommand(JekyllWindowBase):
 
 
 class JekyllListUploadsCommand(JekyllWindowBase):
+    def is_enabled(self):
+        return document_view(self.window) is not None
+
     @catch_errors
     def run(self):
-        view = self.window.active_view()
+        view = document_view(self.window)
         if view is None:
             sublime.status_message("Jekyll: Open a document before inserting an upload.")
             return
@@ -451,20 +461,12 @@ class JekyllPostFrontmatterCommand(sublime_plugin.TextCommand):
 class JekyllInsertDateCommand(sublime_plugin.WindowCommand):
     """Public entry point. A WindowCommand so that an empty window doesn't get a new document created for it."""
 
-    def document_view(self):
-        # In an empty window active_view() still returns a hidden placeholder view; writing to it creates a
-        # new document. Only accept a view that is one of the window's open documents.
-        view = self.window.active_view()
-        if view is None or view.id() not in {v.id() for v in self.window.views()}:
-            return None
-        return view
-
     def is_enabled(self, format="date"):
-        return self.document_view() is not None
+        return document_view(self.window) is not None
 
     @catch_errors
     def run(self, format="date"):
-        view = self.document_view()
+        view = document_view(self.window)
         if view is None:
             return
         view.run_command("jekyll_insert_date_text", {"format": format})

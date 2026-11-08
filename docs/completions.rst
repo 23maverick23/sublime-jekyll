@@ -188,7 +188,7 @@ array_to_sentence_string ``array_to_sentence_string``
 markdownify              ``markdownify``
 smartify                 ``smartify``
 scssify                  ``scssify``
-sassisfy                 ``sassisfy``
+sassify                  ``sassify``
 slugify                  ``slugify``
 jsonify                  ``jsonify``
 normalize_whitespace     ``normalize_whitespace``

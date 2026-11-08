@@ -26,6 +26,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Remove settings migration and backup browsing commands, and `jekyll_utility_disable`.
 
 ### Fixed
+- Insert upload no longer creates a new document in an empty window; the command is disabled until a document is open.
+- Creating a post from a template whose `title` is a multiline YAML value (`>` / `|`) now replaces the whole value instead of leaving invalid YAML.
+- Fix the `sassify` filter completion, previously misspelled `sassisfy`.
 - Insert current date/datetime no longer creates a new document in an empty window; the commands are disabled until a document is open.
 - Refuse to delete or promote a file with unsaved changes open in a tab.
 - Percent-encode upload link paths and escape Markdown label characters; recognise TIFF and other legacy image types.

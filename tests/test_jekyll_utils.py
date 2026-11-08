@@ -194,3 +194,26 @@ def test_url_path_percent_encodes_but_keeps_slashes():
     assert url_path("uploads/photo 1#2.png") == "uploads/photo%201%232.png"
     assert url_path("uploads/2026/ok-file_v1.png") == "uploads/2026/ok-file_v1.png"
     assert url_path("uploads/caf\u00e9.png") == "uploads/caf%C3%A9.png"
+
+
+TITLE = 'title: "New title"\n'
+
+
+@pytest.mark.parametrize(
+    "frontmatter, expected",
+    [
+        ("layout: post\ntitle: Old\ntags: [a]\n", 'layout: post\ntitle: "New title"\ntags: [a]\n'),
+        ("title: >\n  Old folded\n  title\nlayout: post\n", 'title: "New title"\nlayout: post\n'),
+        ("title: |-\n  Old literal\n\n  second para\nlayout: post\n", 'title: "New title"\nlayout: post\n'),
+        ("title: Old plain\n  continued\n\nlayout: post\n", 'title: "New title"\n\nlayout: post\n'),
+        ("title:\n- a\n- b\nlayout: post\n", 'title: "New title"\nlayout: post\n'),
+        ("title: ${1:snippet}\nlayout: ${2:post}\n", 'title: "New title"\nlayout: ${2:post}\n'),
+        ("layout: post\ntitle: >\n  last key", 'layout: post\ntitle: "New title"\n'),
+        ("layout: post\n", 'title: "New title"\nlayout: post\n'),
+        ("subtitle: keep\nlayout: post\n", 'title: "New title"\nsubtitle: keep\nlayout: post\n'),
+    ],
+)
+def test_set_frontmatter_title(frontmatter, expected):
+    from jekyll_utils import set_frontmatter_title
+
+    assert set_frontmatter_title(frontmatter, TITLE) == expected

@@ -70,7 +70,7 @@
             { "trigger": "markdownify\tJekyll",                  "contents": "markdownify" },
             { "trigger": "smartify\tJekyll",                     "contents": "smartify" },
             { "trigger": "scssify\tJekyll",                      "contents": "scssify" },
-            { "trigger": "sassisfy\tJekyll",                     "contents": "sassisfy" },
+            { "trigger": "sassify\tJekyll",                      "contents": "sassify" },
             { "trigger": "slugify\tJekyll",                      "contents": "slugify" },
             { "trigger": "jsonify\tJekyll",                      "contents": "jsonify" },
             { "trigger": "normalize_whitespace\tJekyll",         "contents": "normalize_whitespace" },
