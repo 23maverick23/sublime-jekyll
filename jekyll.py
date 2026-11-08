@@ -112,7 +112,13 @@ class JekyllWindowBase(sublime_plugin.WindowCommand):
         if configured not in (None, ""):
             path = self.expanded_path(configured)
             if not os.path.isdir(path):
-                raise MissingPathException(f'{key} is not a directory: "{path}".')
+                message = f'{key} is set to "{configured}", which resolves to "{path}", but that is not a directory.'
+                if "${" in str(configured):
+                    message += (
+                        "\n\nNote: ${project_path} is the folder containing your .sublime-project file; "
+                        "${folder} is the first folder open in the sidebar."
+                    )
+                raise MissingPathException(message)
             return [path]
         if kind == "templates":
             path = os.path.join(sublime.packages_path(), "User", "Jekyll Templates")
