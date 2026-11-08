@@ -7,7 +7,7 @@ sublime-jekyll
 >
 > Version 4.0.0 was prepared with help from AI coding tools (Claude Code and Codex). The maintainer reviewed the changes; testing combined automated checks, agent-run checks in Sublime Text, and the maintainer's own testing.
 
-[sublime-jekyll](http://23maverick23.github.io/sublime-jekyll/) is a [Sublime Text](http://www.sublimetext.com/) package for [Jekyll](http://jekyllrb.com/) static sites.
+[sublime-jekyll](https://sublime-jekyll.readthedocs.io/) is a [Sublime Text](http://www.sublimetext.com/) package for [Jekyll](http://jekyllrb.com/) static sites.
 
 This package is aimed at streamlining the process of managing and creating new Jekyll posts. It does this by providing quick and easy access to new post and draft commands, snippets and completions for [Liquid](https://github.com/Shopify/liquid/wiki/Liquid-for-Designers) template tags and filters, as well as some handy commands for adding dates and upload links to your posts.
 
@@ -32,7 +32,7 @@ The old settings migration and backup browsing commands, and `jekyll_utility_dis
 Documentation
 -------------
 
-Installation instructions, available commands and features, detailed documentation, and FAQs can be found at [sublime-jekyll.rtfd.org](http://sublime-jekyll.rtfd.org/).
+Installation instructions, available commands and features, detailed documentation, and FAQs can be found at [Read the Docs](https://sublime-jekyll.readthedocs.io/).
 
 License
 -------

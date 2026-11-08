@@ -6,8 +6,7 @@
                            _/ |\___|_|\_\\__, |_|_|
                           |__/           |___/
 
-                http://23maverick23.github.io/sublime-jekyll/
-                      http://sublime-jekyll.rtfd.org/
+                https://sublime-jekyll.readthedocs.io/
                sublime-jekyll is licensed under the MIT license
 
 *******************************************************************************

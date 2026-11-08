@@ -16,7 +16,7 @@
                                 Thanks for installing sublime-jekyll.
                                    We hope you like what you see.
                             
-                            http://23maverick23.github.io/sublime-jekyll/
+                            https://sublime-jekyll.readthedocs.io/
                           sublime-jekyll is licensed under the MIT license.
        
 ***************************************************************************************************

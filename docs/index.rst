@@ -39,7 +39,7 @@ Version 3.0 overview (historical)
    faq
 
 
-.. _sublime-jekyll: http://23maverick23.github.io/sublime-jekyll
+.. _sublime-jekyll: https://sublime-jekyll.readthedocs.io/
 .. _Sublime Text: http://www.sublimetext.com/
 .. _Jekyll: http://jekyllrb.com/
 .. _Liquid: https://github.com/Shopify/liquid/wiki/Liquid-for-Designers
