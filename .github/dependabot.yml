@@ -1,0 +1,23 @@
+# Keep maintenance noise low: monthly checks, one grouped PR per ecosystem.
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    groups:
+      github-actions:
+        patterns: ["*"]
+    commit-message:
+      prefix: "ci"
+
+  # Sphinx documentation dependencies (docs/requirements.txt). The plugin itself has no Python dependencies.
+  - package-ecosystem: "pip"
+    directory: "/docs"
+    schedule:
+      interval: "monthly"
+    groups:
+      docs:
+        patterns: ["*"]
+    commit-message:
+      prefix: "docs"
