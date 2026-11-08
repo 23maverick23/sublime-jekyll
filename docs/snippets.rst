@@ -40,6 +40,7 @@ Capture
     :Content:
 
         .. code-block:: liquid
+            :force:
 
             {% capture $1 %}
             $0
@@ -54,6 +55,7 @@ Case
     :Content:
 
         .. code-block:: liquid
+            :force:
 
             {% case $1 %}
             $0
@@ -82,6 +84,7 @@ Context variable
     :Content:
 
         .. code-block:: liquid
+            :force:
 
             {{ $1 }}
 
@@ -130,6 +133,7 @@ Else/if
     :Content:
 
         .. code-block:: liquid
+            :force:
 
             {% elsif $1 %}
 
@@ -156,6 +160,7 @@ If
     :Content:
 
         .. code-block:: liquid
+            :force:
 
             {% if $1 %}
             $0
@@ -170,6 +175,7 @@ If/else
     :Content:
 
         .. code-block:: liquid
+            :force:
 
             {% if $1 %}
             $2
@@ -212,6 +218,7 @@ Unless
     :Content:
 
         .. code-block:: liquid
+            :force:
 
             {% unless $1 %}
             $0
@@ -226,6 +233,7 @@ When
     :Content:
 
         .. code-block:: liquid
+            :force:
 
             {% when $1 %}
 
