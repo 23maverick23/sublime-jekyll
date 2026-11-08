@@ -8,3 +8,4 @@ pyproject.toml export-ignore
 AGENTS.md export-ignore
 CLAUDE.md export-ignore
 .readthedocs.yaml export-ignore
+.git-blame-ignore-revs export-ignore
