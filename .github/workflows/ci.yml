@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       # uv provides Python 3.8, which setup-python no longer offers on current Ubuntu runners.
-      - uses: astral-sh/setup-uv@v10
+      - uses: astral-sh/setup-uv@v10.3.3
       - name: Create environment
         run: |
           uv venv --python ${{ matrix.python-version }} .venv
@@ -37,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: astral-sh/setup-uv@v10
+      - uses: astral-sh/setup-uv@v10.3.3
       - name: Create environment
         # Matches the Python version in .readthedocs.yaml.
         run: |
