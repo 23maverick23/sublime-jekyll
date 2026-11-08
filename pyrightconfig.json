@@ -11,9 +11,10 @@
         ".venv"
     ],
     "extraPaths": [
-        "/Applications/Sublime Text.app/Contents/MacOS/Lib/python38"
+        "/Applications/Sublime Text.app/Contents/MacOS/Lib/python314"
     ],
     "reportMissingModuleSource": "none",
     "venvPath": ".",
-    "venv": ".venv"
+    "venv": ".venv",
+    "reportIncompatibleMethodOverride": "none"
 }
