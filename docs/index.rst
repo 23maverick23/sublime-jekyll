@@ -2,7 +2,7 @@ sublime-jekyll
 ==============
 
 .. image:: https://img.shields.io/github/license/23maverick23/sublime-jekyll.svg
-   :target: https://github.com/23maverick23/sublime-jekyll/blob/master/LICENSE
+   :target: https://github.com/23maverick23/sublime-jekyll/blob/main/LICENSE
 .. image:: https://img.shields.io/github/tag/23maverick23/sublime-jekyll.svg
    :target: https://github.com/23maverick23/sublime-jekyll/tags
 .. image:: https://img.shields.io/packagecontrol/dt/Jekyll.svg

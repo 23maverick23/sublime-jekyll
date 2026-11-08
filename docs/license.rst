@@ -3,7 +3,7 @@ License & Credits
 
 sublime-jekyll is licensed under the `MIT license`_.
 
-.. _MIT license:  https://rawgit.com/23maverick23/sublime-jekyll/master/LICENSE
+.. _MIT license:  https://github.com/23maverick23/sublime-jekyll/blob/main/LICENSE
 
 
 Authors
@@ -21,7 +21,7 @@ This package gets better with more feedback and contributions from you! If you w
 
 A huge thanks already to our `current contributors`_.
 
-.. _contributing guide: https://github.com/23maverick23/sublime-jekyll/blob/master/CONTRIBUTING.md
+.. _contributing guide: https://github.com/23maverick23/sublime-jekyll/blob/main/.github/CONTRIBUTING.md
 .. _current contributors: https://github.com/23maverick23/sublime-jekyll/graphs/contributors
 
 

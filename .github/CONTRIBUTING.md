@@ -11,9 +11,9 @@ Here's a quick guide we prefer you follow when submitting pull requests.
 2. Create a Branch with a descriptive name (`git checkout -b my_feature_or_issue`).
 3. Commit your changes (`git commit -am "Add Feature or Close #123"`).
 4. Push to the branch (`git push origin my_feature_or_issue`).
-5. Open a new [Pull Request](https://github.com/23maverick23/sublime-jekyll/pull/new/master).
+5. Open a new [Pull Request](https://github.com/23maverick23/sublime-jekyll/pull/new/main).
 
-Please send your [GitHub Pull Request](https://github.com/23maverick23/sublime-jekyll/pull/new/master) with a clear list of what you've done (read more about [pull requests](http://help.github.com/pull-requests/)). Please follow our coding conventions (below) and make sure all of your commits are atomic (one feature per commit).
+Please send your [GitHub Pull Request](https://github.com/23maverick23/sublime-jekyll/pull/new/main) with a clear list of what you've done (read more about [pull requests](http://help.github.com/pull-requests/)). Please follow our coding conventions (below) and make sure all of your commits are atomic (one feature per commit).
 
 Always write a clear log message for your commits. One-line messages are fine for small changes, but bigger changes should look like this:
 

@@ -23,7 +23,7 @@ Manual
 If you would prefer to install this package manually, you can do that directly from GitHub.
 
 * `Clone the git repo <https://github.com/23maverick23/sublime-jekyll.git>`_
-* `Download the repo ZIP archive <https://github.com/23maverick23/sublime-jekyll/archive/master.zip>`_
+* `Download the repo ZIP archive <https://github.com/23maverick23/sublime-jekyll/archive/refs/heads/main.zip>`_
 
 Put the contents in a ``Jekyll`` folder under your Sublime Text ``Packages`` directory. Use *Preferences > Browse Packages...* to find the correct directory, including for portable or upgraded installations.
 

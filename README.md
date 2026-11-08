@@ -1,7 +1,7 @@
 sublime-jekyll
 ==============
 
-[![GitHub license](https://img.shields.io/github/license/23maverick23/sublime-jekyll.svg)](https://github.com/23maverick23/sublime-jekyll/blob/master/LICENSE) [![GitHub tag](https://img.shields.io/github/tag/23maverick23/sublime-jekyll.svg)](https://github.com/23maverick23/sublime-jekyll/tags) [![Package Control](https://img.shields.io/packagecontrol/dt/Jekyll.svg)](https://packagecontrol.io/packages/Jekyll)
+[![GitHub license](https://img.shields.io/github/license/23maverick23/sublime-jekyll.svg)](https://github.com/23maverick23/sublime-jekyll/blob/main/LICENSE) [![GitHub tag](https://img.shields.io/github/tag/23maverick23/sublime-jekyll.svg)](https://github.com/23maverick23/sublime-jekyll/tags) [![Package Control](https://img.shields.io/packagecontrol/dt/Jekyll.svg)](https://packagecontrol.io/packages/Jekyll)
 
 > **Maintenance mode:** This package is no longer in active development. Version 4.0.0 restores compatibility with current Sublime Text 4 and fixes outstanding bugs. No new features are planned. Bug-fix PRs may be reviewed as time allows.
 >
@@ -37,8 +37,8 @@ Installation instructions, available commands and features, detailed documentati
 License
 -------
 
-sublime-jekyll is licensed under the MIT license. [LICENSE](https://raw.githubusercontent.com/23maverick23/sublime-jekyll/master/LICENSE)
+sublime-jekyll is licensed under the MIT license. [LICENSE](https://raw.githubusercontent.com/23maverick23/sublime-jekyll/main/LICENSE)
 
 [![](https://sourcerer.io/fame/23maverick23/23maverick23/sublime-jekyll/images/0)](https://sourcerer.io/fame/23maverick23/23maverick23/sublime-jekyll/links/0)[![](https://sourcerer.io/fame/23maverick23/23maverick23/sublime-jekyll/images/1)](https://sourcerer.io/fame/23maverick23/23maverick23/sublime-jekyll/links/1)[![](https://sourcerer.io/fame/23maverick23/23maverick23/sublime-jekyll/images/2)](https://sourcerer.io/fame/23maverick23/23maverick23/sublime-jekyll/links/2)[![](https://sourcerer.io/fame/23maverick23/23maverick23/sublime-jekyll/images/3)](https://sourcerer.io/fame/23maverick23/23maverick23/sublime-jekyll/links/3)[![](https://sourcerer.io/fame/23maverick23/23maverick23/sublime-jekyll/images/4)](https://sourcerer.io/fame/23maverick23/23maverick23/sublime-jekyll/links/4)[![](https://sourcerer.io/fame/23maverick23/23maverick23/sublime-jekyll/images/5)](https://sourcerer.io/fame/23maverick23/23maverick23/sublime-jekyll/links/5)[![](https://sourcerer.io/fame/23maverick23/23maverick23/sublime-jekyll/images/6)](https://sourcerer.io/fame/23maverick23/23maverick23/sublime-jekyll/links/6)[![](https://sourcerer.io/fame/23maverick23/23maverick23/sublime-jekyll/images/7)](https://sourcerer.io/fame/23maverick23/23maverick23/sublime-jekyll/links/7)
 
-This project adheres to the [Contributor Covenant code of conduct](https://raw.githubusercontent.com/23maverick23/sublime-jekyll/master/CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to github@rymo.io.
+This project adheres to the [Contributor Covenant code of conduct](https://raw.githubusercontent.com/23maverick23/sublime-jekyll/main/CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to github@rymo.io.
