@@ -4,6 +4,8 @@ sublime-jekyll
 [![GitHub license](https://img.shields.io/github/license/23maverick23/sublime-jekyll.svg)](https://github.com/23maverick23/sublime-jekyll/blob/master/LICENSE) [![GitHub tag](https://img.shields.io/github/tag/23maverick23/sublime-jekyll.svg)](https://github.com/23maverick23/sublime-jekyll/tags) [![Package Control](https://img.shields.io/packagecontrol/dt/Jekyll.svg)](https://packagecontrol.io/packages/Jekyll)
 
 > **Maintenance mode:** This package is no longer in active development. Version 4.0.0 restores compatibility with current Sublime Text 4 and fixes outstanding bugs. No new features are planned. Bug-fix PRs may be reviewed as time allows.
+>
+> Version 4.0.0 was prepared with help from AI coding tools (Claude Code and Codex) and reviewed and tested by the maintainer.
 
 [sublime-jekyll](http://23maverick23.github.io/sublime-jekyll/) is a [Sublime Text](http://www.sublimetext.com/) package for [Jekyll](http://jekyllrb.com/) static sites.
 
