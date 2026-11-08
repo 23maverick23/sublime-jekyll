@@ -5,3 +5,5 @@ ruff.toml export-ignore
 .gitattributes export-ignore
 pyrightconfig.json export-ignore
 pyproject.toml export-ignore
+AGENTS.md export-ignore
+CLAUDE.md export-ignore
