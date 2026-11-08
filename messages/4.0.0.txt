@@ -26,6 +26,10 @@ hand using the format in the documentation.
 The package is now in maintenance mode and is no longer in active development.
 No new features are planned. Bug-fix PRs may be reviewed as time allows.
 
+This release was prepared with help from AI coding tools (Claude Code and
+Codex). The maintainer reviewed the changes; testing combined automated checks,
+agent-run checks in Sublime Text, and the maintainer's own testing.
+
 Thanks for using sublime-jekyll!
 
 

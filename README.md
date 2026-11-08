@@ -5,7 +5,7 @@ sublime-jekyll
 
 > **Maintenance mode:** This package is no longer in active development. Version 4.0.0 restores compatibility with current Sublime Text 4 and fixes outstanding bugs. No new features are planned. Bug-fix PRs may be reviewed as time allows.
 >
-> Version 4.0.0 was prepared with help from AI coding tools (Claude Code and Codex) and reviewed and tested by the maintainer.
+> Version 4.0.0 was prepared with help from AI coding tools (Claude Code and Codex). The maintainer reviewed the changes; testing combined automated checks, agent-run checks in Sublime Text, and the maintainer's own testing.
 
 [sublime-jekyll](http://23maverick23.github.io/sublime-jekyll/) is a [Sublime Text](http://www.sublimetext.com/) package for [Jekyll](http://jekyllrb.com/) static sites.
 
