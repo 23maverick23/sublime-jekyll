@@ -29,13 +29,23 @@ updates only, no new features. Keep changes small and scoped to the reported pro
 Use a local venv (`.venv` is gitignored):
 
 ```bash
-uv venv .venv --python 3.13 && uv pip install --python .venv/bin/python pytest ruff "black>=26,<27"
+uv venv .venv --python 3.13 && uv pip install --python .venv "pytest>=7" "ruff>=0.17,<0.18" "black>=26,<27"
 .venv/bin/pytest -q
 .venv/bin/ruff check .
 .venv/bin/black --check .
-ty check            # configured in pyproject.toml
-python3 -W error -m py_compile jekyll.py jekyll_utils.py
+.venv/bin/python -W error -m py_compile jekyll.py jekyll_utils.py
+ty check            # optional, configured in pyproject.toml (not run in CI)
 ```
+
+If `docs/` changed, build the docs strictly (CI does this too):
+
+```bash
+uv venv .venv-docs --python 3.12 && uv pip install --python .venv-docs -r docs/requirements.txt
+.venv-docs/bin/sphinx-build -W --keep-going -b html docs /tmp/sublime-jekyll-docs
+```
+
+CI (`.github/workflows/ci.yml`) runs the tests, ruff and the compile check on Python 3.8, 3.13 and 3.14, black on 3.14,
+and the strict docs build. Contributor-facing instructions live in `.github/CONTRIBUTING.md`; keep the two in sync.
 
 ty and Pyright resolve `sublime` from the Sublime Text app bundle (`Lib/python314` on macOS, build 4215). If Sublime
 updates and that folder changes, update `pyproject.toml` and `pyrightconfig.json`.
@@ -50,7 +60,8 @@ ln -s "$PWD" ~/Library/Application\ Support/Sublime\ Text/Packages/Jekyll
 ```
 
 Use disposable copies of a Jekyll site for delete/promote tests. Say clearly which results came from real Sublime and
-which came from mocks or unit tests.
+which came from mocks or unit tests. The reusable release checklist is `tests/manual-release-checklist.md`; keep it
+blank and record results elsewhere.
 
 ## Sublime Text gotchas learned the hard way
 

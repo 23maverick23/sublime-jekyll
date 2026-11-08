@@ -102,3 +102,4 @@ Temporary Items
 .pytest_cache/
 .ruff_cache/
 .venv
+.venv-docs
