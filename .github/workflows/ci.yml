@@ -1,19 +1,47 @@
 name: CI
+
 on: [push, pull_request]
+
+permissions:
+  contents: read
+
 jobs:
   test:
+    name: Tests (Python ${{ matrix.python-version }})
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        python-version: ["3.8", "3.13"]
+        # 3.8: oldest modern plugin host (ST4 < 4200). 3.14: plugin host in ST 4215+. 3.13: in between.
+        python-version: ["3.8", "3.13", "3.14"]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
-      - run: python -m pip install pytest ruff
+      - uses: actions/checkout@v7
+      # uv provides Python 3.8, which setup-python no longer offers on current Ubuntu runners.
+      - uses: astral-sh/setup-uv@v10
+      - name: Create environment
+        run: |
+          uv venv --python ${{ matrix.python-version }} .venv
+          echo "$PWD/.venv/bin" >> "$GITHUB_PATH"
+      - name: Install test tools
+        run: uv pip install --python .venv "pytest>=7" "ruff>=0.17,<0.18"
       - run: pytest -q
       - run: ruff check .
-      - if: matrix.python-version == '3.13'
-        run: python -m pip install "black>=26,<27" && black --check .
-      - run: python -W error -m py_compile jekyll.py jekyll_utils.py
+      - name: Check formatting
+        if: matrix.python-version == '3.14'
+        run: uv pip install --python .venv "black>=26,<27" && black --check .
+      - name: Compile with warnings as errors
+        run: python -W error -m py_compile jekyll.py jekyll_utils.py
+
+  docs:
+    name: Docs (strict Sphinx build)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10
+      - name: Create environment
+        # Matches the Python version in .readthedocs.yaml.
+        run: |
+          uv venv --python 3.12 .venv
+          echo "$PWD/.venv/bin" >> "$GITHUB_PATH"
+      - run: uv pip install --python .venv -r docs/requirements.txt
+      - run: sphinx-build -W --keep-going -b html docs "$RUNNER_TEMP/docs-html"
