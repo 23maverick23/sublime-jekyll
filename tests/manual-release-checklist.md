@@ -88,6 +88,8 @@ because templates live in `Packages/User/Jekyll Templates` unless `jekyll_templa
 
 ## Paths and settings
 
+- [ ] Both Preferences → Package Settings → Jekyll → Settings and the palette command Preferences: Jekyll Settings
+      open package defaults on the left and User settings on the right, including when no User settings file exists.
 - [ ] With no path settings, `_config.yml` / `_config.yaml` in an open folder or its immediate child is detected and
       the standard `_posts`, `_drafts` and `uploads` folders are used.
 - [ ] Explicit paths take priority. An invalid explicit path shows an error that includes the configured value and

@@ -2,7 +2,7 @@
     "pythonVersion": "3.8",
     "include": [
         "jekyll.py",
-        "jekyll_utils.py",
+        "jekyll_lib/jekyll_utils.py",
         "tests"
     ],
     "exclude": [

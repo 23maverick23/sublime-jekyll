@@ -7,7 +7,7 @@ sublime-jekyll ships with a number of configurable settings. These can be overri
 Settings lookup
 ---------------
 
-Settings are read when a command runs. Values in ``settings > Jekyll`` in the current ``.sublime-project`` file take priority over ``Jekyll.sublime-settings`` (User settings and package defaults). A project value of ``false`` or an empty string still overrides the user value. Edit User settings through *Preferences > Package Settings > Jekyll > Settings - User*.
+Settings are read when a command runs. Values in ``settings > Jekyll`` in the current ``.sublime-project`` file take priority over ``Jekyll.sublime-settings`` (User settings and package defaults). A project value of ``false`` or an empty string still overrides the user value. Edit User settings through *Preferences > Package Settings > Jekyll > Settings* or the *Preferences: Jekyll Settings* command in the Command Palette. Package defaults open on the left and editable User settings on the right.
 
 Path resolution
 ---------------

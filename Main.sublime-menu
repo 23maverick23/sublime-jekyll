@@ -121,33 +121,18 @@
 
                             { "caption": "-" },
 
-                            // Settings - Default
+                            // Settings
                             {
-                                "caption": "Settings – Default",
-                                "command": "open_file",
+                                "caption": "Settings",
+                                "command": "edit_settings",
                                 "args": {
-                                    "file": "${packages}/Jekyll/Jekyll.sublime-settings"
-                                }
-                            },
-                            // Settings - User
-                            {
-                                "caption": "Settings – User",
-                                "command": "open_file",
-                                "args": {
-                                    "file": "${packages}/User/Jekyll.sublime-settings"
+                                    "base_file": "${packages}/Jekyll/Jekyll.sublime-settings",
+                                    "default": "{\n\t$0\n}\n"
                                 }
                             },
 
                             { "caption": "-" },
 
-                            // Key Bindings - Default
-                            {
-                                "caption": "Key Bindings – Default",
-                                "command": "open_file",
-                                "args": {
-                                    "file": "${packages}/Jekyll/Default ($platform).sublime-keymap"
-                                }
-                            },
                             // Key Bindings - User
                             {
                                 "caption": "Key Bindings – User",

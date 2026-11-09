@@ -30,7 +30,7 @@ jobs:
         if: matrix.python-version == '3.14'
         run: uv pip install --python .venv "black>=26,<27" && black --check .
       - name: Compile with warnings as errors
-        run: python -W error -m py_compile jekyll.py jekyll_utils.py
+        run: python -W error -m py_compile jekyll.py jekyll_lib/jekyll_utils.py
 
   docs:
     name: Docs (strict Sphinx build)

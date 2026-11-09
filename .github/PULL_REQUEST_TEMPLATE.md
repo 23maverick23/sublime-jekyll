@@ -20,7 +20,7 @@ Closes #
 - [ ] `pytest -q`
 - [ ] `ruff check .`
 - [ ] `black --check .`
-- [ ] `python -W error -m py_compile jekyll.py jekyll_utils.py`
+- [ ] `python -W error -m py_compile jekyll.py jekyll_lib/jekyll_utils.py`
 - [ ] Strict docs build (only if `docs/` changed)
 
 **Testing in Sublime Text** (required for changes to `jekyll.py`). Unit tests and mocks don't count here.

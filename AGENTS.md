@@ -10,8 +10,8 @@ updates only, no new features. Keep changes small and scoped to the reported pro
 ## Layout
 
 - `jekyll.py` — all Sublime commands. Imports `sublime` / `sublime_plugin`, so it only runs inside Sublime Text.
-- `jekyll_utils.py` — pure helpers (paths, titles, escaping, dates). Must **not** import `sublime`; this is what the tests cover.
-- `tests/` — pytest suite for `jekyll_utils.py` plus a check that every menu/palette entry maps to a real command.
+- `jekyll_lib/jekyll_utils.py` — pure helpers (paths, titles, escaping, dates). Must **not** import `sublime`; this is what the tests cover.
+- `tests/` — pytest suite for `jekyll_lib/jekyll_utils.py` plus a check that every menu/palette entry maps to a real command.
 - `*.sublime-commands`, `*.sublime-menu`, `*.sublime-keymap`, `Jekyll.sublime-settings` — command wiring and default settings.
 - `messages/`, `messages.json`, `CHANGELOG` — release notes shown by Package Control.
 - `docs/` — Sphinx documentation.
@@ -33,7 +33,7 @@ uv venv .venv --python 3.13 && uv pip install --python .venv "pytest>=7" "ruff>=
 .venv/bin/pytest -q
 .venv/bin/ruff check .
 .venv/bin/black --check .
-.venv/bin/python -W error -m py_compile jekyll.py jekyll_utils.py
+.venv/bin/python -W error -m py_compile jekyll.py jekyll_lib/jekyll_utils.py
 ty check            # optional, configured in pyproject.toml (not run in CI)
 ```
 

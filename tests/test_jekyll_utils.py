@@ -4,7 +4,7 @@ from datetime import datetime
 
 import pytest
 
-from jekyll_utils import (
+from jekyll_lib.jekyll_utils import (
     bounded_find_dirs,
     clean_title_input,
     escape_snippet,
@@ -182,14 +182,14 @@ def test_resolve_relative(tmp_path):
 
 
 def test_markdown_label_escapes_brackets_and_backslash():
-    from jekyll_utils import markdown_label
+    from jekyll_lib.jekyll_utils import markdown_label
 
     assert markdown_label("a]b[c\\d") == "a\\]b\\[c\\\\d"
     assert markdown_label("plain name") == "plain name"
 
 
 def test_url_path_percent_encodes_but_keeps_slashes():
-    from jekyll_utils import url_path
+    from jekyll_lib.jekyll_utils import url_path
 
     assert url_path("uploads/photo 1#2.png") == "uploads/photo%201%232.png"
     assert url_path("uploads/2026/ok-file_v1.png") == "uploads/2026/ok-file_v1.png"
@@ -214,6 +214,6 @@ TITLE = 'title: "New title"\n'
     ],
 )
 def test_set_frontmatter_title(frontmatter, expected):
-    from jekyll_utils import set_frontmatter_title
+    from jekyll_lib.jekyll_utils import set_frontmatter_title
 
     assert set_frontmatter_title(frontmatter, TITLE) == expected

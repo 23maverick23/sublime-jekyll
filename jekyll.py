@@ -1,4 +1,4 @@
-"""Jekyll 4.0.0 commands for Sublime Text 4 (build 4083+)."""
+"""Jekyll 4.0.1 commands for Sublime Text 4 (build 4083+)."""
 
 import os
 import shutil
@@ -9,7 +9,7 @@ from functools import wraps
 import sublime
 import sublime_plugin
 
-from .jekyll_utils import (  # type: ignore  # Sublime loads this repo as package "Jekyll"
+from .jekyll_lib.jekyll_utils import (  # type: ignore  # Sublime loads this repo as package "Jekyll"
     MARKDOWN_EXTENSIONS,
     bounded_find_dirs,
     clean_title_input,
@@ -63,7 +63,7 @@ def is_debug():
 
 def plugin_loaded():
     if is_debug():
-        print(f"Jekyll 4.0.0 loaded at {datetime.now(timezone.utc)} (Sublime {sublime.version()})")
+        print(f"Jekyll 4.0.1 loaded at {datetime.now(timezone.utc)} (Sublime {sublime.version()})")
 
 
 def catch_errors(fn):

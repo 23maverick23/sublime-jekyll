@@ -9,8 +9,8 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 FILES = [*ROOT.glob("*.sublime-menu"), *ROOT.glob("*.sublime-commands"), *ROOT.glob("*.sublime-keymap")]
-# The menus also use this command supplied by Sublime itself.
-BUILTIN_COMMANDS = {"open_file"}
+# The menus and palette also use these commands supplied by Sublime itself.
+BUILTIN_COMMANDS = {"open_file", "edit_settings"}
 
 
 def read_jsonc(path):
@@ -64,6 +64,6 @@ def test_settings_json_and_host():
     assert (ROOT / ".python-version").read_bytes() == b"3.8\n"
 
 
-@pytest.mark.parametrize("name", ["jekyll.py", "jekyll_utils.py"])
+@pytest.mark.parametrize("name", ["jekyll.py", "jekyll_lib/__init__.py", "jekyll_lib/jekyll_utils.py"])
 def test_python38_syntax(name):
     ast.parse((ROOT / name).read_text(encoding="utf-8"), feature_version=(3, 8))

@@ -1,5 +1,13 @@
 [
     {
+        "caption": "Preferences: Jekyll Settings",
+        "command": "edit_settings",
+        "args": {
+            "base_file": "${packages}/Jekyll/Jekyll.sublime-settings",
+            "default": "{\n\t$0\n}\n"
+        }
+    },
+    {
         "caption": "Jekyll: New post",
         "command": "jekyll_new_post"
     },

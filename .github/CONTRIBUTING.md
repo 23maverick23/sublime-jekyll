@@ -42,7 +42,7 @@ Then run:
 .venv/bin/pytest -q                                          # unit tests
 .venv/bin/ruff check .                                       # lint
 .venv/bin/black --check .                                    # formatting (run `.venv/bin/black .` to fix)
-.venv/bin/python -W error -m py_compile jekyll.py jekyll_utils.py   # compile, warnings as errors
+.venv/bin/python -W error -m py_compile jekyll.py jekyll_lib/jekyll_utils.py   # compile, warnings as errors
 ```
 
 If you change anything under `docs/`, also build the docs strictly:
@@ -58,7 +58,7 @@ CI runs the tests on Python 3.8, 3.13 and 3.14. If you can, also run `pytest` un
 
 ## Testing in Sublime Text
 
-The automated tests only cover `jekyll_utils.py` (pure helpers) and the menu/command wiring. **They don't load the
+The automated tests only cover `jekyll_lib/jekyll_utils.py` (pure helpers) and the menu/command wiring. **They don't load the
 plugin in Sublime Text**, so they can't catch problems with commands, menus, panels or views. Mocked or simulated
 Sublime checks have the same limit.
 
